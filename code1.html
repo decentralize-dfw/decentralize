@@ -18,7 +18,7 @@
 
         /* Arama çubuğu placeholder rengi */
         ::placeholder {
-            color: #525252; /* neutral-600 */
+            color: #737373; /* neutral-500 (Daha belirgin) */
             opacity: 1;
         }
         
@@ -58,15 +58,14 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            /* Daha seri olması için 0.3s yapıldı */
             transition: max-height 0.3s ease-out;
         }
         
         /* Aktif Akordeon Başlığı */
         .accordion-toggle.active {
             background-color: transparent; 
-            border-color: #525252; 
-            border-width: 1px; 
+            border-color: #737373; /* neutral-500 (Daha belirgin) */
+            border-width: 2px; /* 2px yapıldı (Kalınlaştırıldı) */
             border-style: solid;
             border-radius: 6px; /* rounded-md */
         }
@@ -79,7 +78,7 @@
         /* Filtre Düğmeleri */
         .filter-button {
             transition: color 0.2s, border-color 0.2s;
-            border: 1px solid transparent; 
+            border: 2px solid transparent; /* 2px rezerve */
         }
         .filter-button.active {
             background-color: transparent; 
@@ -111,7 +110,8 @@
         <!-- Üst Başlıklar ve Filtreler -->
         <header class="mb-2"> 
             <!-- Arama Çubuğu -->
-            <input type="text" id="search-input" class="w-full bg-transparent border-b border-neutral-600 text-neutral-200 text-sm rounded-none py-1.5 px-2 mb-2 focus:outline-none focus:border-neutral-400 placeholder-neutral-600" placeholder="Search">
+            <!-- border-b-2 ve border-neutral-500 (Daha kalın ve belirgin) -->
+            <input type="text" id="search-input" class="w-full bg-transparent border-b-2 border-neutral-500 text-neutral-200 text-sm rounded-none py-1.5 px-2 mb-2 focus:outline-none focus:border-neutral-300 placeholder-neutral-500" placeholder="Search">
             
             <!-- Gruplama Filtreleri -->
             <div class="flex flex-wrap gap-2 items-center mt-1">
@@ -122,8 +122,8 @@
         </header>
 
         <!-- Akordeon Liste Ana Başlıkları -->
-        <!-- mt-[10px] (10px boşluk), border-b (ince çizgi), border-neutral-600 (belirgin) -->
-        <div id="accordion-header" class="hidden md:flex sticky top-0 bg-black z-10 py-1 border-b border-neutral-600 mt-[10px] text-sm font-normal text-neutral-500">
+        <!-- border-b-2 ve border-neutral-500 -->
+        <div id="accordion-header" class="hidden md:flex sticky top-0 bg-black z-10 py-1 border-b-2 border-neutral-500 mt-[10px] text-sm font-normal text-neutral-500">
             <div class="w-[40%] px-2">Project name</div> 
             <div id="dynamic-header-1" class="w-[15%] px-2 capitalize"></div>
             <div id="dynamic-header-2" class="w-[15%] px-2 capitalize"></div>
@@ -142,15 +142,13 @@
     <img id="thumbnail-preview" src="" alt="Preview" width="200">
 
     <!-- Modal (Popup) -->
-    <!-- tabindex="-1" EKLENDİ: Odaklanabilmesi için gerekli -->
     <div id="modal-container" tabindex="-1" class="fixed inset-0 z-40 flex items-center justify-center p-4 md:p-12 outline-none">
         <!-- Arka Plan Karartma -->
         <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"></div>
         
         <!-- Modal İçeriği -->
         <div id="modal-content" class="relative z-50 w-full h-full bg-black border border-neutral-700 rounded-lg shadow-xl flex flex-col overflow-hidden">
-            <!-- Kapatma Düğmesi (YENİ TASARIM) -->
-            <!-- text-xs, rounded-md, border border-white, text-white, bg-black/60 -->
+            <!-- Kapatma Düğmesi -->
             <button id="modal-close-btn" class="absolute top-4 right-4 z-50 text-xs font-medium px-3 py-1 rounded-md border border-white text-white bg-black/60 hover:bg-black/80 transition-colors">
                 Close
             </button>
@@ -330,8 +328,8 @@
                 const groupProjects = groups[groupName];
 
                 const groupToggle = document.createElement('div');
-                // text-sm (Project name ile aynı font), border-b (ince çizgi), border-neutral-600 (görünür gri)
-                groupToggle.className = 'accordion-toggle flex py-1 px-2 border-b border-neutral-600 cursor-pointer transition-opacity duration-300 text-sm font-bold text-neutral-200';
+                // border-b-2 ve border-neutral-500 (Daha kalın ve belirgin)
+                groupToggle.className = 'accordion-toggle flex py-1 px-2 border-b-2 border-neutral-500 cursor-pointer transition-opacity duration-300 text-sm font-bold text-neutral-200';
                 groupToggle.innerHTML = `<span class="capitalize">${groupName}</span>`;
                 
                 const contentDiv = document.createElement('div');
@@ -339,23 +337,24 @@
                 
                 if (currentSearchQuery) {
                     groupToggle.classList.add('active');
-                    contentDiv.style.maxHeight = "none"; // Aramada animasyonsuz aç
+                    contentDiv.style.maxHeight = "none"; 
                     contentDiv.classList.add('open');
                 }
                 
                 groupProjects.forEach(project => {
                     const projectRow = document.createElement('div');
-                    // text-xs (2 font size küçük), border-b, border-neutral-600
+                    // text-xs, border-b-2, border-neutral-500
                     projectRow.className = 'project-row flex cursor-pointer transition-opacity duration-300 ml-4 text-xs text-neutral-400';
                     
                     let headersHtml = '';
                     dynamicHeaders.forEach(key => {
                         const value = project.categories[key] || 'N/A';
-                        headersHtml += `<div class="py-1 px-2 border-b border-neutral-600 w-[15%] capitalize">${value}</div>`;
+                        // border-b-2 ve border-neutral-500
+                        headersHtml += `<div class="py-1 px-2 border-b-2 border-neutral-500 w-[15%] capitalize">${value}</div>`;
                     });
                     
                     projectRow.innerHTML = `
-                        <div class="py-1 px-2 border-b border-neutral-600 w-[40%] text-neutral-300 font-medium">${project.name}</div>
+                        <div class="py-1 px-2 border-b-2 border-neutral-500 w-[40%] text-neutral-300 font-medium">${project.name}</div>
                         ${headersHtml}
                     `;
                     
@@ -364,7 +363,6 @@
                         openModal(project.id);
                     });
                     
-                    // Mouse Hover Logic
                     projectRow.addEventListener('mouseenter', (e) => {
                         if (contentDiv.classList.contains('open')) {
                             groupToggle.style.opacity = '0.5';
@@ -392,41 +390,35 @@
                     const wasActive = groupToggle.classList.contains('active');
                     const currentActiveToggle = document.querySelector('.accordion-toggle.active');
                     
-                    // 1. Başka bir başlık açıksa kapat
                     if (currentActiveToggle && currentActiveToggle !== groupToggle) {
                         currentActiveToggle.classList.remove('active');
-                        currentActiveToggle.classList.add('border-b', 'border-neutral-600');
+                        // border-b-2 ve border-neutral-500
+                        currentActiveToggle.classList.add('border-b-2', 'border-neutral-500');
                         const currentActiveContent = currentActiveToggle.nextElementSibling;
                         if (currentActiveContent && currentActiveContent.classList.contains('accordion-content')) {
-                            // LAG ÇÖZÜMÜ: maxHeight'i null yaparak anında kapat
                             currentActiveContent.style.maxHeight = null;
                             currentActiveContent.classList.remove('open');
                             currentActiveContent.querySelectorAll('.project-row').forEach(row => row.style.opacity = '1');
                         }
                     }
 
-                    // 2. Tıklananı aç veya kapat
                     if (wasActive) {
-                        // KAPATMA
                         groupToggle.classList.remove('active');
-                        
-                        // LAG ÇÖZÜMÜ: maxHeight'i null yaparak anında kapat
                         contentDiv.style.maxHeight = null;
                         contentDiv.classList.remove('open');
                         
                         document.querySelectorAll('.accordion-toggle').forEach(toggle => {
                             toggle.style.opacity = '1'; 
                             if (!toggle.classList.contains('active')) { 
-                                toggle.classList.add('border-b', 'border-neutral-600');
+                                // border-b-2 ve border-neutral-500
+                                toggle.classList.add('border-b-2', 'border-neutral-500');
                             }
                         });
                     } else {
-                        // AÇMA
                         groupToggle.classList.add('active');
-                        groupToggle.classList.remove('border-b', 'border-neutral-600');
+                        // border sınıfını kaldır
+                        groupToggle.classList.remove('border-b-2', 'border-neutral-500');
                         contentDiv.classList.add('open');
-                        
-                        // LAG ÇÖZÜMÜ: İçeriğin tam boyutu kadar aç (boşluk bekleme yok)
                         contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
                         
                         document.querySelectorAll('.accordion-toggle').forEach(toggle => {
@@ -489,7 +481,6 @@
             filterButtonsContainer.innerHTML = '';
             categoryPriorityList.forEach(key => {
                 const button = document.createElement('button');
-                // rounded-md (yuvarlatma)
                 button.className = 'filter-button text-xs bg-transparent text-neutral-500 px-2 py-0.5 rounded-md hover:text-neutral-300 hover:border-neutral-600 capitalize';
                 button.textContent = key;
                 if (key === currentGroupKey) {
@@ -544,7 +535,6 @@
                 'Link': `<a href="${project.link}" target="_blank" class="text-neutral-400 hover:text-white underline break-all">${project.link}</a>`
             };
 
-            // Künye Satır Aralığı Düşürüldü (space-y-0.5 ve leading-none)
             let leftHtml = '<div class="space-y-1 text-xs leading-tight text-neutral-400">';
             
             leftHtml += `<p class="flex"><strong class="font-normal text-neutral-600 w-24 flex-shrink-0 capitalize">Project:</strong> <span class="text-neutral-300">${allMetadata['Project']}</span></p>`;
@@ -564,8 +554,6 @@
             modalContainer.classList.add('open');
             modalBackdrop.classList.add('open');
             
-            // ESC TUŞU İÇİN KRİTİK GÜNCELLEME:
-            // Modal açıldığında hemen ona odaklan, böylece klavye olaylarını yakalayabilir.
             modalContainer.focus();
         }
 
@@ -608,9 +596,7 @@
         modalCloseBtn.addEventListener('click', closeModal);
         modalBackdrop.addEventListener('click', closeModal);
         
-        // GÜNCELLENDİ: ESC TUŞU KONTROLÜ (Window seviyesinde ve daha sağlam)
         window.addEventListener('keydown', (e) => {
-            // 'Escape' veya eski tarayıcılar için 'Esc'
             if ((e.key === 'Escape' || e.key === 'Esc') && modalContainer.classList.contains('open')) {
                 closeModal();
             }
