@@ -142,7 +142,8 @@
     <img id="thumbnail-preview" src="" alt="Preview" width="200">
 
     <!-- Modal (Popup) -->
-    <div id="modal-container" class="fixed inset-0 z-40 flex items-center justify-center p-4 md:p-12">
+    <!-- tabindex="-1" EKLENDİ: Odaklanabilmesi için gerekli -->
+    <div id="modal-container" tabindex="-1" class="fixed inset-0 z-40 flex items-center justify-center p-4 md:p-12 outline-none">
         <!-- Arka Plan Karartma -->
         <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"></div>
         
@@ -562,6 +563,10 @@
             
             modalContainer.classList.add('open');
             modalBackdrop.classList.add('open');
+            
+            // ESC TUŞU İÇİN KRİTİK GÜNCELLEME:
+            // Modal açıldığında hemen ona odaklan, böylece klavye olaylarını yakalayabilir.
+            modalContainer.focus();
         }
 
         function closeModal() {
@@ -602,9 +607,11 @@
 
         modalCloseBtn.addEventListener('click', closeModal);
         modalBackdrop.addEventListener('click', closeModal);
-        // GÜNCELLENDİ: ESC TUŞU KONTROLÜ
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalContainer.classList.contains('open')) {
+        
+        // GÜNCELLENDİ: ESC TUŞU KONTROLÜ (Window seviyesinde ve daha sağlam)
+        window.addEventListener('keydown', (e) => {
+            // 'Escape' veya eski tarayıcılar için 'Esc'
+            if ((e.key === 'Escape' || e.key === 'Esc') && modalContainer.classList.contains('open')) {
                 closeModal();
             }
         });
