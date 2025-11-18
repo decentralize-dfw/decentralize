@@ -1,0 +1,32 @@
+bir websitesi üretmeni istiyorum.
+
+bir liste göreceğiz. 
+
+resimdeki gibi.
+
+bunlar ana başlıklar olucak.
+
+her birini tıkladığımızda altında, onun contentleri çıkıcak gene liste olarak daha küçük fontta tabi ki.
+
+yani bu başlıklar açılıp kapanabilir başlıklar olmalıdır.
+
+her bir başlığın ya da alt başlığın mouse ile üstüne gelindiğinde ufak bir thumbnailini görmeliyiz. tıklandığındaysa, bir pop up açılmalıdır. kapatılabilmelidir. bu pop up ya üstündeki çarpıdan, ya da esc ye basarak. ikinci resimdeki gibi olmalıdır pop up.
+
+sayfanın yüzde 15 heryeridnde proporsiyonel olarak kısıp, kalan kısmın kiey olarak yüzde 60ı yan yan scrol edilerek ilerleyebildiğimiz görseller, 
+
+alt kısmında da 2ye bölünmüş bir text alanı, sol taraftaki index gibi, sağ tarafta da descriptionu yazıyor olmalıdır.
+
+
+
+her bir content in 
+
+başlıklar:realityyeartypecollectionmediumexpressionkontentlermetaverse2025paintingdiigtal topsrenderdecentralizeirl2024imagetheatersphotoreligious robotics
+
+2023videoweb appgraphicdfw -2022textgalleryvideovea2021designapp2020architectureworld building2019graphicweb ui2018fashionavatar2017experiencespace2016photographyfurniture2015digital
+
+bu şekilde categorileri olmalıdırç
+
+ayrıca, bir ismi, bir descriptionu ve bir de linki olmalıdır. tabi imageları da. image, video, glb viewer hepsi olmalıdır, ve hangi sırayla yazıldıysa o sırada burada gözükmelidir. 
+
+bu listede en başta type olarak görmeliyiz. ama bir düğme ile bunu başlıklardan herhangi birisi olarak filtrelediğimizde, o başlık, ve contentmedia da hangi sırayla yazıldıysa o şekilde başlıkların altında alt alta görmeliyiz.
+
