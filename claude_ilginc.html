@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Galerisi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Kategori Filtreler */
+        .filter-area {
+            background-color: #0a0a0a;
+            border-bottom: 1px solid #333333;
+            padding: 12px 24px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .category-filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #404040;
+            border-radius: 4px;
+            background-color: #1a1a1a;
+            color: #999999;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-filter-btn:hover {
+            background-color: #262626;
+            border-color: #505050;
+            color: #cccccc;
+        }
+
+        .category-filter-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Ana İçerik */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #000000;
+            padding: 24px;
+        }
+
+        .main-content h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #ffffff;
+        }
+
+        /* Kategori Grubu */
+        .category-group {
+            margin-bottom: 32px;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #0a0a0a;
+        }
+
+        .category-header {
+            width: 100%;
+            padding: 16px;
+            background-color: #1a1a1a;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+            color: #ffffff;
+        }
+
+        .category-header:hover {
+            background-color: #262626;
+        }
+
+        .category-header.expanded {
+            background-color: #2a2a2a;
+        }
+
+        .chevron {
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .category-header.expanded .chevron {
+            transform: rotate(180deg);
+        }
+
+        .category-items {
+            display: none;
+            background-color: #0a0a0a;
+            padding: 20px;
+        }
+
+        .category-items.show {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* Proje Kartı */
+        .project-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            aspect-ratio: 4/3;
+        }
+
+        .project-card:hover {
+            border-color: #505050;
+            background-color: #262626;
+            transform: translateY(-2px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 16px;
+            color: white;
+        }
+
+        .project-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .project-meta {
+            font-size: 11px;
+            color: #999999;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: fixed;
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 500;
+            max-width: 220px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .tooltip.show {
+            display: block;
+        }
+
+        .tooltip img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .tooltip-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .tooltip-meta {
+            font-size: 11px;
+            color: #999999;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            width: 92%;
+            max-width: 1500px;
+            max-height: 88vh;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #333333;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 32px;
+            border-bottom: 1px solid #333333;
+            background-color: #0f0f0f;
+            flex-shrink: 0;
+        }
+
+        .modal-header h2 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #666666;
+            transition: color 0.2s ease;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .modal-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .modal-gallery-section {
+            width: 100%;
+            height: 50%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            padding: 20px 24px;
+            gap: 16px;
+            background-color: #0a0a0a;
+            border-bottom: 1px solid #333333;
+            flex-shrink: 0;
+        }
+
+        .modal-gallery-item {
+            min-width: 320px;
+            height: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            flex-shrink: 0;
+            border: 1px solid #333333;
+        }
+
+        .modal-gallery-item img,
+        .modal-gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-info-section {
+            height: 50%;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .modal-info-left {
+            width: 50%;
+            padding: 24px;
+            overflow-y: auto;
+            border-right: 1px solid #333333;
+            background-color: #0f0f0f;
+        }
+
+        .modal-info-right {
+            width: 50%;
+            padding: 24px;
+            overflow-y: auto;
+            background-color: #0f0f0f;
+        }
+
+        .info-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .index-list {
+            list-style: none;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .index-list li {
+            color: #cccccc;
+        }
+
+        .index-list li strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .description-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b0b0b0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Kategori Filtreler -->
+        <div class="filter-area" id="filterArea"></div>
+
+        <!-- Ana İçerik -->
+        <div class="main-content" id="mainContent"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery-section" id="modalGallery"></div>
+                <div class="modal-info-section">
+                    <div class="modal-info-left">
+                        <div class="info-title">Project Information</div>
+                        <ul class="index-list" id="modalIndexList"></ul>
+                    </div>
+                    <div class="modal-info-right">
+                        <div class="info-title">Description</div>
+                        <div class="description-text" id="modalDescription"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        const portfolioData = [
+            { id: 1, name: 'Project Alpha', type: 'painting', collection: 'theater', year: 2023, medium: 'render', expression: 'dfw', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&h=400&fit=crop' },
+            { id: 2, name: 'Project Beta', type: 'painting', collection: 'gallery', year: 2023, medium: 'video', expression: 'vea', reality: 'irl', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=400&fit=crop' },
+            { id: 3, name: 'Project Gamma', type: 'image', collection: 'theater', year: 2023, medium: 'photographic', expression: 'decentralize', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1514306688772-aadfc877a541?w=600&h=400&fit=crop' },
+            { id: 4, name: 'Project Delta', type: 'image', collection: 'diigtal tops', year: 2023, medium: 'render', expression: 'religious robotics', reality: 'irl', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop' },
+            { id: 5, name: 'Project Epsilon', type: 'video', collection: 'theater', year: 2022, medium: 'video', expression: 'dfw', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1545037893-6a62f44563c7?w=600&h=400&fit=crop' },
+            { id: 6, name: 'Project Zeta', type: 'video', collection: 'gallery', year: 2022, medium: 'web ui', expression: 'vea', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1493514789560-586d24a35c1b?w=600&h=400&fit=crop' },
+            { id: 7, name: 'Project Eta', type: 'design', collection: 'diigtal tops', year: 2022, medium: 'graphic', expression: 'decentralize', reality: 'irl', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&h=400&fit=crop' },
+            { id: 8, name: 'Project Theta', type: 'design', collection: 'web app', year: 2022, medium: 'world building', expression: 'religious robotics', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop' },
+            { id: 9, name: 'Project Iota', type: 'architecture', collection: 'theater', year: 2021, medium: 'render', expression: 'vea', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1457842636035-98e5c92f9622?w=600&h=400&fit=crop' },
+            { id: 10, name: 'Project Kappa', type: 'architecture', collection: 'gallery', year: 2021, medium: 'photographic', expression: 'dfw', reality: 'irl', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop' },
+            { id: 11, name: 'Project Lambda', type: 'fashion', collection: 'diigtal tops', year: 2021, medium: 'avatar', expression: 'decentralize', reality: 'metaverse', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1556821552-5f63b235ce3f?w=600&h=400&fit=crop' },
+            { id: 12, name: 'Project Mu', type: 'fashion', collection: 'web app', year: 2021, medium: 'render', expression: 'religious robotics', reality: 'irl', description: 'Proje açıklaması burada yer alacak.', img: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=600&h=400&fit=crop' }
+        ];
+
+        const categories = {
+            type: ['painting', 'image', 'video', 'design', 'architecture', 'fashion'],
+            collection: ['theater', 'gallery', 'diigtal tops', 'web app'],
+            expression: ['dfw', 'vea', 'decentralize', 'religious robotics'],
+            year: ['2023', '2022', '2021'],
+            reality: ['metaverse', 'irl'],
+            medium: ['render', 'photographic', 'video', 'web ui', 'world building', 'avatar', 'graphic']
+        };
+
+        let activeCategory = null;
+
+        function renderFilters() {
+            const filterArea = document.getElementById('filterArea');
+            filterArea.innerHTML = '';
+
+            Object.keys(categories).forEach(categoryName => {
+                const btn = document.createElement('button');
+                btn.className = 'category-filter-btn';
+                btn.textContent = categoryName.toUpperCase();
+                btn.onclick = () => setActiveCategory(categoryName, btn);
+                filterArea.appendChild(btn);
+            });
+        }
+
+        function setActiveCategory(categoryName, btn) {
+            if (activeCategory === categoryName) {
+                activeCategory = null;
+                document.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
+            } else {
+                activeCategory = categoryName;
+                document.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            renderContent();
+        }
+
+        function renderContent() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = '';
+
+            if (!activeCategory) {
+                mainContent.innerHTML = '<h2>Tüm Projeler</h2>';
+                return;
+            }
+
+            const categoryValues = categories[activeCategory];
+            const grouped = {};
+
+            categoryValues.forEach(value => {
+                grouped[value] = portfolioData.filter(item => item[activeCategory] === value);
+            });
+
+            categoryValues.forEach(categoryValue => {
+                const projects = grouped[categoryValue];
+                
+                const group = document.createElement('div');
+                group.className = 'category-group';
+
+                const header = document.createElement('button');
+                header.className = 'category-header';
+                header.innerHTML = `${categoryValue} <span class="chevron">▼</span>`;
+
+                const itemsDiv = document.createElement('div');
+                itemsDiv.className = 'category-items';
+
+                projects.slice(0, 2).forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    card.innerHTML = `
+                        <img src="${project.img}" alt="${project.name}">
+                        <div class="project-info">
+                            <div class="project-name">${project.name}</div>
+                            <div class="project-meta">${project.year} • ${project.type}</div>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => openModal(project.id));
+                    card.addEventListener('mouseenter', (e) => showTooltip(project, e));
+                    card.addEventListener('mouseleave', hideTooltip);
+                    itemsDiv.appendChild(card);
+                });
+
+                header.addEventListener('click', () => {
+                    header.classList.toggle('expanded');
+                    itemsDiv.classList.toggle('show');
+                });
+
+                group.appendChild(header);
+                group.appendChild(itemsDiv);
+                mainContent.appendChild(group);
+            });
+        }
+
+        function showTooltip(item, e) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = `
+                <img src="${item.img}" alt="${item.name}">
+                <div class="tooltip-title">${item.name}</div>
+                <div class="tooltip-meta">${item.type} • ${item.year}</div>
+            `;
+
+            const rect = e.currentTarget.getBoundingClientRect();
+            tooltip.style.left = (rect.left + rect.width / 2 - 110) + 'px';
+            tooltip.style.top = (rect.top - 160) + 'px';
+            tooltip.classList.add('show');
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('show');
+        }
+
+        function openModal(projectId) {
+            const project = portfolioData.find(p => p.id === projectId);
+            if (!project) return;
+
+            document.getElementById('modalTitle').textContent = project.name;
+
+            const gallerySection = document.getElementById('modalGallery');
+            gallerySection.innerHTML = `<div class="modal-gallery-item"><img src="${project.img}" alt="${project.name}"></div>`;
+
+            const indexList = document.getElementById('modalIndexList');
+            indexList.innerHTML = `
+                <li><strong>Name:</strong> ${project.name}</li>
+                <li><strong>Type:</strong> ${project.type}</li>
+                <li><strong>Year:</strong> ${project.year}</li>
+                <li><strong>Collection:</strong> ${project.collection}</li>
+                <li><strong>Medium:</strong> ${project.medium}</li>
+                <li><strong>Expression:</strong> ${project.expression}</li>
+                <li><strong>Reality:</strong> ${project.reality}</li>
+            `;
+
+            document.getElementById('modalDescription').textContent = project.description;
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal')) closeModal();
+        });
+
+        renderFilters();
+    </script>
+</body>
+</html>
