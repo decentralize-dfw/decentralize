@@ -10,28 +10,25 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 
     <style>
-        /* --- TEMA VE SCROLL AYARLARI (V1 KODUNDAN ALINDI) --- */
+        /* --- TEMA AYARLARI --- */
         :root {
             --ui-color: #002fa7; 
             --bg-color: pink;
             --modal-bg: #d6a1aa;
-            --card-bg: black; //#fdb5c1; 
+            --card-bg: transparent; 
         }
 
-        /* Hem html hem body için scrollbar'ı gizle (Firefox/IE) */
         html, body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--ui-color);
             margin: 0;
-            overflow: hidden; /* 3D sahne taşmasın */
+            overflow: hidden;
             touch-action: manipulation;
-            /* V1 Scrollbar gizleme */
             scrollbar-width: none; 
             -ms-overflow-style: none; 
         }
 
-        /* Webkit (Chrome, Safari, Edge) için TÜM scrollbarları varsayılan olarak gizle */
         *::-webkit-scrollbar {
             display: none;
             width: 0;
@@ -39,87 +36,176 @@
             background: transparent;
         }
 
-        /* --- MODAL SCROLLBAR İSTİSNALARI (V1 BİREBİR) --- */
-        
-        /* Modal Stilleri */
-        #modal-container {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-            position: fixed; inset: 0; z-index: 99999; /* Yüksek Z-index */
-            display: flex; align-items: center; justify-content: center;
-            padding: 3%; /* V1 p-4 md:p-12 benzeri oran */
+        /* --- UI CONTAINER (V1 MENÜSÜYLE BİREBİR) --- */
+        #ui-container {
+            position: absolute; 
+            top: 0; left: 0; width: 100%; 
+            z-index: 100;
+            /* V1'deki padding p-8 (32px) */
+           padding: 6rem 2rem 2rem 2rem;
             pointer-events: none;
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; /* SOLA YASLI */
+            justify-content: flex-start;
+            background-color: transparent; //var(--bg-color); 
+            /* İNCE ÇİZGİ (Kalın değil) */
+            //border-bottom: 1px solid rgba(0, 47, 167, 0.3); 
         }
-        #modal-container.open { 
-            opacity: 1; 
-            visibility: visible; 
-            pointer-events: auto; 
+
+        @media (max-width: 768px) {
+            #ui-container { padding: 1rem; }
         }
-        
-        #modal-backdrop {
-            position: absolute; inset: 0;
-            background-color: rgba(0, 0, 0, 0.8); /* V1 bg-black/80 */
-            backdrop-filter: blur(4px); /* V1 backdrop-blur-sm */
-            z-index: -1;
+
+        .menu-bar {
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 0.75rem; /* gap-3 biraz daha ferah */
+            justify-content: flex-start; 
+            align-items: center; 
+            pointer-events: auto;
+            width: 100%;
+        }
+
+        .menu-group-separator {
+            width: 1px; height: 20px; background-color: var(--ui-color);
+            opacity: 0.3; margin: 0 8px;
+        }
+
+        /* V1 Buton Stili */
+        .nav-btn {
+            background: transparent; 
+            border: 1px solid transparent; 
+            color: var(--ui-color); 
+            padding: 4px 12px;
+            text-transform: capitalize; 
+            font-size: 1rem; 
+            font-weight: 400;
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            border-radius: 0.375rem; 
+            opacity: 0.7;
+        }
+        .nav-btn:hover { 
+            opacity: 1;
+            border-color: var(--ui-color); 
+        }
+        .nav-btn.active { 
+            background-color: transparent;
+            color: var(--ui-color);
+            border-color: var(--ui-color); 
+            opacity: 1;
+            font-weight: 500;
+        }
+
+        /* --- AUTO ROTATE SLIDER --- */
+        #slider-container {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            pointer-events: auto;
+        }
+        #slider-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            opacity: 0.7;
+            color: var(--ui-color);
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 4px;
+            background: rgba(0, 47, 167, 0.3);
+            border-radius: 2px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--ui-color);
             cursor: pointer;
         }
 
-        #modal-content {
-            /* V1 Yapısı */
-            position: relative;
-            z-index: 50;
-            width: 100%; 
-            height: 100%;
-            border: 1px solid var(--ui-color);
-            border-radius: 8px; /* rounded-lg */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-xl */
-            display: flex; 
-            flex-direction: column;
-            overflow: hidden;
-            background-color: var(--modal-bg);
-            color: var(--ui-color);
+        /* --- 3D ELEMENTS --- */
+        .element-card {
+            width: 160px; height: 160px; background-color: var(--card-bg);
+            border: none; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            pointer-events: auto; user-select: none;
+            transition: transform 0.2s; transform-style: preserve-3d;
+            backface-visibility: visible; -webkit-backface-visibility: visible;
         }
-
-        /* Modal içi Yatay Medya Scroller - GÖRÜNÜR YAP */
-        .media-scroller {
-            scrollbar-width: thin; 
-            scrollbar-color: var(--ui-color) transparent;
-        }
-        .media-scroller::-webkit-scrollbar { 
-            display: block; 
-            height: 6px; 
-        }
-        .media-scroller::-webkit-scrollbar-track { background: transparent; }
-        .media-scroller::-webkit-scrollbar-thumb { 
-            background: var(--ui-color); 
-            border-radius: 3px; 
-            opacity: 0.5; 
-            border: none; 
-        }
+        .element-card:hover { transform: scale(1.1); z-index: 1000; }
         
-        /* Modal içi Dikey Metin Scroller - GÖRÜNÜR YAP */
-        #modal-left-col, #modal-right-col {
-            scrollbar-width: thin; 
-            scrollbar-color: var(--ui-color) transparent;
-        }
-        #modal-left-col::-webkit-scrollbar,
-        #modal-right-col::-webkit-scrollbar { 
-            display: block; 
-            width: 4px; 
-        }
-        #modal-left-col::-webkit-scrollbar-thumb,
-        #modal-right-col::-webkit-scrollbar-thumb { 
-            background: var(--ui-color); 
-            border-radius: 2px; 
-            border: none; 
+        .card-image {
+            width: 100%; height: 100%; object-fit: contain; pointer-events: none;
+            filter: drop-shadow(0 10px 15px rgba(0,47,167,0.25));
         }
 
-        /* --- GLOBAL STYLES V1 --- */
+        /* FULL OPACITY LABELS */
+        .group-label {
+            font-size: 100px; /* Biraz daha okunaklı */
+            font-weight: 900; color: var(--ui-color);
+            text-transform: uppercase; pointer-events: none; user-select: none;
+            white-space: nowrap; font-family: 'Arial Black', sans-serif;
+            text-align: center; opacity: 0; transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .group-label.visible { 
+            opacity: 1 !important; /* FULL OPACITY */
+            transform: scale(1); 
+        }
+
+        /* --- MODAL --- */
+        #modal-container {
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+            position: fixed; inset: 0; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            padding: 3%; pointer-events: none;
+        }
+        #modal-container.open { opacity: 1; visibility: visible; pointer-events: auto; }
+        
+        #modal-backdrop {
+            position: absolute; inset: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: -1; cursor: pointer;
+        }
+
+        #modal-content {
+            position: relative; z-index: 50; width: 100%; height: 100%;
+            border: 1px solid var(--ui-color); border-radius: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex; flex-direction: column; overflow: hidden;
+            background-color: var(--modal-bg); color: var(--ui-color);
+        }
+
+        .media-scroller {
+            scrollbar-width: thin; scrollbar-color: var(--ui-color) transparent;
+        }
+        .media-scroller::-webkit-scrollbar { display: block; height: 6px; }
+        .media-scroller::-webkit-scrollbar-track { background: transparent; }
+        .media-scroller::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 3px; opacity: 0.5; border: none; }
+        
+        #modal-left-col, #modal-right-col {
+            scrollbar-width: thin; scrollbar-color: var(--ui-color) transparent;
+        }
+        #modal-left-col::-webkit-scrollbar, #modal-right-col::-webkit-scrollbar { display: block; width: 4px; }
+        #modal-left-col::-webkit-scrollbar-thumb, #modal-right-col::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 2px; border: none; }
+
         .ui-text { color: var(--ui-color); }
         .ui-border { border-color: var(--ui-color); }
 
-        /* --- 3D SPECIFIC --- */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color); z-index: 9999;
@@ -131,95 +217,6 @@
             text-transform: uppercase; color: var(--ui-color); font-weight: bold;
         }
 
-        /* --- UI CONTAINER (V1 SOLA YASLI MENÜ) --- */
-        #ui-container {
-            position: absolute; 
-            top: 0; left: 0; width: 100%; 
-            z-index: 100;
-            /* V1'deki padding: p-4 md:p-8 */
-            padding: 2rem; /* 32px approx p-8 */
-            pointer-events: none;
-            display: flex; 
-            flex-direction: column; 
-            align-items: flex-start; /* SOLA YASLA */
-            justify-content: flex-start;
-            background-color: var(--bg-color); 
-            /* V1'deki border-b-2 stili */
-            border-bottom: 2px solid var(--ui-color); 
-        }
-
-        /* Mobilde paddingi biraz düşürelim */
-        @media (max-width: 768px) {
-            #ui-container { padding: 1rem; }
-        }
-
-        .menu-bar {
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 0.5rem; /* gap-2 (8px) */
-            justify-content: flex-start; /* SOLA YASLA */
-            align-items: center; 
-            pointer-events: auto;
-            width: 100%;
-        }
-
-        /* Ayırıcıyı kaldırdım veya minimal yaptım çünkü V1 resminde düz akıyor */
-        .menu-group-separator {
-            width: 1px; height: 20px; background-color: var(--ui-color);
-            opacity: 0.4; margin: 0 4px;
-        }
-
-        /* V1 Buton Stili */
-        .nav-btn {
-            background: transparent; 
-            border: 1px solid transparent; /* Varsayılan bordersız */
-            color: var(--ui-color); 
-            /* px-3 py-1 -> 12px 4px approx */
-            padding: 4px 12px;
-            text-transform: capitalize; 
-            font-size: 1rem; 
-            font-weight: 400;
-            cursor: pointer; 
-            transition: all 0.2s ease; 
-            border-radius: 0.375rem; /* rounded-md (6px) */
-            opacity: 0.7;
-        }
-        .nav-btn:hover { 
-            opacity: 1;
-            border-color: var(--ui-color); /* Hoverda border */
-        }
-        .nav-btn.active { 
-            background-color: transparent;
-            color: var(--ui-color);
-            border-color: var(--ui-color); /* Aktifken Border VAR */
-            opacity: 1;
-            font-weight: normal;
-        }
-
-        /* Kartlar */
-        .element-card {
-            width: 160px; height: 160px; background-color: var(--card-bg);
-            border: none; cursor: pointer; display: flex;
-            align-items: center; justify-content: center;
-            pointer-events: auto; user-select: none;
-            transition: transform 0.2s; transform-style: preserve-3d;
-            backface-visibility: visible; -webkit-backface-visibility: visible;
-        }
-        .element-card:hover { transform: scale(1.1); z-index: 1000; }
-        .card-image {
-            width: 100%; height: 100%; object-fit: contain; pointer-events: none;
-            filter: drop-shadow(0 10px 15px rgba(0,47,167,0.25));
-        }
-
-        .group-label {
-            font-size: 120px; font-weight: 900; color: var(--ui-color);
-            text-transform: uppercase; pointer-events: none; user-select: none;
-            white-space: nowrap; font-family: 'Arial Black', sans-serif;
-            text-align: center; opacity: 0; transform: scale(0.8);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-        .group-label.visible { opacity: 0.15; transform: scale(1); }
-
         #container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: auto; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
@@ -230,17 +227,17 @@
         <div class="loader-text">INITIALIZING</div>
     </div>
 
-    <!-- UI (V1 SOLA YASLI YAPISI) -->
+    <!-- UI MENU (SOLA YASLI, V1 BİREBİR) -->
     <div id="ui-container">
         <div class="menu-bar">
-            <!-- View -->
+            <!-- View Modes -->
             <button class="nav-btn active" data-type="view" data-val="random">Chaos</button>
             <button class="nav-btn" data-type="view" data-val="grid">Grid</button>
             <button class="nav-btn" data-type="view" data-val="sphere">Sphere</button>
 
             <div class="menu-group-separator"></div>
 
-            <!-- Filters -->
+            <!-- Filters (Search YOK) -->
             <button class="nav-btn active" data-type="filter" data-val="all">All</button>
             <button class="nav-btn" data-type="filter" data-val="year">Year</button>
             <button class="nav-btn" data-type="filter" data-val="type">Type</button>
@@ -250,10 +247,16 @@
         </div>
     </div>
 
+    <!-- AUTO ROTATE SLIDER -->
+    <div id="slider-container">
+        <div id="slider-label">Auto Rotate</div>
+        <input type="range" id="rotate-slider" min="-2" max="2" step="0.1" value="0">
+    </div>
+
     <!-- 3D Scene -->
     <div id="container"></div>
 
-    <!-- MODAL (LİSTE KODU V1 BİREBİR) -->
+    <!-- MODAL -->
     <div id="modal-container" tabindex="-1">
         <div id="modal-backdrop"></div>
         
@@ -262,12 +265,8 @@
                 Close
             </button>
             
-            <!-- Medya Scroller (Yan Yana Sıralama) -->
-            <div id="modal-media-scroller" class="media-scroller w-full h-[60%] flex-shrink-0 overflow-x-auto overflow-y-hidden whitespace-nowrap border-b ui-border bg-transparent flex items-center p-4 gap-4">
-                <!-- Medya JS ile buraya dolacak -->
-            </div>
+            <div id="modal-media-scroller" class="media-scroller w-full h-[60%] flex-shrink-0 overflow-x-auto overflow-y-hidden whitespace-nowrap border-b ui-border bg-transparent flex items-center p-4 gap-4"></div>
             
-            <!-- Alt Kısım: Sol Metadata, Sağ Açıklama -->
             <div class="w-full h-[40%] grid grid-cols-1 md:grid-cols-2 gap-px ui-border" style="border-color: var(--ui-color);">
                 <div id="modal-left-col" class="p-[5%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
                 <div id="modal-right-col" class="p-[5%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
@@ -292,8 +291,7 @@
 
         const categoryPriorityList = ['type', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
-        // --- DATA ---
-              const projects = [
+             const projects = [
   {
     id: "fig-1",
     name: "penguin is not a friend, only a sinner",
@@ -2278,11 +2276,14 @@
             controls.dampingFactor = 0.05;
             controls.minZoom = 0.5;
             controls.maxZoom = 2;
+            // Default auto rotate speed, will be controlled by slider
+            controls.autoRotateSpeed = 0; 
 
             buildScene();
 
             window.addEventListener('resize', onWindowResize);
             setupMenuButtons();
+            setupSlider();
 
             setTimeout(() => {
                 const l = document.getElementById('loader');
@@ -2308,7 +2309,6 @@
                 img.draggable = false;
                 el.appendChild(img);
 
-                // --- HOVER LOCK (KESİN TIKLAMA ÇÖZÜMÜ) ---
                 el.addEventListener('mouseenter', () => { controls.enabled = false; });
                 el.addEventListener('touchstart', () => { controls.enabled = false; }, {passive: true});
                 el.addEventListener('mouseleave', () => { controls.enabled = true; });
@@ -2350,6 +2350,19 @@
                     state[type] = val;
                     updateLayout();
                 });
+            });
+        }
+
+        function setupSlider() {
+            const slider = document.getElementById('rotate-slider');
+            slider.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                if (val === 0) {
+                    controls.autoRotate = false;
+                } else {
+                    controls.autoRotate = true;
+                    controls.autoRotateSpeed = val * 2.0; // Multiplier for better speed range
+                }
             });
         }
 
@@ -2396,17 +2409,24 @@
             }
 
             const groupKeys = Object.keys(groups).sort();
-            const clusterRadius = 2200; 
-
+            
             groupKeys.forEach((key, gIndex) => {
                 const indexes = groups[key];
                 let cx = 0, cy = 0, cz = 0;
                 
+                // Dynamic Radius Calculation requested by user
+                const dynamicRadius = Math.sqrt(indexes.length) * 45 + 200;
+
+                // Cluster Positioning
                 if (state.filter !== 'all') {
+                    const clusterSpacing = 2200; // Distance between clusters
                     const angle = (gIndex / groupKeys.length) * Math.PI * 2;
-                    cx = Math.cos(angle) * clusterRadius;
-                    cz = Math.sin(angle) * clusterRadius;
-                    createLabel(key, cx, 600, cz); 
+                    cx = Math.cos(angle) * clusterSpacing;
+                    cz = Math.sin(angle) * clusterSpacing;
+                    
+                    // Label Placement: Top of sphere + offset
+                    // y = dynamicRadius + 100
+                    createLabel(key, cx, dynamicRadius + 100, cz); 
                 }
 
                 if (state.view === 'grid') {
@@ -2421,10 +2441,6 @@
                     });
                 } 
                 else if (state.view === 'sphere') {
-                    // DINAMİK SPHERE BOYUTU HESAPLAMA
-                    // radius, içerik sayısının kareköküyle orantılı artar
-                    const dynamicRadius = Math.sqrt(indexes.length) * 45+ 200 ; //
-
                     const vector = new THREE.Vector3();
                     indexes.forEach((objIndex, i) => {
                         const dummy = new THREE.Object3D();
