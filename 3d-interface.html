@@ -6,8 +6,8 @@
     <title>Portfolio 3D View</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Model Viewer -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <!-- Meshopt Decoder (Global) -->
+    <script src="https://unpkg.com/meshoptimizer@0.19.0/meshopt_decoder.js"></script>
 
     <style>
         /* --- TEMA AYARLARI --- */
@@ -15,7 +15,7 @@
             --ui-color: #002fa7; 
             --bg-color: pink;
             --modal-bg: #d6a1aa;
-            --card-bg: transparent; 
+            --card-bg: yellow; //transparent; 
         }
 
         html, body {
@@ -36,21 +36,19 @@
             background: transparent;
         }
 
-        /* --- UI CONTAINER (V1 MENÜSÜYLE BİREBİR) --- */
+        /* --- UI CONTAINER --- */
         #ui-container {
             position: absolute; 
             top: 0; left: 0; width: 100%; 
             z-index: 100;
-            /* V1'deki padding p-8 (32px) */
-           padding: 6rem 2rem 2rem 2rem;
+            padding: 2rem; 
             pointer-events: none;
             display: flex; 
             flex-direction: column; 
-            align-items: flex-start; /* SOLA YASLI */
+            align-items: flex-start; 
             justify-content: flex-start;
-            background-color: transparent; //var(--bg-color); 
-            /* İNCE ÇİZGİ (Kalın değil) */
-            //border-bottom: 1px solid rgba(0, 47, 167, 0.3); 
+            background-color: var(--bg-color); 
+            border-bottom: 1px solid rgba(0, 47, 167, 0.3); 
         }
 
         @media (max-width: 768px) {
@@ -60,7 +58,7 @@
         .menu-bar {
             display: flex; 
             flex-wrap: wrap; 
-            gap: 0.75rem; /* gap-3 biraz daha ferah */
+            gap: 0.75rem; 
             justify-content: flex-start; 
             align-items: center; 
             pointer-events: auto;
@@ -151,9 +149,8 @@
             filter: drop-shadow(0 10px 15px rgba(0,47,167,0.25));
         }
 
-        /* FULL OPACITY LABELS */
         .group-label {
-            font-size: 100px; /* Biraz daha okunaklı */
+            font-size: 100px; 
             font-weight: 900; color: var(--ui-color);
             text-transform: uppercase; pointer-events: none; user-select: none;
             white-space: nowrap; font-family: 'Arial Black', sans-serif;
@@ -161,7 +158,7 @@
             transition: opacity 1s ease, transform 1s ease;
         }
         .group-label.visible { 
-            opacity: 1 !important; /* FULL OPACITY */
+            opacity: 1 !important; 
             transform: scale(1); 
         }
 
@@ -190,8 +187,10 @@
             background-color: var(--modal-bg); color: var(--ui-color);
         }
 
+        /* SCROLLBAR */
         .media-scroller {
             scrollbar-width: thin; scrollbar-color: var(--ui-color) transparent;
+            overflow-x: auto; overflow-y: hidden;
         }
         .media-scroller::-webkit-scrollbar { display: block; height: 6px; }
         .media-scroller::-webkit-scrollbar-track { background: transparent; }
@@ -205,6 +204,49 @@
 
         .ui-text { color: var(--ui-color); }
         .ui-border { border-color: var(--ui-color); }
+
+        /* HTML SCALE WRAPPER */
+        .html-scale-wrapper {
+            position: relative;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            min-width: 720px; 
+            margin-right: 1rem;
+            border: 1px solid #eee;
+        }
+        
+        .html-scale-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 200%; 
+            height: 200%; 
+            border: none;
+            transform: scale(0.5); 
+            transform-origin: 0 0;
+        }
+
+        /* GLB CANVAS WRAPPER */
+        .glb-wrapper {
+            height: 100%;
+            min-width: 300px;
+            margin-right: 1rem;
+            position: relative;
+            background: transparent; 
+            border-radius: 4px;
+        }
+        
+        /* Yükleniyor yazısı için stil */
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(255,255,255,0.5); z-index: 10; pointer-events: none;
+        }
+        .loading-text { font-size: 0.8rem; font-weight: bold; color: #002fa7; margin-bottom: 5px; }
+        .loading-progress { width: 60%; height: 4px; background: #ddd; border-radius: 2px; overflow: hidden; }
+        .progress-bar { height: 100%; background: #002fa7; width: 0%; transition: width 0.2s; }
 
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -227,17 +269,14 @@
         <div class="loader-text">INITIALIZING</div>
     </div>
 
-    <!-- UI MENU (SOLA YASLI, V1 BİREBİR) -->
     <div id="ui-container">
         <div class="menu-bar">
-            <!-- View Modes -->
             <button class="nav-btn active" data-type="view" data-val="random">Chaos</button>
             <button class="nav-btn" data-type="view" data-val="grid">Grid</button>
             <button class="nav-btn" data-type="view" data-val="sphere">Sphere</button>
 
             <div class="menu-group-separator"></div>
 
-            <!-- Filters (Search YOK) -->
             <button class="nav-btn active" data-type="filter" data-val="all">All</button>
             <button class="nav-btn" data-type="filter" data-val="year">Year</button>
             <button class="nav-btn" data-type="filter" data-val="type">Type</button>
@@ -247,16 +286,13 @@
         </div>
     </div>
 
-    <!-- AUTO ROTATE SLIDER -->
     <div id="slider-container">
         <div id="slider-label">Auto Rotate</div>
         <input type="range" id="rotate-slider" min="-2" max="2" step="0.1" value="0">
     </div>
 
-    <!-- 3D Scene -->
     <div id="container"></div>
 
-    <!-- MODAL -->
     <div id="modal-container" tabindex="-1">
         <div id="modal-backdrop"></div>
         
@@ -285,18 +321,36 @@
 
     <script type="module">
         import * as THREE from 'three';
-        import TWEEN from 'three/addons/libs/tween.module.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+        import TWEEN from 'three/addons/libs/tween.module.js';
+        
+        // GLB Yükleyiciler
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
         const categoryPriorityList = ['type', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
-             const projects = [
+        const projects = [
+            { 
+                id: "demo-1", 
+                name: "MEDIA TEST DEMO", 
+                description: "This project demonstrates 3D Model (GLB), Video (MP4) and HTML Embed (YouTube) support.", 
+                link: null, 
+                media: [
+                    { "type": "model", "src": "https://raw.githubusercontent.com/decentralize-dfw/c2w2-glb/main/seize-centerobject-opt-v1.glb" },
+                    { "type": "html", "src": "https://raw.githubusercontent.com/decentralize-dfw/finder/refs/heads/main/decentralize.html" }, 
+                    { "type": "video", "src": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+                ], 
+                categories: { year: 2024, type: "demo", subtype: "mixed", collection: "test", medium: "digital", expression: "code", reality: "virtual", contents: "mixed" } 
+            },
+            
   {
     id: "fig-1",
     name: "penguin is not a friend, only a sinner",
     description: "acrylic on 120x120 canvas, 2023",
-    link: "https://www.digitalforgerywork.shop/",
+    link: null,
     media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/a161.png" }],
     categories: { year: 2023, type: "painting", subtype: "figurative", collection: "irl", medium: "canvas", expression: "decentralize*", reality: "irl", contents: "drawing" }
   },
@@ -2229,10 +2283,6 @@
     categories: { year: 2018, type: "photography", subtype: "spleen", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
   }
 
-  // end of paintings resim sonu
-  
-
-           
         ];
 
         // --- STATE ---
@@ -2303,8 +2353,35 @@
                 
                 const img = document.createElement('img');
                 img.className = 'card-image';
-                const firstImg = p.media && p.media.find(m => m.type === 'image');
-                img.src = firstImg ? firstImg.src : 'https://placehold.co/300x300/000000/FFF?text=NA';
+                
+                // --- THUMBNAIL LOGIC ---
+                // 1. Try to find an image type media
+                const imgMedia = p.media && p.media.find(m => m.type === 'image');
+                let thumbUrl = 'https://placehold.co/300x300/000000/FFF?text=MEDIA';
+
+                if (imgMedia) {
+                    // If image exists, construct thumbnail URL from filename
+                    const filename = imgMedia.src.split('/').pop();
+                    thumbUrl = `https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/${filename}`;
+                } else {
+                    // If no image (e.g. demo project), check first media
+                    const firstMedia = p.media && p.media[0];
+                    if (firstMedia && firstMedia.src) {
+                         // Optional: You could try to fetch a thumbnail even for GLB/Video if they follow same naming
+                         // But for now, let's keep a placeholder or try the same logic
+                         // const filename = firstMedia.src.split('/').pop();
+                         // thumbUrl = `.../${filename}`;
+                         // For safety, let's just keep placeholder for non-image projects unless specified
+                    }
+                }
+
+                img.src = thumbUrl;
+                
+                // Fallback: If thumbnail fails, load original high-res image
+                img.onerror = () => {
+                    if (imgMedia) img.src = imgMedia.src;
+                };
+
                 img.loading = "lazy";
                 img.draggable = false;
                 el.appendChild(img);
@@ -2361,7 +2438,7 @@
                     controls.autoRotate = false;
                 } else {
                     controls.autoRotate = true;
-                    controls.autoRotateSpeed = val * 2.0; // Multiplier for better speed range
+                    controls.autoRotateSpeed = val * 2.0; 
                 }
             });
         }
@@ -2414,18 +2491,14 @@
                 const indexes = groups[key];
                 let cx = 0, cy = 0, cz = 0;
                 
-                // Dynamic Radius Calculation requested by user
                 const dynamicRadius = Math.sqrt(indexes.length) * 45 + 200;
 
-                // Cluster Positioning
                 if (state.filter !== 'all') {
-                    const clusterSpacing = 2200; // Distance between clusters
+                    const clusterSpacing = 2200; 
                     const angle = (gIndex / groupKeys.length) * Math.PI * 2;
                     cx = Math.cos(angle) * clusterSpacing;
                     cz = Math.sin(angle) * clusterSpacing;
                     
-                    // Label Placement: Top of sphere + offset
-                    // y = dynamicRadius + 100
                     createLabel(key, cx, dynamicRadius + 100, cz); 
                 }
 
@@ -2500,7 +2573,106 @@
             renderer.render(scene, camera);
         }
 
-        // --- MODAL FUNCTIONS (V1 LOGIC) ---
+        // --- 3D VIEWER HELPER FUNCTION ---
+        function initThreeJSViewer(container, modelUrl) {
+            // Setup Scene
+            const scene = new THREE.Scene();
+            
+            // Camera
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 3);
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            container.appendChild(renderer.domElement);
+
+            // Environment (HDRI like)
+            // Using PMREMGenerator to load environment from a texture
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+
+            // Using RGBELoader to load HDR environment
+            new RGBELoader()
+                .setDataType(THREE.UnsignedByteType)
+                .load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/equirectangular/venice_sunset_1k.hdr', function (texture) {
+                    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+                    scene.environment = envMap;
+                    texture.dispose();
+                    pmremGenerator.dispose();
+                });
+
+            // Additional Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            dirLight.position.set(5, 10, 7.5);
+            scene.add(dirLight);
+
+            // Controls
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.minDistance = 0.5;
+            controls.maxDistance = 10;
+
+            // Load Model
+            const loader = new GLTFLoader();
+            
+            // DRACO Support
+            const dracoLoader = new DRACOLoader();
+            dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+            loader.setDRACOLoader(dracoLoader);
+
+            // MESHOPT Support (THE FIX)
+            // We assume MeshoptDecoder is globally available via the script tag in head
+            loader.setMeshoptDecoder(MeshoptDecoder);
+
+            loader.load(modelUrl, (gltf) => {
+                const model = gltf.scene;
+                
+                // Auto-center
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                // Scale to fit
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 2 / maxDim;
+                model.scale.setScalar(scale);
+
+                // Center
+                model.position.sub(center.multiplyScalar(scale));
+                
+                scene.add(model);
+                
+                // Play animations if any
+                 if (gltf.animations && gltf.animations.length > 0) {
+                    const mixer = new THREE.AnimationMixer(model);
+                    gltf.animations.forEach(clip => {
+                        mixer.clipAction(clip).play();
+                    });
+                    // Add mixer to animation loop if needed
+                    // For simplicity, we skip complex animation loop integration here as it requires clock passing
+                 }
+
+            }, undefined, (error) => {
+                console.error('An error happened loading the model:', error);
+                container.innerHTML = `<p class="text-red-500 p-4">Error loading 3D model.</p>`;
+            });
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // --- MODAL FUNCTIONS ---
         const modalContainer = document.getElementById('modal-container');
         const modalBackdrop = document.getElementById('modal-backdrop');
         const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -2508,10 +2680,16 @@
         const modalLeftCol = document.getElementById('modal-left-col');
         const modalRightCol = document.getElementById('modal-right-col');
 
+        modalMediaScroller.addEventListener('wheel', (evt) => {
+            if (evt.target === modalMediaScroller) {
+                evt.preventDefault();
+                modalMediaScroller.scrollLeft += evt.deltaY;
+            }
+        });
+
         function openModal(project) {
             modalMediaScroller.innerHTML = '';
             
-            // ITERATE ALL MEDIA (V1 LOGIC)
             if (project.media) {
                 project.media.forEach(media => {
                     let mediaEl;
@@ -2525,42 +2703,51 @@
                         mediaEl.controls = true;
                         mediaEl.className = "inline-block h-full object-contain mr-4";
                     } else if (media.type === 'model') {
-                        mediaEl = document.createElement('model-viewer');
-                        mediaEl.src = media.src;
-                        mediaEl.className = "inline-block h-full w-auto mr-4";
-                        mediaEl.setAttribute('ar', '');
-                        mediaEl.setAttribute('camera-controls', '');
-                        mediaEl.setAttribute('shadow-intensity', '1');
+                        // Use custom div container for Three.js viewer
+                        mediaEl = document.createElement('div');
+                        mediaEl.className = "glb-wrapper inline-block h-full min-w-[300px] w-auto mr-4";
+                        
+                        // Convert raw github link if needed
+                        let modelUrl = media.src;
+                        if (modelUrl.includes('raw.githubusercontent.com')) {
+                             modelUrl = modelUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh').replace('/main/', '@main/');
+                        }
+                        
+                        // Initialize viewer after append (needs dimensions)
+                        setTimeout(() => initThreeJSViewer(mediaEl, modelUrl), 0);
+
+                    } else if (media.type === 'html') {
+                        mediaEl = document.createElement('iframe');
+                        let url = media.src;
+                        if (url.includes('raw.githubusercontent.com') && url.endsWith('.html')) {
+                            url = url.replace('raw.githubusercontent.com', 'raw.githack.com').replace('/refs/heads/', '/'); 
+                        }
+                        const wrapper = document.createElement('div');
+                        wrapper.className = "html-scale-wrapper inline-block mr-4";
+                        mediaEl.src = url;
+                        mediaEl.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                        mediaEl.allowFullscreen = true;
+                        wrapper.appendChild(mediaEl);
+                        modalMediaScroller.appendChild(wrapper);
+                        return;
                     }
                     if (mediaEl) modalMediaScroller.appendChild(mediaEl);
                 });
             }
 
-            const allMetadata = {
-                'Project': project.name,
-                ...project.categories,
-            };
-            
-            if (project.link) {
-                allMetadata['Link'] = `<a href="${project.link}" target="_blank" class="underline ui-text">${project.link}</a>`;
-            }
+            const allMetadata = { 'Project': project.name, ...project.categories };
+            if (project.link) allMetadata['Link'] = `<a href="${project.link}" target="_blank" class="underline ui-text">${project.link}</a>`;
 
             let leftHtml = '<div class="space-y-1 text-base leading-tight ui-text">';
             leftHtml += `<p class="flex"><strong class="font-normal w-32 flex-shrink-0 capitalize">Project:</strong> <span>${allMetadata['Project']}</span></p>`;
             categoryPriorityList.forEach(key => {
-                if (allMetadata[key]) {
-                    leftHtml += `<p class="flex"><strong class="font-normal w-32 flex-shrink-0 capitalize">${key}:</strong> <span>${allMetadata[key]}</span></p>`;
-                }
+                if (allMetadata[key]) leftHtml += `<p class="flex"><strong class="font-normal w-32 flex-shrink-0 capitalize">${key}:</strong> <span>${allMetadata[key]}</span></p>`;
             });
-            
-            if (allMetadata['Link']) {
-                leftHtml += `<p class="flex"><strong class="font-normal w-32 flex-shrink-0 capitalize">Mint Link:</strong> <span>${allMetadata['Link']}</span></p>`;
-            }
+            if (allMetadata['Link']) leftHtml += `<p class="flex"><strong class="font-normal w-32 flex-shrink-0 capitalize">Link:</strong> <span>${allMetadata['Link']}</span></p>`;
             leftHtml += '</div>';
             
             modalLeftCol.innerHTML = leftHtml;
             modalRightCol.innerHTML = `<p class="text-lg whitespace-pre-line leading-relaxed ui-text">${project.description || ''}</p>`;
-            
             modalContainer.classList.add('open');
         }
 
