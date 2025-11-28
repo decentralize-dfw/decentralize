@@ -1,4 +1,4 @@
- const projects = [
+         const projects = [
             { 
                 id: "demo-1", 
                 name: "MEDIA TEST DEMO", 
@@ -1946,5 +1946,806 @@
     link: null,
     media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/voices.jpg" }],
     categories: { year: 2018, type: "photography", subtype: "spleen", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
-  }
+  },
+  // mass and volume photogpraphy
+  {
+  id: "mass-v-1",
+  name: "10h05am",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/10h05am.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-2",
+  name: "aldorossi modena",
+  description: "modena, 2019",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/aldorossi-modena.jpg" }],
+  categories: { year: 2019, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-3",
+  name: "architecture porn muiccia",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/architecture-porn-muiccia.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-4",
+  name: "being on the road is the arrival itself",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/being-on-the-road-is-the-arriva-itselfl.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-5",
+  name: "berlin jewish hall",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/berlin-jewish-hall.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-6",
+  name: "brothers and sisters",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/brothers-and-sisters.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-7",
+  name: "caneporco network",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/caneporco-network.JPG" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-8",
+  name: "church of transhumanism",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/church-of-transhumanism.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-9",
+  name: "concrete",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/concrete.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-10",
+  name: "corbusier blues",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/corbusier_blues.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-11",
+  name: "dizzy",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/dizzy.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-12",
+  name: "dont cry murph",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/dont-cry-murph.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-13",
+  name: "eminonu",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/eminonu.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-14",
+  name: "fazil say as landart",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/fazil-say-as-landart.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-15",
+  name: "get naked babe",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/get-naked-babe.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-16",
+  name: "gingar",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/gingar.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-17",
+  name: "grater 2",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/grater-2.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-18",
+  name: "iloveyou",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/iloveyou.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-19",
+  name: "kadikoy",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/kadikoy.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-20",
+  name: "Kemalettin the Architect",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Kemalettin-the-Architect.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-21",
+  name: "lonelynezz lazinyss",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/lonelynezz-lazinyss.JPG" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-22",
+  name: "milano got thieves",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/milano-got-thieves.JPG" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-23",
+  name: "mitches comengo",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mitches-comengo.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-24",
+  name: "mofakking night",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mofakking-night.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-25",
+  name: "mosk",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mosk.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-26",
+  name: "motorolla morpheues flip",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/motorolla-morpheues-flip.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-27",
+  name: "nutella on toes Plus",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/nutella-on-toes-Plus.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-28",
+  name: "platoon alegori",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/platoon-alegori.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-29",
+  name: "reflected like antenna",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/reflected-like-antenna.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-30",
+  name: "roofiverse",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/roofiverse.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-31",
+  name: "santral frames",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/santral-frames.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-32",
+  name: "silk on bed to feel kissy and soft if killy love",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/silk-on-bed-to-feel-kissy-and-soft-if-killy-love.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-33",
+  name: "simulation dairies",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/simulation-dairies.JPG" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-34",
+  name: "sky is heavy",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sky-is-heavy.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-35",
+  name: "swirv on them hoes",
+  description: "berlin, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/swirv-on-them-hoes.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-36",
+  name: "the kids are right toujours but sharp adults get angry to them",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/the-kids-are-right-toujours-but-sharp-adults-get-angry-to-them.JPG" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-37",
+  name: "therefore i am not",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/therefore-i-am-not.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-38",
+  name: "thunder",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/thunder.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-39",
+  name: "uffisi",
+  description: "firenze, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/uffisi.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-40",
+  name: "uffizi uterus",
+  description: "firenze, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/uffizi-uterus.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-41",
+  name: "unfuckable firenze snake",
+  description: "firenze, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/unfuckable-firenze-snake.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-42",
+  name: "urban bongs",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/urban-bongs.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-43",
+  name: "uterus",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/uterus.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-44",
+  name: "versace patterns on jail jumper",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/versace-patterns-on-jail-jumper.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-45",
+  name: "virtual theater",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/virtual-theater.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-46",
+  name: "where the rope goes where a god are",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/where-the-rope-goes-where-a-god-are.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-47",
+  name: "where you look is where you dont see",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/where-you-look-is-where-you-dont-see.jpg" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-48",
+  name: "wrong side of the road",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/wrong-side-of-the-road.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-49",
+  name: "you can sit with us",
+  description: "milano, 2018",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/you-can-sit-with-us.JPG" }],
+  categories: { year: 2018, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "mass-v-50",
+  name: "you dont see a kite after 12 y o",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/you-dont-see-a-kite-after-12-y-o.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-1",
+  name: "aura traces of a stranger",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/aura-traces-of-a-stranger.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-2",
+  name: "bilgi mushroom",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/bilgi-mushroom.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-3",
+  name: "broadwalk empire",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/broadwalk-empire.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-4",
+  name: "cant stop wont stop",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cant-stop-wont-stop.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-5",
+  name: "chitchat on bike",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/chitchat-on-bike.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-6",
+  name: "crime scene entrance like jagger",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/crime-scene-entrance-like-jagger.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-7",
+  name: "does vigility exist",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/does-vigility-exist.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-8",
+  name: "emionu youth",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/emionu-youth.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-9",
+  name: "follow the ai",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/follow-the-ai.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-10",
+  name: "forever thin",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/forever-thin.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-11",
+  name: "gothamlike",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/gothamlike.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-12",
+  name: "grater 3",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/grater-3.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-13",
+  name: "jazz is tanbul",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/jazz-is-tanbul.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-14",
+  name: "jump from island",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/jump-from-island.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-15",
+  name: "kotti blues",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/kotti-blues.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-16",
+  name: "layered sunlight",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/layered-sunlight.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-17",
+  name: "marble head and skull lion",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/marble-head-and-skull-lion.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-18",
+  name: "mesale",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mesale.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-19",
+  name: "mozzarella pomodoro",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mozzarella-pomodoro.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-20",
+  name: "mrs robot",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mrs-robot.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-21",
+  name: "npc s have feelings too",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/npc-s-have-feelings-too.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-22",
+  name: "paradoxical",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/paradoxical.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-23",
+  name: "paranthesis in out",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/paranthesis-in-out.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-24",
+  name: "president to citizen",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/president-to-citizen.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-25",
+  name: "puppetmaster",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/puppetmaster.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-26",
+  name: "renaissance wrestling",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/renaissance-wrestling.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-27",
+  name: "road rash",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/road-rash.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-28",
+  name: "run n catch Noir",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/run-n-catch-Noir.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-29",
+  name: "second hand book seller",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/second-hand-book-seller.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-30",
+  name: "sexvenice loneliness",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sexvenice-loneliness.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-31",
+  name: "statments",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/statments.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-32",
+  name: "street cartier",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/street-cartier.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-33",
+  name: "that car was there after 7 years",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/that-car-was-there-after-7-years.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-34",
+  name: "throat",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/throat.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-35",
+  name: "tone sur tone sur tone sur strada",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/tone-sur-tone-sur-tone-sur-strada.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-36",
+  name: "toy",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/toy.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-37",
+  name: "tukey division",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/tukey-division.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-38",
+  name: "typical spring",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/typical-spring.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-39",
+  name: "under 30 mins",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/under-30-mins.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-40",
+  name: "urban liningroom",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/urban-liningroom.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-41",
+  name: "verona coffee",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/verona-coffee.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-42",
+  name: "vicecity",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/vicecity.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-43",
+  name: "waiting for grandson",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/waiting-for-grandson.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-44",
+  name: "walking into my sins and traumas",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/walking-into-my-sins-and-traumas.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-45",
+  name: "where i lost and found my keys",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/where-i-lost-and-found-my-keys.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-46",
+  name: "which note the bird is",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/which-note-the-bird-is.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-47",
+  name: "windows of perception",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/windows-of-perception.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-48",
+  name: "womans broke up much harder",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/womans-broke-up-much-harder.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-49",
+  name: "xxyz 0078",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/xxyz_0078.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-50",
+  name: "xyz axis oriented bird",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/xyz-axis-oriented-bird.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+}
         ];
