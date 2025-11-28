@@ -1,4 +1,4 @@
-const projects = [
+ const projects = [
             { 
                 id: "demo-1", 
                 name: "MEDIA TEST DEMO", 
@@ -1424,7 +1424,7 @@ const projects = [
     name: "munafixx",
     description: "istanbul, 2017",
     link: null,
-    media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/munafixx.JPG" }],
+    media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/munafıxx.JPG" }],
     categories: { year: 2017, type: "photography", subtype: "people", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
   },
   {
