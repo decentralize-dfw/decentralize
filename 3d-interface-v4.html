@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Portfolio 3D View V6 - Final Interactions</title>
+    <title>Portfolio 3D View V8 - Fit View Button</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meshopt Decoder (Global) -->
@@ -61,11 +61,17 @@
         .nav-btn:hover { opacity: 1; border-color: var(--ui-color); }
         .nav-btn.active { background-color: transparent; color: var(--ui-color); border-color: var(--ui-color); opacity: 1; font-weight: 500; }
 
-        /* --- SLIDER --- */
+        /* --- SLIDER & FIT BUTTON CONTAINER --- */
         #slider-container {
             position: fixed; bottom: 30px; left: 30px; z-index: 100;
-            display: flex; flex-direction: column; align-items: center; gap: 5px; pointer-events: auto;
+            /* Changed to row to place button on right */
+            display: flex; flex-direction: row; align-items: flex-end; gap: 12px; pointer-events: auto;
         }
+        
+        .slider-wrapper {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
+
         #slider-label {
             font-size: 0.7rem; text-transform: uppercase; font-weight: bold; opacity: 0.7; color: var(--ui-color);
         }
@@ -76,6 +82,18 @@
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none; width: 12px; height: 12px;
             border-radius: 50%; background: var(--ui-color); cursor: pointer;
+        }
+        
+        /* Specific Style for Fit Button to match Slider Label Size */
+        #fit-btn {
+            font-size: 0.7rem; 
+            font-weight: bold; 
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border: 1px solid var(--ui-color); /* Ensure visibility */
+            height: 24px; /* Align nicely with slider visual height */
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: -4px; /* Fine tune alignment with slider track */
         }
 
         /* --- 3D ELEMENTS --- */
@@ -203,8 +221,12 @@
     </div>
 
     <div id="slider-container">
-        <div id="slider-label">Auto Rotate</div>
-        <input type="range" id="rotate-slider" min="-2" max="2" step="0.1" value="0">
+        <div class="slider-wrapper">
+            <div id="slider-label">Auto Rotate</div>
+            <input type="range" id="rotate-slider" min="-2" max="2" step="0.1" value="0">
+        </div>
+        <!-- FIT SCREEN BUTTON ON RIGHT -->
+        <button id="fit-btn" class="nav-btn">FIT VIEW</button>
     </div>
 
     <div id="container"></div>
@@ -243,7 +265,7 @@
         const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
         // --- DATA (REDUCED to ~20 items as requested) ---
-         const projects = [
+                 const projects = [
             { 
                 id: "demo-1", 
                 name: "MEDIA TEST DEMO", 
@@ -2592,9 +2614,409 @@
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/you-dont-see-a-kite-after-12-y-o.jpg" }],
   categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+//street photography
+{
+  id: "street-1",
+  name: "aura traces of a stranger",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/aura-traces-of-a-stranger.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-2",
+  name: "bilgi mushroom",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/bilgi-mushroom.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-3",
+  name: "broadwalk empire",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/broadwalk-empire.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-4",
+  name: "cant stop wont stop",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cant-stop-wont-stop.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-5",
+  name: "chitchat on bike",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/chitchat-on-bike.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-6",
+  name: "crime scene entrance like jagger",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/crime-scene-entrance-like-jagger.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-7",
+  name: "does vigility exist",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/does-vigility-exist.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-8",
+  name: "emionu youth",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/emionu-youth.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-9",
+  name: "follow the ai",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/follow-the-ai.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-10",
+  name: "forever thin",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/forever-thin.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-11",
+  name: "gothamlike",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/gothamlike.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-12",
+  name: "grater 3",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/grater-3.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-13",
+  name: "jazz is tanbul",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/jazz-is-tanbul.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-14",
+  name: "jump from island",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/jump-from-island.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-15",
+  name: "kotti blues",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/kotti-blues.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-16",
+  name: "layered sunlight",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/layered-sunlight.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-17",
+  name: "marble head and skull lion",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/marble-head-and-skull-lion.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-18",
+  name: "mesale",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mesale.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-19",
+  name: "mozzarella pomodoro",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mozzarella-pomodoro.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-20",
+  name: "mrs robot",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/mrs-robot.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-21",
+  name: "npc s have feelings too",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/npc-s-have-feelings-too.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-22",
+  name: "paradoxical",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/paradoxical.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-23",
+  name: "paranthesis in out",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/paranthesis-in-out.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-24",
+  name: "president to citizen",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/president-to-citizen.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-25",
+  name: "puppetmaster",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/puppetmaster.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-26",
+  name: "renaissance wrestling",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/renaissance-wrestling.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-27",
+  name: "road rash",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/road-rash.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-28",
+  name: "run n catch Noir",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/run-n-catch-Noir.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-29",
+  name: "second hand book seller",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/second-hand-book-seller.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-30",
+  name: "sexvenice loneliness",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sexvenice-loneliness.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-31",
+  name: "statments",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/statments.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-32",
+  name: "street cartier",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/street-cartier.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-33",
+  name: "that car was there after 7 years",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/that-car-was-there-after-7-years.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-34",
+  name: "throat",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/throat.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-35",
+  name: "tone sur tone sur tone sur strada",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/tone-sur-tone-sur-tone-sur-strada.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-36",
+  name: "toy",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/toy.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-37",
+  name: "tukey division",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/tukey-division.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-38",
+  name: "typical spring",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/typical-spring.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-39",
+  name: "under 30 mins",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/under-30-mins.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-40",
+  name: "urban liningroom",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/urban-liningroom.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-41",
+  name: "verona coffee",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/verona-coffee.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-42",
+  name: "vicecity",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/vicecity.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-43",
+  name: "waiting for grandson",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/waiting-for-grandson.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-44",
+  name: "walking into my sins and traumas",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/walking-into-my-sins-and-traumas.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-45",
+  name: "where i lost and found my keys",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/where-i-lost-and-found-my-keys.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-46",
+  name: "which note the bird is",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/which-note-the-bird-is.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-47",
+  name: "windows of perception",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/windows-of-perception.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-48",
+  name: "womans broke up much harder",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/womans-broke-up-much-harder.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-49",
+  name: "xxyz 0078",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/xxyz_0078.jpg" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+{
+  id: "street-50",
+  name: "xyz axis oriented bird",
+  description: "istanbul, 2017",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/xyz-axis-oriented-bird.JPG" }],
+  categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
 }
         ];
-
 
 
         // --- STATE ---
@@ -2615,6 +3037,7 @@
             const container = document.getElementById('container');
 
             const aspect = window.innerWidth / window.innerHeight;
+            // Slightly increased frustum size for better "fit" range, but keeping similar scale
             const frustumSize = 3500; 
             camera = new THREE.OrthographicCamera( 
                 frustumSize * aspect / - 2, 
@@ -2639,8 +3062,9 @@
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minZoom = 0.5;
-            controls.maxZoom = 2;
+            // Relax zoom limits to allow proper "fit"
+            controls.minZoom = 0.1;
+            controls.maxZoom = 5;
             controls.autoRotateSpeed = 0; 
             
             // --- FIX FOR INVERTING CONTROLS ---
@@ -2658,6 +3082,7 @@
             window.addEventListener('resize', onWindowResize);
             setupMenuButtons();
             setupSlider();
+            setupFitButton(); // NEW FUNCTION
 
             // Hide Loader
             const l = document.getElementById('loader');
@@ -2742,7 +3167,7 @@
         }
 
         function setupMenuButtons() {
-            const buttons = document.querySelectorAll('.nav-btn');
+            const buttons = document.querySelectorAll('.nav-btn:not(#fit-btn)'); // Exclude fit button from this loop
             buttons.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const type = e.target.dataset.type;
@@ -2761,6 +3186,66 @@
             slider.addEventListener('input', (e) => {
                 const val = parseFloat(e.target.value);
                 autoRotateSpeed = val * 0.02;
+            });
+        }
+
+        function setupFitButton() {
+            const fitBtn = document.getElementById('fit-btn');
+            fitBtn.addEventListener('click', () => {
+                // 1. Reset Controls Target to Center (0,0,0)
+                new TWEEN.Tween(controls.target)
+                    .to({ x: 0, y: 0, z: 0 }, 1000)
+                    .easing(TWEEN.Easing.Cubic.Out)
+                    .start();
+
+                // 2. Find Max Radius of ACTIVE objects
+                let maxDist = 0;
+                objects.forEach(obj => {
+                    if (obj.userData.center) { // If visible
+                        // Approximate distance including the layout offset
+                        // We use the object's current target position logic from animate loop logic roughly
+                        // But simpler: just get distance of current layout offset from 0,0,0 + a margin for card size
+                        const dist = obj.userData.center.length() + obj.userData.offset.length();
+                        if (dist > maxDist) maxDist = dist;
+                    }
+                });
+                
+                // Add margin for card size (approx 160px) and UI
+                maxDist += 300; 
+
+                // 3. Calculate Zoom to Fit
+                // Frustum Height = (top - bottom) / zoom
+                // We want Frustum Height >= 2 * maxDist
+                // (3500) / zoom >= 2 * maxDist  =>  zoom <= 3500 / (2 * maxDist)
+                
+                // Check Aspect Ratio
+                const aspect = window.innerWidth / window.innerHeight;
+                const frustumBase = 3500; // From init
+                
+                let targetZoom = 1;
+                
+                if (aspect >= 1) {
+                    // Landscape: Fit height is usually the constraint
+                    targetZoom = frustumBase / (2 * maxDist);
+                } else {
+                    // Portrait: Fit width
+                    // Width = Height * Aspect
+                    // We need Width >= 2 * maxDist => Height * Aspect >= 2 * maxDist
+                    // (3500/zoom) * Aspect >= 2 * maxDist => zoom <= (3500 * Aspect) / (2 * maxDist)
+                    targetZoom = (frustumBase * aspect) / (2 * maxDist);
+                }
+
+                // Safety Clamp
+                targetZoom = Math.max(0.1, Math.min(targetZoom, 5));
+
+                // 4. Animate Zoom
+                new TWEEN.Tween(camera)
+                    .to({ zoom: targetZoom }, 1000)
+                    .easing(TWEEN.Easing.Cubic.Out)
+                    .onUpdate(() => {
+                        camera.updateProjectionMatrix();
+                    })
+                    .start();
             });
         }
 
@@ -2788,6 +3273,8 @@
 
             objects.forEach(obj => {
                 obj.userData.rotation.set(0, 0, 0);
+                // Reset sphere center ref
+                obj.userData.sphereCenter = null;
             });
 
             let activeIndices = [];
@@ -2857,8 +3344,6 @@
                 } 
                 else if (state.view === 'sphere') {
                     // --- FIXED SPHERE LAYOUT ---
-                    // Calculate center Y so that the TOP of the sphere is at SPHERE_TOP_Y
-                    // Sphere Top = cy + radius. So cy = Top - radius.
                     const sphereCenterY = SPHERE_TOP_Y - sphereRadius;
 
                     indexes.forEach((objIndex, i) => {
@@ -2873,11 +3358,12 @@
                         dummy.lookAt(0, 0, 0); 
 
                         const obj = objects[objIndex];
-                        // Use sphereCenterY for vertical offset
+                        
+                        // Store the calculated center of the sphere for this object's group
+                        // to use in LookAt during animation
+                        obj.userData.sphereCenter = new THREE.Vector3(cx, sphereCenterY, cz);
+
                         new TWEEN.Tween(obj.userData.center).to({x: cx, y: cy, z: cz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
-                        // Add sphereCenterY to the Y offset directly or handle it in center logic.
-                        // Ideally, we move the group center relative to 0? No, we set offset.
-                        // Let's add sphereCenterY to the y component of offset.
                         new TWEEN.Tween(obj.userData.offset).to({x: ox, y: oy + sphereCenterY, z: oz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
                         
                         new TWEEN.Tween(obj.userData.rotation).to({x: dummy.rotation.x, y: dummy.rotation.y, z: dummy.rotation.z}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
@@ -2919,6 +3405,7 @@
 
             globalRotation += autoRotateSpeed;
             const time = Date.now() * 0.002;
+            const vectorHelper = new THREE.Vector3();
 
             objects.forEach((obj, i) => {
                 if(obj.userData.center) { 
@@ -2942,28 +3429,13 @@
                       else if (state.view === 'sphere') {
                           obj.position.copy(targetPos);
                           
-                          // SPHERE ORIENTATION:
-                          // Always look at the center of *its own group* to maintain the shell effect.
-                          // Group center (rotating with global) is obj.userData.center.
-                          // Wait, center is fixed (cx,cy,cz). Offset rotates.
-                          // The "LookAt" target needs to correspond to the sphere's center IN WORLD SPACE.
-                          // The sphere center moves? No, only offsets rotate.
-                          // The layout center (cx,cy,cz) is static.
-                          // But we added `sphereCenterY` to the offset Y. 
-                          // So the actual sphere center is (cx, cy + sphereCenterY, cz).
-                          // BUT... `cy` in updateLayout was `0`. So center is (cx, sphereCenterY, cz).
-                          
-                          // Let's create a vector for the specific group center.
-                          // Since we don't store "sphereCenterY" on the object, we can infer it or just look at (cx, cy, cz) 
-                          // if we centered the sphere around 0,0,0 in offset. 
-                          // But we shifted offset Y.
-                          
-                          // Simpler approach for Sphere Rotation:
-                          // The base rotation was calculated to face 0,0,0 (local).
-                          // We just apply global Y rotation to that base rotation.
-                          obj.rotation.y = obj.userData.rotation.y + globalRotation;
-                          obj.rotation.x = obj.userData.rotation.x;
-                          obj.rotation.z = obj.userData.rotation.z;
+                          // SPHERE FIX: Use LookAt to force face outward from center
+                          if (obj.userData.sphereCenter) {
+                              // vectorHelper = Position + (Position - Center)
+                              // This creates a point "outside" the sphere along the radius vector
+                              vectorHelper.subVectors(obj.position, obj.userData.sphereCenter).add(obj.position);
+                              obj.lookAt(vectorHelper);
+                          }
                       } 
                       else {
                           obj.position.copy(targetPos);
