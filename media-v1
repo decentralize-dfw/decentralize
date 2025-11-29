@@ -1,4 +1,4 @@
-         const projects = [
+      const projects = [
             { 
                 id: "demo-1", 
                 name: "MEDIA TEST DEMO", 
@@ -7,7 +7,8 @@
                 media: [
                     { "type": "model", "src": "https://raw.githubusercontent.com/decentralize-dfw/c2w2-glb/main/seize-centerobject-opt-v1.glb" },
                     { "type": "html", "src": "https://raw.githubusercontent.com/decentralize-dfw/finder/refs/heads/main/decentralize.html" }, 
-                    { "type": "video", "src": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+                    { "type": "video", "src": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" },
+                    
                 ], 
                 categories: { year: 2024, type: "demo", subtype: "mixed", collection: "test", medium: "digital", expression: "code", reality: "virtual", contents: "mixed" } 
             },
@@ -2348,6 +2349,7 @@
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/you-dont-see-a-kite-after-12-y-o.jpg" }],
   categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
 },
+//street photography
 {
   id: "street-1",
   name: "aura traces of a stranger",
@@ -2582,10 +2584,10 @@
 },
 {
   id: "street-30",
-  name: "sexvenice loneliness",
+  name: "sexvenice lonelinezss",
   description: "istanbul, 2017",
   link: null,
-  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sexvenice-loneliness.jpg" }],
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sexvenice-lonelinezss.jpg" }],
   categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
 },
 {
@@ -2638,10 +2640,10 @@
 },
 {
   id: "street-37",
-  name: "tukey division",
+  name: "tuRkey division",
   description: "istanbul, 2017",
   link: null,
-  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/tukey-division.jpg" }],
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/tuRkey-division.jpg" }],
   categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
 },
 {
@@ -2747,5 +2749,454 @@
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/xyz-axis-oriented-bird.JPG" }],
   categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo", expression: "decentralize*early", reality: "irl", contents: "photography" }
+},
+//end of photo
+// digital art
+//wabi sabi
+{
+  id: "fwssexp-1",
+  name: "3rd WebCam Opening Ceremony for Digisapiens",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_dd5df10a12914518a981167064f1b903/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-1.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-2",
+  name: "05 - 3rd WebCam Opening Ceremony for DigiGods",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_a9225e7806c04dbcb35920f49b317826/1080p/mp4/file.mp4" },
+  
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-2.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-3",
+  name: "25th Pixel Opening Ceremony for Invincible Phytons",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_4377f1c0417c487fae6822aeb8110322/1080p/mp4/file.mp4" },
+  
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-3.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-4",
+  name: "Aigorithmin Dominus Republic - Blockchain Based Official Seal",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Aigorithmin%20Dominus%20Republic%20-%20Blockchain%20Based%20Official%20Seal.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-5",
+  name: "Algorithmic Ambassador's Floral Blockchain Skirrt at Night-Year",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Algorithmic%20Ambassador’s%20Floral%20Blockchain%20Skirrt%20at%20Night-Year.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-6",
+  name: "Algorithmic Ambassador's Floral Blockchain Skirrt",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Algorithmic%20Ambassador’s%20Floral%20Blockchain%20Skirrt.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-7",
+  name: "Analog%Organic Lifeform Museum (inspired by Mozambique.3dm)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Analog%25Organic%20Lifeform%20Museum%20%28inspired%20by%20Mozambique.3dm%29.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-8",
+  name: "Carbon Based Programing - Sound Frequencies",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Carbon%20Based%20Programing%20-%20Sound%20Frequencies.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-9",
+  name: "Carbon Based Programing",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Carbon%20Based%20Programing.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-10",
+  name: "DiGiSapienz Manifesto",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/DiGiSapienz%20Manifesto.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-11",
+  name: "Digital Map of Ketamiton (3rd Civilization) after 68 years from the Evasion of QanyeVV-Nyk3 Collab.",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Digital%20Map%20of%20Ketamiton%20%283rd%20Civilization%29%20after%2068%20years%20from%20the%20Evasion%20of%20QanyeVV-Nyk3%20Collab..png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-12",
+  name: "Digital Map of Ketamiton (3rd Civilization) after the Evasion of QanyeVV-Nyk3 Collab.",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Digital%20Map%20of%20Ketamiton%20%283rd%20Civilization%29%20after%20the%20Evasion%20of%20QanyeVV-Nyk3%20Collab..jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-13",
+  name: "Digital Map of Ketamiton (3rd Civilization) before the Evasion of QanyeVV-Nyk3 Collab",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Digital%20Map%20of%20Ketamiton%20%283rd%20Civilization%29%20before%20the%20Evasion%20of%20QanyeVV-Nyk3%20Collab.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-14",
+  name: "Divine Duracell - Evolution Phase 1 (2094-68i2)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Divine%20Duracell%20-%20Evolution%20Phase%201%20%282094-68i2%29.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-15",
+  name: "Divine Duracell - Evolution Phase 2 (68i2-X02j1=)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Divine%20Duracell%20-%20Evolution%20Phase%202%20%2868i2-X02j1%3D%29.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-16",
+  name: "Divine Duracell - Evolution Phase 3 (X02j1= - est. Zz17Y31)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Divine%20Duracell%20-%20Evolution%20Phase%203%20%28X02j1%3D%20-%20est.%20Zz17Y31%29.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-17",
+  name: "Fluid Spy Organisms",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Fluid%20Spy%20Organisms.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-18",
+  name: "Future Wabi-Sabi Spacescape Experiment (with the presentation of Shitcoin Pump Minister)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_c055034162cc49abb6ef4fb79b2ae8b1/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-18.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-19",
+  name: "Future Wabi-Sabi Spacescape Experiment",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_b0a5f9e00db94bc6be469585b9d7128f/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-19.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-20",
+  name: "FWSSSExp",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_e41952859e74498f865852786f92ee79/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-20.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-21",
+  name: "Header for Coding of Aigorithmin Dominus Republic - Blockchain Based Official Seal",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Header%20for%20Coding%20of%20Aigorithmin%20Dominus%20Republic%20-%20Blockchain%20Based%20Official%20Seal.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-22",
+  name: "Inside Section of the MotherBoard 1",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Inside%20Section%20of%20the%20MotherBoard%201.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-23",
+  name: "Inside Section of the MotherBoard 2",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Inside%20Section%20of%20the%20MotherBoard%202.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-24",
+  name: "Judge Court",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Judge%20Court.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-25",
+  name: "Judge_AiDoRe_Avatar",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Judge_AiDoRe_Avatar.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-26",
+  name: "Ketamiton Shitcoin Pump Ministry Officer (on OldSchool-TorsoPack-3000) V2 -WAGMI",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20%28on%20OldSchool-TorsoPack-3000%29%20V2%20-WAGMI.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-27",
+  name: "Ketamiton Shitcoin Pump Ministry Officer (on OldSchool-TorsoPack-3000) V3 -DATA FOR ZUCK @iFarm",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20%28on%20OldSchool-TorsoPack-3000%29%20V3%20-DATA%20FOR%20ZUCK%20%40iFarm.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-28",
+  name: "Ketamiton Shitcoin Pump Ministry Officer (on OldSchool-TorsoPack-3000)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20%28on%20OldSchool-TorsoPack-3000%29.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-29",
+  name: "Ketamiton Shitcoin Pump Ministry Officer -v2",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20-v2.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-30",
+  name: "Ketamiton Shitcoin Pump Ministry Officer -v3",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20-v3.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-31",
+  name: "Ketamiton Shitcoin Pump Ministry Officer -v4",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20-v4.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-32",
+  name: "Ketamiton Shitcoin Pump Ministry Officer -v5",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Ketamiton%20Shitcoin%20Pump%20Ministry%20Officer%20-v5.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-33",
+  name: "Motherboard",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Motherboard.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-34",
+  name: "Museum of Pregnancy&Birth Rituels before the Foundation of Aigorithmic Dominus Republic",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_ad05e31416bc4dd28a426e6bc0b7f676/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-34.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-35",
+  name: "Non-Fungible Casino Bacteries under Telescope v2",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Non-Fungible%20Casino%20Bacteries%20under%20Telescope%20v2.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-36",
+  name: "Non-Fungible Casino Bacteries under Telescope v4",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Non-Fungible%20Casino%20Bacteries%20under%20Telescope%20v4.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-37",
+  name: "Non-Fungible Casino Bacteries under Telescope",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Non-Fungible%20Casino%20Bacteries%20under%20Telescope.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-38",
+  name: "Non-Fungible Casino Vertigo",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_a2d39ab3f54549378814eaf21aea4c30/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-38.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-39",
+  name: "QanyeVV-Nyk3 Collab Ministry",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://video.wixstatic.com/video/54a996_85d45f4c90464593afd61ffcec242ff7/1080p/mp4/file.mp4" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-39.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "video" }
+},
+{
+  id: "fwssexp-40",
+  name: "quadragesimo-core cpu equipped quantum satellite intelligence tech -2nd gen genius contracts based",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/quadragesimo-core%20cpu%20equipped%20quantum%20satellite%20intelligence%20tech%20-2nd%20gen%20genius%20contracts%20based.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-41",
+  name: "quadragesimo-core cpu equipped quantum satellite intelligence tech on defense mode 3",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/quadragesimo-core%20cpu%20equipped%20quantum%20satellite%20intelligence%20tech%20on%20defense%20mode%203.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-42",
+  name: "quadragesimo-core cpu equipped quantum satellite intelligence tech",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/quadragesimo-core%20cpu%20equipped%20quantum%20satellite%20intelligence%20tech.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-43",
+  name: "Shut Down & Downgrade (VI gen) Restoring Penalty until X03j2A decided by Decentralized Digisapiens Federation Court",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Shut%20Down%20%26%20Downgrade%20%28VI%20gen%29%20Restoring%20Penalty%20until%20X03j2A%20decided%20by%20Decentralized%20Digisapiens%20Federation%20Court.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-44",
+  name: "The Family Tree exposing The Ancestors of The Great Architect, The Great Code-Father of AIGoRe",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/The%20Family%20Tree%20exposing%20The%20Ancestors%20of%20The%20Great%20Architect%2C%20The%20Great%20Code-Father%20of%20AIGoRe.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-45",
+  name: "The Great Mystery",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/The%20Great%20Mystery.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-46",
+  name: "Tiktok University of Digi-Sciences and Head Office",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Tiktok%20University%20of%20Digi-Sciences%20and%20Head%20Office.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-47",
+  name: "Troops Ready to re-Hack Analog Revolution of Centralized Boomer Gov't Systems (on their way to Sector 69)",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Troops%20Ready%20to%20re-Hack%20Analog%20Revolution%20of%20Centralized%20Boomer%20Gov%27t%20Systems%20%28on%20their%20way%20to%20Sector%2069%29.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-48",
+  name: "Wabi-Sabi Central Office - Satellite Officer",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Wabi-Sabi%20Central%20Office%20-%20Satellite%20Officer.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-49",
+  name: "Wabi-Sabi Central Office - Security Mode 3 Against Organic Hacking",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Wabi-Sabi%20Central%20Office%20-%20Security%20Mode%203%20Against%20Organic%20Hacking.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-50",
+  name: "Wabi-Sabi Central Office during Coding hours",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Wabi-Sabi%20Central%20Office%20during%20Coding%20hours.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-51",
+  name: "Waiting for the Decentralized Digisapiens Federation Court 1",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Waiting%20for%20the%20Decentralized%20Digisapiens%20Federation%20Court%201.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-52",
+  name: "Waiting for the Decentralized Digisapiens Federation Court 2",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Waiting%20for%20the%20Decentralized%20Digisapiens%20Federation%20Court%202.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-53",
+  name: "Waiting for the Decentralized Digisapiens Federation Court 3",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/Waiting%20for%20the%20Decentralized%20Digisapiens%20Federation%20Court%203.jpg" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+},
+{
+  id: "fwssexp-54",
+  name: "wawbbisabbi",
+  description: "Fwsssexp depicts a sterile, AI-dominated future where organic expression is punished and \"wabi-sabi\" is ironically used to enforce a cold, algorithmic perfection.",
+  link: null,
+  media: [{ type: "video", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/wawbbisabbi.mp3" },
+  { type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-54.png" }],
+  categories: { year: 2020, type: "digital art", subtype: "Future Wabi-Sabi Spacescape Exp.", collection: "Future Wabi-sabi Spacescape Experiments", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 }
+
+
         ];
