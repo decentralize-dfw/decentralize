@@ -268,8 +268,37 @@
                 fontFamily: 'Robot', 
                 position: { x: 600, y: 900, z: -600 },
                 rotation: { x: 20, y: 0, z: 0 }
+            },
+
+            // --- NEW: LINK OBJECT EXAMPLE --- 
+            {
+                type: 'link',
+                src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sendmail.png', // İkon/Resim URL
+                link: 'mailto:info@de-centralize.com', // Yeni sekmede açılacak link
+                label: 'mail', // Altındaki yazı
+                fontFamily: 'Telegrama Raw',
+                fontSize: 80,
+                color: '#FFFFFF',
+                width: 250, // Resmin genişliği
+               position: { x: -1800, y: 1020, z: -300 }, // Konumu
+                rotation: { x: 0, y: 40, z: 0 },
+                scale: .6
+            },
+             {
+                type: 'link',
+                src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/twt.png', // İkon/Resim URL
+                link: 'https://x.com/decentralize___', // Yeni sekmede açılacak link
+                label: 'twitter X', // Altındaki yazı
+                fontFamily: 'Telegrama Raw',
+                fontSize: 80,
+                color: '#FFFFFF',
+                width: 250, // Resmin genişliği
+                position: { x: -2200, y: 1000, z: -300 }, // Konumu
+                rotation: { x: 0, y: 40, z: 0 },
+                scale: .6
             }
         ];;
+
 
 
         // --- 2. SETUP ---
@@ -444,7 +473,7 @@
                 let object = intersects[0].object;
                 
                 // Parent'a kadar çık
-                while(object.parent && !object.userData.isVideo && !object.userData.isSound) {
+                while(object.parent && !object.userData.isVideo && !object.userData.isSound && !object.userData.isLink) {
                     object = object.parent;
                     if (!object) break; 
                 }
@@ -485,6 +514,17 @@
                         audio.currentTime = 0; 
                         object.userData.isPlaying = false;
                     }
+                }
+
+                // --- LINK CLICK ---
+                if (object.userData.isLink) {
+                    // Animasyon (Hafif bir zıplama)
+                    new TWEEN.Tween(object.scale).to({x: object.scale.x * 0.9, y: object.scale.y * 0.9}, 100).yoyo(true).repeat(1).start();
+                    
+                    // Yeni sekmede aç
+                    setTimeout(() => {
+                        window.open(object.userData.url, '_blank');
+                    }, 150);
                 }
             }
         }
@@ -745,6 +785,56 @@
                             window.mixers.push(mixer);
                         }
                     }, undefined, (err) => console.error(err));
+                }
+
+                // --- LINK OBJECT (NEW) ---
+                else if (item.type === 'link') {
+                    const group = new THREE.Group();
+                    applyTransform(group);
+                    
+                    // 1. Resim (Image)
+                    const texture = textureLoader.load(safeSrc);
+                    texture.colorSpace = THREE.SRGBColorSpace;
+                    
+                    const imgWidth = item.width || 200;
+                    const imgGeo = new THREE.PlaneGeometry(imgWidth, imgWidth); 
+                    const imgMat = new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide });
+                    const imgMesh = new THREE.Mesh(imgGeo, imgMat);
+                    
+                    // Aspect ratio koruma
+                    texture.onload = () => {
+                        const aspect = texture.image.width / texture.image.height;
+                        imgMesh.scale.set(1, 1/aspect, 1); 
+                    };
+
+                    group.add(imgMesh);
+
+                    // 2. Etiket (Label)
+                    if (item.label) {
+                        const { texture: textTex, width: textW, height: textH } = createTextTexture(
+                            item.label, 
+                            item.fontSize || 40, 
+                            item.fontFamily || 'sans-serif', 
+                            item.color || '#fff'
+                        );
+                        
+                        const labelGeo = new THREE.PlaneGeometry(textW, textH);
+                        const labelMat = new THREE.MeshBasicMaterial({ map: textTex, transparent: true, side: THREE.DoubleSide });
+                        const labelMesh = new THREE.Mesh(labelGeo, labelMat);
+                        
+                        // Konum: Resmin altına
+                        labelMesh.position.y = - (imgWidth / 2 + 50); 
+                        
+                        group.add(labelMesh);
+                    }
+
+                    group.userData = {
+                        isLink: true,
+                        url: item.link
+                    };
+
+                    scene.add(group);
+                    clickableObjects.push(group); 
                 }
             });
         }
