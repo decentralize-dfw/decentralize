@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Portfolio Interface - V10</title>
+    <title>Portfolio Interface - V12</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
@@ -33,7 +33,8 @@
             position: relative; 
             width: 100%; 
             z-index: 100;
-            padding: 0 2rem; 
+            /* Right padding 0px yapıldı (Logo sağa yapışsın diye) */
+            padding: 0 0 0 2rem; 
             height: 50px; /* İnce üst bar */
             display: flex; 
             flex-direction: row; 
@@ -81,28 +82,31 @@
             gap: 30px; /* İkon grubu ile Ana Logo arasındaki boşluk */
         }
 
-        /* Ana Logo (D*) - En sağda */
-        .main-logo-link {
-            height: 70%; /* Bar yüksekliğine oranla */
+        /* Ana Logo (D*) - En sağda - STATİK */
+        .main-logo-container {
+            height: 100%; /* Bara tam otursun */
             display: flex;
             align-items: center;
+            /* Sol tarafa sıfırlama mantığı: margin-left yok, sağa yaslı */
         }
 
         .main-logo {
-            height: 100%; 
+            height: 100%; /* Fit to height */
             width: auto;
-            object-fit: contain;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-            cursor: pointer;
+            object-fit: contain; /* Orantılı sığdır */
+            object-position: right; /* Sağa yasla */
+            opacity: 1;
+            cursor: default; 
+            display: block;
         }
-        .main-logo:hover { opacity: 1; }
-
+        
         /* Sosyal İkon Grubu - Ana Logonun Solunda */
         .social-group {
             display: flex;
             align-items: center;
             gap: 8px; /* İkonlar arası 8px boşluk */
+            /* Sağ taraftan biraz boşluk bırakmak isterseniz margin-right ekleyebilirsiniz, 
+               ancak logo ile gap zaten var. */
         }
 
         /* Küçük İkonlar (12x12 pixel) */
@@ -154,7 +158,7 @@
             <div class="menu-group-separator"></div>
             <button class="nav-btn" onclick="loadUrl('works', this)">WORKS</button>
             <button class="nav-btn" onclick="loadUrl('list', this)">LIST</button>
-            <!-- D** butonu buradan kaldırıldı, sağa logo olarak eklendi -->
+            <button class="nav-btn" onclick="loadUrl('info', this)">INFO</button>
         </div>
 
         <!-- SAĞ: LOGOLAR -->
@@ -163,31 +167,22 @@
             <!-- Küçük İkonlar (Solda) -->
             <div class="social-group">
                 <!-- Twitter (X) -->
-                <a href="https://twitter.com" target="_blank">
+                <a href="https://twitter.com/decentralize___" target="_blank">
                     <img src="https://cdn.simpleicons.org/x/FF006A" class="social-icon" alt="Twitter">
                 </a>
-                <!-- Instagram -->
-                <a href="https://instagram.com" target="_blank">
-                    <img src="https://cdn.simpleicons.org/instagram/FF006A" class="social-icon" alt="Instagram">
-                </a>
-                <!-- Linkedin -->
-                <a href="https://linkedin.com" target="_blank">
-                    <img src="https://cdn.simpleicons.org/linkedin/FF006A" class="social-icon" alt="Linkedin">
-                </a>
-                <!-- PDF -->
-                <a href="#" target="_blank">
-                    <img src="https://cdn.simpleicons.org/adobeacrobatreader/FF006A" class="social-icon" alt="PDF">
+               
+              
                 </a>
                 <!-- Mail -->
-                <a href="mailto:info@de-centralize.com">
+                <a href="mailto:community@de-centralize.com">
                     <img src="https://cdn.simpleicons.org/gmail/FF006A" class="social-icon" alt="Mail">
                 </a>
             </div>
 
-            <!-- Ana Logo / D* (En Sağda) -->
-            <a href="https://de-centralize.com/info" target="_blank" class="main-logo-link">
-                <img src="https://placehold.co/40x40/FF006A/000000?text=D*" alt="D* Info" class="main-logo">
-            </a>
+            <!-- Ana Logo (En Sağda - Tıklanamaz Statik Logo) -->
+            <div class="main-logo-container">
+                <img src="https://raw.githubusercontent.com/decentralize-dfw/decentralize///main/LOGO1.png" alt="D* Logo" class="main-logo">
+            </div>
 
         </div>
 
@@ -200,10 +195,10 @@
 
     <script>
         const links = {
-            'home': 'https://raw.githack.com/decentralize-dfw/decentralize/refs/heads/main/home',
+            'home': 'https://raw.githack.com/decentralize-dfw/decentralize/refs/heads/main/home.html',
             'works': 'https://de-centralize.com/works',
-            'list': 'https://de-centralize.com/list'
-            // 'd' linki artık sağ üstteki logoda
+            'list': 'https://de-centralize.com/list',
+            'info': 'https://de-centralize.com/info'
         };
 
         const frame = document.getElementById('main-frame');
