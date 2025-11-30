@@ -142,7 +142,7 @@
                 border: 1px solid rgba(255, 0, 106, 0.3);
                 backdrop-filter: blur(5px);
                 border-radius: 12px;
-                padding: 8px;
+                padding: 8px 4px; /* Kenar boşluklarını azalttık */
                 width: 100%;
                 justify-content: space-between; /* Butonları yay */
             }
@@ -154,7 +154,8 @@
                 flex: 1; /* Butonlar eşit genişlesin */
                 text-align: center;
                 padding: 8px 0; /* Dokunma alanı artsın */
-                font-size: 0.7rem;
+                font-size: 0.6rem; /* Uzun kelimeler sığsın diye hafif küçülttük */
+                letter-spacing: 0; /* Harf aralığını sıkılaştırdık */
             }
 
             /* Slider'ı mobilde aşağı sabitle */
@@ -378,7 +379,8 @@
 
     <!-- Intro Overlay -->
     <div id="intro-overlay">
-        <div class="intro-text">Use your fingers to rotate and open / close each work</div>
+        <!-- Default text set to mouse interaction for desktop -->
+        <div class="intro-text">Use your mouse to rotate and open / close each work</div>
     </div>
 
     <div id="ui-container">
@@ -404,8 +406,8 @@
                 <button class="nav-btn" data-type="filter" data-val="year">Year</button>
                 <button class="nav-btn" data-type="filter" data-val="type">Type</button>
                 <button class="nav-btn" data-type="filter" data-val="subtype">Subtype</button>
-                <button class="nav-btn" data-type="filter" data-val="collection">Coll.</button>
-                <button class="nav-btn" data-type="filter" data-val="medium">Med.</button>
+                <button class="nav-btn" data-type="filter" data-val="collection">Collection</button>
+                <button class="nav-btn" data-type="filter" data-val="medium">Medium</button>
             </div>
         </div>
     </div>
@@ -586,6 +588,16 @@
 
             // --- INTRO OVERLAY LOGIC ---
             const intro = document.getElementById('intro-overlay');
+            const introText = intro.querySelector('.intro-text');
+            
+            // Detect if touch device (Mobile/Tablet)
+            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+            
+            if (isTouchDevice) {
+                introText.textContent = "Use your fingers to rotate and open / close each work";
+            }
+            // else: text remains "Use your mouse..." as defined in HTML
+
             setTimeout(() => {
                 intro.style.opacity = '0';
                 setTimeout(() => {
