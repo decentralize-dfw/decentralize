@@ -206,10 +206,31 @@
         #modal-left-col::-webkit-scrollbar, #modal-right-col::-webkit-scrollbar { display: block; width: 4px; }
         #modal-left-col::-webkit-scrollbar-thumb, #modal-right-col::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 2px; border: none; }
 
-        /* Modal Typography */
-        .modal-label { font-family: var(--font-headers); font-weight: 500; font-size: 0.8rem; } 
-        .modal-value { font-family: var(--font-body); font-weight: 400; font-size: 0.8rem; }
-        .modal-desc { font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.5; }
+        /* Modal Typography - RESPONSIVE UPDATE */
+        /* Desktop defaults, overridden by media queries in style or Tailwind classes in HTML */
+        .modal-label { 
+            font-family: var(--font-headers); 
+            font-weight: 500; 
+            font-size: 0.55rem; /* Mobile Base: drastically reduced */
+        } 
+        .modal-value { 
+            font-family: var(--font-body); 
+            font-weight: 400; 
+            font-size: 0.55rem; /* Mobile Base: drastically reduced */
+        }
+        .modal-desc { 
+            font-family: var(--font-body); 
+            font-weight: 400; 
+            font-size: 0.7rem; /* Mobile Base */
+            line-height: 1.1; 
+        }
+
+        /* Desktop Overrides */
+        @media (min-width: 768px) {
+            .modal-label { font-size: 0.8rem; }
+            .modal-value { font-size: 0.8rem; }
+            .modal-desc { font-size: 1rem; line-height: 1.5; }
+        }
 
         .ui-text { color: var(--ui-color); }
         .ui-border { border-color: var(--ui-color); }
@@ -607,7 +628,7 @@
                 // We want to show thumbnail, but let click handle modal.
                 // e.preventDefault(); // removed to allow click through
                 const touch = e.touches[0];
-                showThumbnail({ clientX: touch.clientX, clientY: touch.clientY }, project.id);
+                showThumbnail({ clientX: touch.clientX, clientY: touch.clientY, isTouch: true }, project.id);
             }, {passive: true});
 
             projectRow.addEventListener('touchend', hideThumbnail);
@@ -708,17 +729,33 @@
                     if (imageMedia) this.src = imageMedia.src; 
                 };
                 
-                // Position logic: Check if near edge to prevent off-screen
-                let leftPos = event.clientX + 15;
-                let topPos = event.clientY + 15;
+                // Position logic: 
+                // Mobile (touch): Fixed position bottom-right
+                // Desktop (mouse): Follow cursor
                 
-                // Simple bounds check (mostly for mobile/small screens)
-                if (leftPos + 250 > window.innerWidth) {
-                    leftPos = event.clientX - 265; // Flip to left
+                if (event.isTouch || window.innerWidth < 768) {
+                    // Mobile Position: Fixed at bottom right, but not edge
+                    thumbnailPreview.style.left = 'auto';
+                    thumbnailPreview.style.top = 'auto';
+                    thumbnailPreview.style.right = '20px';
+                    thumbnailPreview.style.bottom = '80px'; 
+                } else {
+                    // Desktop Position: Cursor follow
+                    let leftPos = event.clientX + 15;
+                    let topPos = event.clientY + 15;
+                    
+                    // Simple bounds check
+                    if (leftPos + 250 > window.innerWidth) {
+                        leftPos = event.clientX - 265; // Flip to left
+                    }
+                    
+                    thumbnailPreview.style.left = leftPos + 'px';
+                    thumbnailPreview.style.top = topPos + 'px';
+                    // Reset mobile overrides
+                    thumbnailPreview.style.right = 'auto';
+                    thumbnailPreview.style.bottom = 'auto';
                 }
 
-                thumbnailPreview.style.left = leftPos + 'px';
-                thumbnailPreview.style.top = topPos + 'px';
                 thumbnailPreview.classList.add('visible');
             }
         }
@@ -779,7 +816,7 @@
             let leftHtml = '<div class="space-y-4 ui-text text-sm">';
             // Project Name Block
             leftHtml += `<div class="mb-2">
-                             <div class="modal-label opacity-70 uppercase tracking-widest text-xs mb-1">Project:</div>
+                             <div class="modal-label opacity-70 uppercase tracking-widest mb-1">Project:</div>
                              <div class="modal-value font-bold text-lg leading-tight">${allMetadata['Project']}</div>
                           </div>`;
             
@@ -791,20 +828,20 @@
                 if (allMetadata[key]) {
                     // Display as compact inline blocks: "Label: Value"
                     leftHtml += `<div class="inline-flex items-baseline">
-                        <span class="modal-label opacity-70 uppercase tracking-widest text-xs mr-1">${key}:</span> 
+                        <span class="modal-label opacity-70 uppercase tracking-widest mr-1">${key}:</span> 
                         <span class="modal-value capitalize">${allMetadata[key]}</span>
                     </div>`;
                 }
             });
             
             if (allMetadata['Link']) {
-                 leftHtml += `<div class="inline-flex items-baseline"><span class="modal-label opacity-70 uppercase text-xs mr-1">Link:</span> <span>${allMetadata['Link']}</span></div>`;
+                 leftHtml += `<div class="inline-flex items-baseline"><span class="modal-label opacity-70 uppercase mr-1">Link:</span> <span>${allMetadata['Link']}</span></div>`;
             }
             
             leftHtml += '</div></div>'; // Close flex container and main wrapper
             
             modalLeftCol.innerHTML = leftHtml;
-            modalRightCol.innerHTML = `<p class="modal-desc text-sm leading-relaxed">${project.description || ''}</p>`;
+            modalRightCol.innerHTML = `<p class="modal-desc leading-relaxed">${project.description || ''}</p>`;
             
             modalContainer.classList.add('open');
             modalBackdrop.classList.add('open');
@@ -829,7 +866,7 @@
         
         // --- MOUSE MOVE FOR THUMBNAIL (DESKTOP) ---
         document.addEventListener('mousemove', (e) => {
-            if (thumbnailPreview.classList.contains('visible')) {
+            if (thumbnailPreview.classList.contains('visible') && window.innerWidth >= 768) {
                 // Bounds check
                 let leftPos = e.clientX + 20;
                 if (leftPos + 250 > window.innerWidth) {
