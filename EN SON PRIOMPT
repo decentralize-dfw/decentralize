@@ -1,3 +1,19 @@
+bu kodda istediğim değişiklikler:
+
+1- üç tane font linkleyebilmeliyiz. bu fontlardan birincisimenü başlıklarında ve pop up açıldığı zaman thumbnail tıkladnığı zaman project type, subtype gibi soldaki başlıklarda kullanılmalı, ikinci font pop up açılıdğı zaman çıkan infoların yazıları, yani sağdaki açıklamalar ve sağ kısımdaki description fontu, üçüncü font ise, ana ekranda gördüğümüz yıl ya da subtyoe ya da herhangi bir başlığın ana ekranda gördüğümüz, onların fontları olmalıdır.
+
+2- üstte bulunan menünün bancgroundu yüzde 50opasite olmalıdır. ve ortada olmalıdır. kontroller. tek sıra halinde gene, fakat ortaya hizalı olmalıdır. ve chaos grid circle sıralaması grid circle chaos olmalıdır, açılış olarak aktif olan grid olmalıdır. 
+
+3- subtype kısmında, başlıkları biraz üste al, altlarına ise daha küçük fontla italic şekilde başlıklarını yazmalıdır. örneğin abstract yazıyor ya, ne abstract o? altında onu görmeliyiz fakat üst üste gelmemelidir thumbnaillerle dolayısıyla o kadar üste taşı.
+
+4- ana şeylerin dizildiği çember media sayısına göre parametrik olmalıdır. ne kadar content varsa ona uygun bir çapı olmalıdr. chaos modu için de aynı şey. fakat grid modunda bir çemberde değil tek sıra halinde arka arkaya sıralı görmeliyiz. 
+
+const project data çok yüklü şuan test amaçlı ordan 10 tane çeşitli content kullan hepsini yazma.
+
+
+
+
+-------------------------
 YAZILARIN DÖNMEİSİNİ KALDIR.
 
 GRİD MODUNDA ÜST BAŞLIKLAR HALA AŞAĞIDA KALIYOR, ONLARI BİRAZ DAHA PARAMETRİK OLARAK ÜSTE AL. 
