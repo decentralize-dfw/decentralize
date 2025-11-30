@@ -206,29 +206,30 @@
         #modal-left-col::-webkit-scrollbar, #modal-right-col::-webkit-scrollbar { display: block; width: 4px; }
         #modal-left-col::-webkit-scrollbar-thumb, #modal-right-col::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 2px; border: none; }
 
-        /* Modal Typography - RESPONSIVE UPDATE */
-        /* Desktop defaults, overridden by media queries in style or Tailwind classes in HTML */
+        /* Modal Typography - UPDATED FOR SMALLER MOBILE FONTS */
         .modal-label { 
             font-family: var(--font-headers); 
             font-weight: 500; 
-            font-size: 0.55rem; /* Mobile Base: drastically reduced */
+            font-size: 0.4rem; /* Ultra small for mobile (approx 6-7px) */
+            line-height: 1.1;
         } 
         .modal-value { 
             font-family: var(--font-body); 
             font-weight: 400; 
-            font-size: 0.55rem; /* Mobile Base: drastically reduced */
+            font-size: 0.45rem; /* Ultra small for mobile */
+            line-height: 1.1;
         }
         .modal-desc { 
             font-family: var(--font-body); 
             font-weight: 400; 
-            font-size: 0.7rem; /* Mobile Base */
-            line-height: 1.1; 
+            font-size: 0.65rem; /* Small description text on mobile */
+            line-height: 1.25; 
         }
 
-        /* Desktop Overrides */
+        /* Desktop Overrides - Restore readable sizes */
         @media (min-width: 768px) {
-            .modal-label { font-size: 0.8rem; }
-            .modal-value { font-size: 0.8rem; }
+            .modal-label { font-size: 0.8rem; line-height: 1.5; }
+            .modal-value { font-size: 0.8rem; line-height: 1.5; }
             .modal-desc { font-size: 1rem; line-height: 1.5; }
         }
 
@@ -286,10 +287,23 @@
             
             <div id="modal-media-scroller" class="media-scroller w-full h-[50%] md:h-[60%] flex-shrink-0 overflow-x-auto overflow-y-hidden whitespace-nowrap border-b ui-border flex items-center p-4 gap-4 bg-black/5"></div>
             
-            <div class="w-full h-[50%] md:h-[40%] grid grid-cols-1 md:grid-cols-2 gap-px ui-border">
-                <!-- Added flex-col to enable custom layout -->
-                <div id="modal-left-col" class="p-4 md:p-[3%] overflow-y-auto border-b md:border-b-0 md:border-r ui-border flex flex-col" style="background-color: var(--modal-bg);"></div>
-                <div id="modal-right-col" class="p-4 md:p-[5%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
+            <!-- CHANGED: Used flex-col on mobile to let left-col hug content height, grid on desktop -->
+            <div class="w-full h-[50%] md:h-[40%] flex flex-col md:grid md:grid-cols-2 gap-px ui-border">
+                
+                <!-- 
+                   CHANGED LEFT COL: 
+                   - flex-shrink-0: prevents it from growing to fill half height on mobile, hugs content instead.
+                   - border-b: now acts as the separator line immediately after content on mobile.
+                   - md:border-b-0 md:border-r: Switches to vertical border on desktop.
+                -->
+                <div id="modal-left-col" class="p-4 md:p-[3%] flex-shrink-0 border-b md:border-b-0 md:border-r ui-border flex flex-col" style="background-color: var(--modal-bg);"></div>
+                
+                <!-- 
+                   CHANGED RIGHT COL:
+                   - flex-grow: takes up all remaining space in the container on mobile.
+                   - overflow-y-auto: scrolls if text is long.
+                -->
+                <div id="modal-right-col" class="p-4 md:p-[5%] flex-grow overflow-y-auto" style="background-color: var(--modal-bg);"></div>
             </div>
         </div>
     </div>
