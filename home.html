@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>decentralize-home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Portfolio 3D Scene V1 - Curator Mode</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meshopt Decoder (Global) -->
@@ -39,15 +39,17 @@
             background-color: var(--bg-color);
             color: var(--ui-color);
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* Prevent scrolling */
             width: 100vw;
             height: 100vh;
+            touch-action: none; /* Critical for mobile: disables browser zoom/scroll handling */
         }
 
         #scene-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
+            touch-action: none;
         }
 
         /* HTML Elements in 3D */
@@ -77,6 +79,8 @@
             font-family: 'Telegrama Raw', sans-serif;
             font-size: 2rem; color: var(--ui-color);
             animation: pulse 1s infinite;
+            text-align: center;
+            padding: 20px;
         }
         @keyframes pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
 
@@ -124,9 +128,6 @@
                 scale: 2
             },
             
-            // --- HTML (IFRAME) EXAMPLE ---
-            
-
             // --- SOUND OBJECT ---
             {
                 type: 'sound',
@@ -155,7 +156,7 @@
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize/main/DRAWING4.png',
                 width: 700,
-                position: { x: -1000, y: 500, z: -400 }, // z: 100 -> Videonun önünde
+                position: { x: -1000, y: 500, z: -400 }, 
                 rotation: { x: 0, y: 0, z: 0 },
                 scale: 1.2
             },
@@ -164,7 +165,7 @@
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize/main/DRAWING3.png',
                 width: 600,
-                position: { x: -1000, y: 500, z: -100 }, // z: 100 -> Videonun önünde
+                position: { x: -1000, y: 500, z: -100 }, 
                 rotation: { x: 0, y: 15, z: 0 },
                 scale: 1.2
             },
@@ -173,7 +174,7 @@
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize/main/DRAWING1.png',
                  width: 500,
-                position: { x: -1000, y: 500, z:  200 }, // z: 100 -> Videonun önünde
+                position: { x: -1000, y: 500, z:  200 }, 
                 rotation: { x: 0, y: 30, z: 0 },
                 scale: 1.2
             },
@@ -182,7 +183,7 @@
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize/main/DRAWING0.png',
                 width: 400,
-                position: { x: -1000, y: 500, z: 500 }, // z: 100 -> Videonun önünde
+                position: { x: -1000, y: 500, z: 500 }, 
                 rotation: { x: 0, y: 45, z: 0 },
                 scale: 1.2
             },
@@ -191,14 +192,10 @@
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize/main/LOGO1.png',
                 width: 300,
-                position: { x: -1000, y: 500, z: 800 }, // z: 100 -> Videonun önünde
+                position: { x: -1000, y: 500, z: 800 }, 
                 rotation: { x: 0, y: 60, z: 0 },
                 scale: 1.2
             },
-
-            
-
-            
 
             // --- 3D MODEL ---   
             {
@@ -279,9 +276,20 @@
         let camera, scene, rendererGL, rendererCSS, controls, dragControls;
         let clock;
         let raycaster, mouse;
-        const clickableObjects = []; // Used for both Raycaster (Click) and DragControls
-        const frustumSize = 3000;
-        let isClickBlocked = false; // Separate flag to distinguish drag vs click
+        const clickableObjects = []; 
+        
+        // ** MOBILE DETECTION **
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // ** LENS SETTING (FRUSTUM) **
+        // Mobilde daha geniş açı (uzaktan bakış) için frustum size'ı artırıyoruz.
+        let frustumSize = isMobile ? 5500 : 3000; 
+        
+        let isClickBlocked = false; 
+
+        // Touch handling variables
+        let touchStartX = 0;
+        let touchStartY = 0;
 
         init();
         animate();
@@ -309,7 +317,7 @@
 
             scene = new THREE.Scene();
 
-            // --- RENDERER SETUP (SANDWICH METHOD) ---
+            // --- RENDERER SETUP ---
             
             // 1. CSS3D Renderer (BOTTOM LAYER)
             rendererCSS = new CSS3DRenderer();
@@ -336,28 +344,30 @@
             controls = new OrbitControls(camera, document.body);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.enableZoom = true;
+            controls.enableZoom = true; // Bu özellik mobile pinch-to-zoom'u sağlar
             controls.zoomSpeed = 1.0;
 
             // --- DRAG CONTROLS ---
-            dragControls = new DragControls(clickableObjects, camera, document.body);
-            
-            dragControls.addEventListener('dragstart', function (event) {
-                controls.enabled = false;
-                isClickBlocked = false; // Reset block status on start
-            });
+            // Sadece Masaüstünde (Mobile değilse) Drag özelliğini açıyoruz
+            if (!isMobile) {
+                dragControls = new DragControls(clickableObjects, camera, document.body);
+                
+                dragControls.addEventListener('dragstart', function (event) {
+                    controls.enabled = false;
+                    isClickBlocked = false; 
+                });
 
-            dragControls.addEventListener('drag', function (event) {
-                isClickBlocked = true; // Movement detected, this is a drag, not a click
-            });
+                dragControls.addEventListener('drag', function (event) {
+                    isClickBlocked = true; 
+                });
 
-            dragControls.addEventListener('dragend', function (event) {
-                controls.enabled = true;
-                // If it was a drag, keep click blocked for a moment to prevent accidental trigger
-                if (isClickBlocked) {
-                    setTimeout(() => { isClickBlocked = false; }, 100);
-                }
-            });
+                dragControls.addEventListener('dragend', function (event) {
+                    controls.enabled = true;
+                    if (isClickBlocked) {
+                        setTimeout(() => { isClickBlocked = false; }, 100);
+                    }
+                });
+            }
 
             const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
             scene.add(ambientLight);
@@ -379,10 +389,104 @@
             });
 
             window.addEventListener('resize', onWindowResize);
-            window.addEventListener('click', onMouseClick); 
+            
+            // --- EVENT LISTENERS FOR INTERACTION ---
+            
+            // 1. Desktop Click
+            window.addEventListener('click', (event) => {
+                // Drag sonrası tıklamayı engelle (Desktop only logic)
+                if (isClickBlocked) return;
+                
+                // Normal tıklama
+                handleInteraction(event.clientX, event.clientY);
+            }); 
+            
+            // 2. Mobile Tap (Touch) Detection
+            // Touch başlangıcını kaydet
+            window.addEventListener('touchstart', (event) => {
+                if(event.touches.length > 0) {
+                    touchStartX = event.touches[0].clientX;
+                    touchStartY = event.touches[0].clientY;
+                }
+            }, {passive: false});
+
+            // Touch bitişini kontrol et - eğer kaydırma yoksa "Tıklama" say
+            window.addEventListener('touchend', (event) => {
+                if(event.changedTouches.length > 0) {
+                    const touchEndX = event.changedTouches[0].clientX;
+                    const touchEndY = event.changedTouches[0].clientY;
+                    
+                    const dx = touchEndX - touchStartX;
+                    const dy = touchEndY - touchStartY;
+                    
+                    // Hareket çok az ise (örneğin 10 pikselden az), bu bir TIKLAMA (TAP) dır.
+                    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+                        handleInteraction(touchEndX, touchEndY);
+                    }
+                }
+            }, {passive: false});
+            
             
             setTimeout(() => { document.getElementById('loader').style.opacity = 0; }, 1000);
             setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1500);
+        }
+
+        // --- UNIFIED INTERACTION HANDLER ---
+        function handleInteraction(clientX, clientY) {
+            // Mouse vektörünü güncelle
+            mouse.x = (clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(clickableObjects, true); 
+
+            if (intersects.length > 0) {
+                let object = intersects[0].object;
+                
+                // Parent'a kadar çık
+                while(object.parent && !object.userData.isVideo && !object.userData.isSound) {
+                    object = object.parent;
+                    if (!object) break; 
+                }
+                if (!object) object = intersects[0].object; 
+
+                // --- VIDEO PLAY/PAUSE ---
+                if (object.userData.isVideo) {
+                    const vid = object.userData.videoEl;
+                    const playBtn = object.userData.playBtn;
+                    
+                    if (vid.paused || vid.ended) {
+                        vid.play(); // Mobile'da kullanıcı etkileşimi (touchend) içinde olduğumuz için çalışır
+                        object.material.map = object.userData.videoTex;
+                        object.userData.isPlaying = true;
+                        playBtn.visible = false;
+                        
+                        vid.onended = () => {
+                            object.userData.isPlaying = false;
+                            playBtn.visible = true;
+                        };
+                    } else {
+                        vid.pause();
+                        object.userData.isPlaying = false;
+                        playBtn.visible = true;
+                    }
+                    object.material.needsUpdate = true;
+                }
+
+                // --- SOUND PLAY/PAUSE ---
+                if (object.userData.isSound) {
+                    const audio = object.userData.audioEl;
+                    if (audio.paused) {
+                        audio.play();
+                        object.userData.isPlaying = true;
+                        new TWEEN.Tween(object.scale).to({x: object.scale.x * 1.1, y: object.scale.y * 1.1}, 100).yoyo(true).repeat(1).start();
+                    } else {
+                        audio.pause();
+                        audio.currentTime = 0; 
+                        object.userData.isPlaying = false;
+                    }
+                }
+            }
         }
 
         // --- 3. BUILDER ---
@@ -502,6 +606,10 @@
                     const playMesh = new THREE.Mesh(playGeo, playMat);
                     playMesh.position.z = 5; 
                     playMesh.renderOrder = 1; 
+                    
+                    // Önemli: Play butonuna isim verelim ki raycaster ile bulabilelim
+                    playMesh.name = "PlayButton";
+                    
                     mesh.add(playMesh); 
 
                     applyTransform(mesh);
@@ -641,62 +749,6 @@
             });
         }
 
-        // --- INTERACTION ---
-        function onMouseClick(event) {
-            if (isClickBlocked) return; // Prevent click action if just dragged
-
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(clickableObjects, true); 
-
-            if (intersects.length > 0) {
-                let object = intersects[0].object;
-                while(object.parent && !object.userData.isVideo && !object.userData.isSound) {
-                    object = object.parent;
-                    if (!object) break; // Safety break
-                }
-                
-                if (!object) object = intersects[0].object; // Fallback
-
-                if (object.userData.isVideo) {
-                    const vid = object.userData.videoEl;
-                    const playBtn = object.userData.playBtn;
-                    
-                    if (vid.paused || vid.ended) {
-                        vid.play();
-                        object.material.map = object.userData.videoTex;
-                        object.userData.isPlaying = true;
-                        playBtn.visible = false;
-                        
-                        vid.onended = () => {
-                            object.userData.isPlaying = false;
-                            playBtn.visible = true;
-                        };
-                    } else {
-                        vid.pause();
-                        object.userData.isPlaying = false;
-                        playBtn.visible = true;
-                    }
-                    object.material.needsUpdate = true;
-                }
-
-                if (object.userData.isSound) {
-                    const audio = object.userData.audioEl;
-                    if (audio.paused) {
-                        audio.play();
-                        object.userData.isPlaying = true;
-                        new TWEEN.Tween(object.scale).to({x: object.scale.x * 1.1, y: object.scale.y * 1.1}, 100).yoyo(true).repeat(1).start();
-                    } else {
-                        audio.pause();
-                        audio.currentTime = 0; 
-                        object.userData.isPlaying = false;
-                    }
-                }
-            }
-        }
-
         // --- RENDER LOOP ---
         function animate() {
             requestAnimationFrame(animate);
@@ -718,10 +770,21 @@
         function onWindowResize() {
             const aspect = window.innerWidth / window.innerHeight;
             
-            camera.left = - frustumSize * aspect / 2;
-            camera.right = frustumSize * aspect / 2;
-            camera.top = frustumSize / 2;
-            camera.bottom = - frustumSize / 2;
+            // Re-calculate frustum on resize (handles mobile orientation change)
+            let currentFrustum = frustumSize;
+            if (isMobile && window.innerWidth < window.innerHeight) {
+                 // Portrait mode on mobile might need even more zoom out
+                 currentFrustum = 6000;
+            } else if (isMobile) {
+                 currentFrustum = 5500;
+            } else {
+                 currentFrustum = 3000;
+            }
+
+            camera.left = - currentFrustum * aspect / 2;
+            camera.right = currentFrustum * aspect / 2;
+            camera.top = currentFrustum / 2;
+            camera.bottom = - currentFrustum / 2;
             
             camera.updateProjectionMatrix();
             rendererGL.setSize(window.innerWidth, window.innerHeight);
