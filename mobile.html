@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Portfolio 3D Scene V1 - Curator Mode</title>
+    <title>decentralize-portfolio abstract space</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meshopt Decoder (Global) -->
@@ -286,7 +286,10 @@
         let frustumSize = isMobile ? 5500 : 3000; 
         
         let isClickBlocked = false; 
-        let isPlayButtonHovered = false; // Flag to check if we are over the play button
+
+        // Touch handling variables
+        let touchStartX = 0;
+        let touchStartY = 0;
 
         init();
         animate();
@@ -345,43 +348,26 @@
             controls.zoomSpeed = 1.0;
 
             // --- DRAG CONTROLS ---
-            dragControls = new DragControls(clickableObjects, camera, document.body);
-            
-            dragControls.addEventListener('dragstart', function (event) {
-                // ** PLAY BUTTON PROTECTION **
-                // Eğer kullanıcı tam olarak Play Butonuna dokunuyorsa, sürüklemeyi engelle.
-                // Bu sayede video sağa sola kaymaz, sadece click event'i bekleriz.
-                if (event.object.userData.isVideo) {
-                    // Play butonu ile kesişimi kontrol et
-                    const playBtn = event.object.userData.playBtn;
-                    
-                    // Mouse/Touch pozisyonunu güncellememiz gerekebilir ama DragControls zaten event fırlattı.
-                    // Raycaster ile özel bir kontrol yapalım.
-                    // (Not: DragControls 'mouse' objesini güncellemez, manuel kontrol gerekir)
-                    // Ancak Three.js DragControls'da event.object sürüklenen ana objedir.
-                    
-                    // Basit çözüm: Eğer play butonu görünürse (video oynamıyorsa),
-                    // ve kullanıcı etkileşime girdiyse, hassas bir kontrol yapalım.
-                    // Buraya ek bir raycaster kontrolü koyuyoruz.
-                    
-                    // Raycaster'ı güncellemek için güncel mouse koordinatına ihtiyacımız var.
-                    // DragControls mouse'u vermediği için, en son kaydedilen mouse'u kullanırız (mousemove listener aşağıda).
-                }
+            // Sadece Masaüstünde (Mobile değilse) Drag özelliğini açıyoruz
+            if (!isMobile) {
+                dragControls = new DragControls(clickableObjects, camera, document.body);
+                
+                dragControls.addEventListener('dragstart', function (event) {
+                    controls.enabled = false;
+                    isClickBlocked = false; 
+                });
 
-                controls.enabled = false;
-                isClickBlocked = false; 
-            });
+                dragControls.addEventListener('drag', function (event) {
+                    isClickBlocked = true; 
+                });
 
-            dragControls.addEventListener('drag', function (event) {
-                isClickBlocked = true; 
-            });
-
-            dragControls.addEventListener('dragend', function (event) {
-                controls.enabled = true;
-                if (isClickBlocked) {
-                    setTimeout(() => { isClickBlocked = false; }, 100);
-                }
-            });
+                dragControls.addEventListener('dragend', function (event) {
+                    controls.enabled = true;
+                    if (isClickBlocked) {
+                        setTimeout(() => { isClickBlocked = false; }, 100);
+                    }
+                });
+            }
 
             const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
             scene.add(ambientLight);
@@ -404,62 +390,100 @@
 
             window.addEventListener('resize', onWindowResize);
             
-            // Mouse/Touch eventleri
-            window.addEventListener('click', onMouseClick); 
-            window.addEventListener('touchstart', onTouchStart, {passive: false}); // Mobil touch başlangıcı
+            // --- EVENT LISTENERS FOR INTERACTION ---
             
-            // Mouse takibi (Play butonunu drag'dan korumak için)
-            window.addEventListener('mousemove', updateMouse);
-            window.addEventListener('touchmove', updateTouch, {passive: false});
+            // 1. Desktop Click
+            window.addEventListener('click', (event) => {
+                // Drag sonrası tıklamayı engelle (Desktop only logic)
+                if (isClickBlocked) return;
+                
+                // Normal tıklama
+                handleInteraction(event.clientX, event.clientY);
+            }); 
+            
+            // 2. Mobile Tap (Touch) Detection
+            // Touch başlangıcını kaydet
+            window.addEventListener('touchstart', (event) => {
+                if(event.touches.length > 0) {
+                    touchStartX = event.touches[0].clientX;
+                    touchStartY = event.touches[0].clientY;
+                }
+            }, {passive: false});
 
+            // Touch bitişini kontrol et - eğer kaydırma yoksa "Tıklama" say
+            window.addEventListener('touchend', (event) => {
+                if(event.changedTouches.length > 0) {
+                    const touchEndX = event.changedTouches[0].clientX;
+                    const touchEndY = event.changedTouches[0].clientY;
+                    
+                    const dx = touchEndX - touchStartX;
+                    const dy = touchEndY - touchStartY;
+                    
+                    // Hareket çok az ise (örneğin 10 pikselden az), bu bir TIKLAMA (TAP) dır.
+                    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+                        handleInteraction(touchEndX, touchEndY);
+                    }
+                }
+            }, {passive: false});
+            
+            
             setTimeout(() => { document.getElementById('loader').style.opacity = 0; }, 1000);
             setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1500);
         }
 
-        // --- MOUSE / TOUCH TRACKING ---
-        function updateMouse(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        }
+        // --- UNIFIED INTERACTION HANDLER ---
+        function handleInteraction(clientX, clientY) {
+            // Mouse vektörünü güncelle
+            mouse.x = (clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(clientY / window.innerHeight) * 2 + 1;
 
-        function updateTouch(event) {
-            if(event.touches.length > 0) {
-                mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
-            }
-        }
-        
-        function onTouchStart(event) {
-            // Touch başladığında koordinatları güncelle
-            updateTouch(event);
-            checkPlayButtonIntersect();
-        }
-
-        // Özel kontrol: Drag başlamadan önce play butonuna mı basılıyor?
-        function checkPlayButtonIntersect() {
             raycaster.setFromCamera(mouse, camera);
-            
-            // Sadece video objelerini kontrol et
-            const videoObjects = clickableObjects.filter(o => o.userData.isVideo);
-            const intersects = raycaster.intersectObjects(videoObjects, false);
+            const intersects = raycaster.intersectObjects(clickableObjects, true); 
 
             if (intersects.length > 0) {
-                const videoMesh = intersects[0].object;
-                const playBtn = videoMesh.userData.playBtn;
+                let object = intersects[0].object;
+                
+                // Parent'a kadar çık
+                while(object.parent && !object.userData.isVideo && !object.userData.isSound) {
+                    object = object.parent;
+                    if (!object) break; 
+                }
+                if (!object) object = intersects[0].object; 
 
-                // Şimdi Play butonunun kendisine çarpıyor mu bakalım
-                // Play butonu videoMesh'in çocuğu
-                if (playBtn && playBtn.visible) {
-                    const btnIntersects = raycaster.intersectObject(playBtn, true);
-                    if (btnIntersects.length > 0) {
-                        // Play butonuna basıldı!
-                        // DragControls'u geçici olarak devre dışı bırakmalıyız ki sürüklenmesin
-                        dragControls.enabled = false;
+                // --- VIDEO PLAY/PAUSE ---
+                if (object.userData.isVideo) {
+                    const vid = object.userData.videoEl;
+                    const playBtn = object.userData.playBtn;
+                    
+                    if (vid.paused || vid.ended) {
+                        vid.play(); // Mobile'da kullanıcı etkileşimi (touchend) içinde olduğumuz için çalışır
+                        object.material.map = object.userData.videoTex;
+                        object.userData.isPlaying = true;
+                        playBtn.visible = false;
                         
-                        // Kısa süre sonra tekrar aç (click işlemi bitsin diye)
-                        setTimeout(() => {
-                            dragControls.enabled = true;
-                        }, 500);
+                        vid.onended = () => {
+                            object.userData.isPlaying = false;
+                            playBtn.visible = true;
+                        };
+                    } else {
+                        vid.pause();
+                        object.userData.isPlaying = false;
+                        playBtn.visible = true;
+                    }
+                    object.material.needsUpdate = true;
+                }
+
+                // --- SOUND PLAY/PAUSE ---
+                if (object.userData.isSound) {
+                    const audio = object.userData.audioEl;
+                    if (audio.paused) {
+                        audio.play();
+                        object.userData.isPlaying = true;
+                        new TWEEN.Tween(object.scale).to({x: object.scale.x * 1.1, y: object.scale.y * 1.1}, 100).yoyo(true).repeat(1).start();
+                    } else {
+                        audio.pause();
+                        audio.currentTime = 0; 
+                        object.userData.isPlaying = false;
                     }
                 }
             }
@@ -723,69 +747,6 @@
                     }, undefined, (err) => console.error(err));
                 }
             });
-        }
-
-        // --- INTERACTION ---
-        function onMouseClick(event) {
-            if (isClickBlocked) return; // Prevent click action if just dragged
-
-            // Mouse güncellemeyi garantiye al (mobil için)
-            if (event.type === 'click') {
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            }
-
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(clickableObjects, true); 
-
-            if (intersects.length > 0) {
-                let object = intersects[0].object;
-                
-                // Tıklanan obje Play Butonu mu?
-                let isPlayBtnClick = object.name === "PlayButton";
-
-                while(object.parent && !object.userData.isVideo && !object.userData.isSound) {
-                    object = object.parent;
-                    if (!object) break; // Safety break
-                }
-                
-                if (!object) object = intersects[0].object; // Fallback
-
-                if (object.userData.isVideo) {
-                    const vid = object.userData.videoEl;
-                    const playBtn = object.userData.playBtn;
-                    
-                    if (vid.paused || vid.ended) {
-                        vid.play();
-                        object.material.map = object.userData.videoTex;
-                        object.userData.isPlaying = true;
-                        playBtn.visible = false;
-                        
-                        vid.onended = () => {
-                            object.userData.isPlaying = false;
-                            playBtn.visible = true;
-                        };
-                    } else {
-                        vid.pause();
-                        object.userData.isPlaying = false;
-                        playBtn.visible = true;
-                    }
-                    object.material.needsUpdate = true;
-                }
-
-                if (object.userData.isSound) {
-                    const audio = object.userData.audioEl;
-                    if (audio.paused) {
-                        audio.play();
-                        object.userData.isPlaying = true;
-                        new TWEEN.Tween(object.scale).to({x: object.scale.x * 1.1, y: object.scale.y * 1.1}, 100).yoyo(true).repeat(1).start();
-                    } else {
-                        audio.pause();
-                        audio.currentTime = 0; 
-                        object.userData.isPlaying = false;
-                    }
-                }
-            }
         }
 
         // --- RENDER LOOP ---
