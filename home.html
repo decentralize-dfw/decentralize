@@ -10,16 +10,28 @@
     <script src="https://unpkg.com/meshoptimizer@0.19.0/meshopt_decoder.js"></script>
 
     <!-- 
-        1. FONT DEFINITIONS 
-        Font 1 (Headers/Menu): 'Teko'
-        Font 2 (Body/Description): 'Rajdhani'
-        Font 3 (3D Labels): 'Staatliches'
+        CUSTOM FONTS FROM GITHUB
     -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600&family=Staatliches&family=Teko:wght@300..700&display=swap" rel="stylesheet">
-
     <style>
+        @font-face {
+            font-family: 'Telegrama Raw';
+            src: url('https://raw.githubusercontent.com/decentralize-dfw/font/main/telegrama_raw.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Telegrama Render';
+            src: url('https://raw.githubusercontent.com/decentralize-dfw/font/main/telegrama_render_osn.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'GAU Private';
+            src: url('https://raw.githubusercontent.com/decentralize-dfw/font/main/GAU_private_R.TTF') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         /* --- THEME SETTINGS --- */
         :root {
             --ui-color: #FF006A; 
@@ -27,14 +39,14 @@
             --modal-bg: #ffb8d5;
             --card-bg: transparent; 
             
-            /* Font Assignments */
-            --font-headers: 'Teko', sans-serif;
-            --font-body: 'Rajdhani', sans-serif;
-            --font-3d: 'Staatliches', cursive;
+            /* Font Assignments Updated */
+            --font-headers: 'Telegrama Raw', sans-serif;       /* Menu & Headers */
+            --font-body: 'Telegrama Render', sans-serif;       /* Body & Description */
+            --font-3d: 'GAU Private', cursive;                 /* 3D Labels */
         }
 
         html, body {
-            font-family: var(--font-body); /* Default to Font 2 */
+            font-family: var(--font-body); 
             background-color: var(--bg-color);
             color: var(--ui-color);
             margin: 0;
@@ -46,86 +58,89 @@
 
         *::-webkit-scrollbar { display: none; width: 0; height: 0; background: transparent; }
 
-        /* --- UI CONTAINER (Modified: Centered, 50% Opacity) --- */
+        /* --- UI CONTAINER (Reverted to Left Alignment) --- */
         #ui-container {
             position: absolute; top: 0; left: 0; width: 100%; z-index: 100;
             padding: 1.5rem; pointer-events: none;
             display: flex; 
             flex-direction: column; 
-            align-items: center; /* Center horizontally */
+            align-items: flex-start; /* Aligned to Left */
             justify-content: flex-start;
-            /* Background removed from here, applied to menu-bar for better control */
         }
 
+        /* GÜNCELLEME: Menü Barı Küçültüldü */
         .menu-bar {
-            display: flex; flex-wrap: wrap; gap: 0.75rem; 
-            justify-content: center; /* Center buttons */
+            display: flex; flex-wrap: wrap; gap: 0.5rem; 
+            justify-content: flex-start; /* Items start from left */
             align-items: center; 
             pointer-events: auto; 
-            width: auto; /* Fit content */
-            background-color: rgba(0, 0, 0, 0.5); /* 50% Opacity Black */
-            padding: 10px 20px;
-            border-radius: 50px; /* Rounded pill shape */
+            width: auto; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 6px 12px; /* Reduced padding */
+            border-radius: 30px; /* Smaller radius */
             border: 1px solid rgba(255, 0, 106, 0.3);
             backdrop-filter: blur(5px);
         }
 
         .menu-group-separator {
-            width: 1px; height: 20px; background-color: var(--ui-color);
-            opacity: 0.3; margin: 0 8px;
+            width: 1px; height: 16px; background-color: var(--ui-color);
+            opacity: 0.3; margin: 0 6px;
         }
 
+        /* GÜNCELLEME: Nav Butonları Küçültüldü */
         .nav-btn {
             background: transparent; border: 1px solid transparent; color: var(--ui-color); 
-            padding: 4px 16px; 
+            padding: 2px 10px; /* Reduced padding */
             text-transform: uppercase; 
-            font-family: var(--font-headers); /* Font 1 */
-            font-size: 1.2rem; 
+            font-family: var(--font-headers); 
+            font-size: 0.75rem; /* Reduced font size */
             font-weight: 500;
-            letter-spacing: 1px;
-            cursor: pointer; transition: all 0.2s ease; border-radius: 0.375rem; opacity: 0.7;
+            letter-spacing: 0.5px;
+            cursor: pointer; transition: all 0.2s ease; border-radius: 0.25rem; opacity: 0.7;
         }
         .nav-btn:hover { opacity: 1; border-color: var(--ui-color); text-shadow: 0 0 8px var(--ui-color); }
         .nav-btn.active { background-color: rgba(255, 0, 106, 0.1); color: var(--ui-color); border-color: var(--ui-color); opacity: 1; }
 
         /* --- SLIDER & FIT BUTTON --- */
         #slider-container {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100;
-            display: flex; flex-direction: row; align-items: flex-end; gap: 12px; pointer-events: auto;
+            position: fixed; bottom: 30px; left: 30px; /* Moved to left corner */
+            transform: none; /* Removed center transform */
+            z-index: 100;
+            display: flex; flex-direction: row; align-items: flex-end; gap: 10px; pointer-events: auto;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 8px 16px; /* Slightly reduced */
+            border-radius: 10px;
             border: 1px solid rgba(255, 0, 106, 0.3);
             backdrop-filter: blur(5px);
         }
         
         .slider-wrapper {
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
         }
 
         #slider-label {
             font-family: var(--font-headers);
-            font-size: 1rem; text-transform: uppercase; font-weight: bold; opacity: 0.8; color: var(--ui-color);
+            font-size: 0.7rem; text-transform: uppercase; font-weight: bold; opacity: 0.8; color: var(--ui-color);
         }
         input[type=range] {
-            -webkit-appearance: none; width: 120px; height: 4px; background: rgba(255, 0, 106, 0.3);
+            -webkit-appearance: none; width: 100px; height: 3px; background: rgba(255, 0, 106, 0.3);
             border-radius: 2px; outline: none;
         }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 12px; height: 12px;
+            -webkit-appearance: none; appearance: none; width: 10px; height: 10px;
             border-radius: 50%; background: var(--ui-color); cursor: pointer;
         }
         
         #fit-btn {
             font-family: var(--font-headers);
-            font-size: 1rem; 
+            font-size: 0.7rem; 
             font-weight: bold; 
             text-transform: uppercase;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border: 1px solid var(--ui-color); 
             background: rgba(0,0,0,0.4);
             color: var(--ui-color);
-            height: 30px; 
+            height: 26px; 
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             border-radius: 4px;
@@ -151,7 +166,7 @@
             display: block; user-select: none; -webkit-user-drag: none;
         }
 
-        /* --- 3D LABELS (Modified) --- */
+        /* --- 3D LABELS (GÜNCELLENDİ) --- */
         .group-label-container {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             pointer-events: none; user-select: none;
@@ -162,8 +177,8 @@
         .group-label-container.visible { opacity: 1 !important; transform: scale(1); }
 
         .group-label-main {
-            font-family: var(--font-3d); /* Font 3 */
-            font-size: 120px; /* Larger size */
+            font-family: var(--font-3d); 
+            font-size: 70px; /* Reduced by 50% (was 140px) */
             line-height: 0.9;
             color: var(--ui-color);
             text-transform: uppercase;
@@ -171,12 +186,12 @@
         }
         
         .group-label-sub {
-            font-family: var(--font-body); /* Font 2 */
-            font-size: 30px; 
+            font-family: var(--font-body); 
+            font-size: 28px; /* Slightly increased (was 24px) */
             font-style: italic;
             font-weight: 300;
             color: #fff;
-            margin-top: 10px;
+            margin-top: 2px;
             text-transform: uppercase;
             letter-spacing: 2px;
             background: rgba(255, 0, 106, 0.8);
@@ -218,13 +233,10 @@
         #modal-left-col::-webkit-scrollbar, #modal-right-col::-webkit-scrollbar { display: block; width: 4px; }
         #modal-left-col::-webkit-scrollbar-thumb, #modal-right-col::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 2px; border: none; }
 
-        /* Typography Mapping in Modal */
-        /* Left Column Labels */
-        .modal-label { font-family: var(--font-headers); font-weight: 500; font-size: 1.2rem; } 
-        /* Left Column Values */
-        .modal-value { font-family: var(--font-body); font-weight: 300; font-size: 1.1rem; }
-        /* Right Column Description */
-        .modal-desc { font-family: var(--font-body); font-weight: 400; font-size: 1.1rem; line-height: 1.6; }
+        /* Typography Mapping in Modal (Updated for Compactness) */
+        .modal-label { font-family: var(--font-headers); font-weight: 500; font-size: 0.9rem; } 
+        .modal-value { font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; }
+        .modal-desc { font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.5; }
 
         /* UTILS */
         .ui-text { color: var(--ui-color); }
@@ -265,7 +277,7 @@
 <body>
 
     <div id="loader">
-        <div class="loader-text">LOADING UNIVERSE V9</div>
+        <div class="loader-text">***decentralizing***</div>
     </div>
 
     <div id="ui-container">
@@ -302,7 +314,7 @@
             <button id="modal-close-btn" class="absolute top-4 right-4 z-50 text-sm font-medium px-3 py-1 rounded-md border ui-border ui-text bg-black/60 hover:bg-black/80 transition-colors text-white cursor-pointer" style="font-family: var(--font-headers);">Close</button>
             <div id="modal-media-scroller" class="media-scroller w-full h-[60%] flex-shrink-0 overflow-x-auto overflow-y-hidden whitespace-nowrap border-b ui-border bg-transparent flex items-center p-4 gap-4"></div>
             <div class="w-full h-[40%] grid grid-cols-1 md:grid-cols-2 gap-px ui-border" style="border-color: var(--ui-color);">
-                <div id="modal-left-col" class="p-[5%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
+                <div id="modal-left-col" class="p-[3%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
                 <div id="modal-right-col" class="p-[5%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
             </div>
         </div>
@@ -3682,21 +3694,15 @@
         function setupFitButton() {
             const fitBtn = document.getElementById('fit-btn');
             fitBtn.addEventListener('click', () => {
-                new TWEEN.Tween(controls.target)
-                    .to({ x: 0, y: 0, z: 0 }, 1000)
-                    .easing(TWEEN.Easing.Cubic.Out)
-                    .start();
+                // Do NOT reset controls.target (preserves camera angle)
+                // Just calculate bounding sphere/distance and ZOOM to fit
 
                 let maxDist = 0;
                 objects.forEach(obj => {
                     if (obj.userData.center) { 
-                        // Approximate distance for bounding box calculation
-                        // For grid depth, use Z
+                        // Approximate max dimension
                         const zDist = Math.abs(obj.userData.center.z + obj.userData.offset.z);
-                        // For radius
                         const rDist = obj.userData.center.length() + obj.userData.offset.length();
-                        
-                        // Use max of these to be safe
                         const dist = Math.max(zDist, rDist);
                         if (dist > maxDist) maxDist = dist;
                     }
@@ -3710,7 +3716,6 @@
                 let targetZoom = 1;
                 
                 if (state.view === 'grid') {
-                     // Need more zoom out for deep grid stacks
                      targetZoom = frustumBase / (maxDist * 1.5);
                 } else {
                     if (aspect >= 1) {
@@ -3722,6 +3727,7 @@
 
                 targetZoom = Math.max(0.1, Math.min(targetZoom, 5));
 
+                // Animate ONLY Zoom
                 new TWEEN.Tween(camera)
                     .to({ zoom: targetZoom }, 1000)
                     .easing(TWEEN.Easing.Cubic.Out)
@@ -3814,11 +3820,13 @@
 
                 if (state.filter !== 'all') {
                     if (state.view === 'grid') {
-                        // --- LINEAR GLOBAL LAYOUT FOR GRID ---
+                        // --- CENTERED LINEAR GLOBAL LAYOUT FOR GRID ---
                         // Groups arranged behind each other on Z axis
-                        // Group 1 at Z=0, Group 2 at Z=-2500, etc.
+                        // Centered around Z=0
+                        const groupZSpacing = 2500;
+                        const totalZLen = (groupKeys.length - 1) * groupZSpacing;
                         cx = 0; 
-                        cz = gIndex * -2500; // Negative goes deeper into screen
+                        cz = (totalZLen / 2) - (gIndex * groupZSpacing); // Positive to Negative (Front to Back)
                     } else {
                         // --- CIRCULAR GLOBAL LAYOUT FOR SPHERE/CHAOS ---
                         const angle = (gIndex / groupKeys.length) * Math.PI * 2;
@@ -4076,25 +4084,28 @@
             const allMetadata = { 'Project': project.name, ...project.categories };
             if (project.link) allMetadata['Link'] = `<a href="${project.link}" target="_blank" class="underline ui-text">${project.link}</a>`;
 
-            let leftHtml = '<div class="space-y-2 ui-text">';
-            // Project Name (Font 1)
-            leftHtml += `<p class="flex flex-col mb-4"><span class="modal-label text-xl uppercase tracking-wider">Project</span> <span class="modal-value text-2xl font-bold">${allMetadata['Project']}</span></p>`;
+            let leftHtml = '<div class="space-y-1 ui-text text-sm">';
+            // Project Name (compact row)
+            leftHtml += `<div class="flex items-baseline mb-2">
+                            <span class="modal-label w-36 mr-2 flex-shrink-0 opacity-70 uppercase tracking-widest text-xs">Project:</span>
+                            <span class="modal-value font-bold">${allMetadata['Project']}</span>
+                         </div>`;
             
             categoryPriorityList.forEach(key => {
                 if (allMetadata[key]) {
-                    // Label (Font 1), Value (Font 2)
-                    leftHtml += `<div class="flex flex-col border-b border-pink-900/30 pb-1 mb-1">
-                        <span class="modal-label text-sm opacity-70 uppercase tracking-widest">${key}</span> 
-                        <span class="modal-value text-lg">${allMetadata[key]}</span>
+                    // Label (Font 1), Value (Font 2) - Side by Side
+                    leftHtml += `<div class="flex items-baseline border-b border-pink-900/30 pb-1 mb-1">
+                        <span class="modal-label w-36 mr-2 flex-shrink-0 opacity-70 uppercase tracking-widest text-xs">${key}:</span> 
+                        <span class="modal-value">${allMetadata[key]}</span>
                     </div>`;
                 }
             });
-            if (allMetadata['Link']) leftHtml += `<div class="flex flex-col mt-4"><span class="modal-label uppercase">Link</span> <span>${allMetadata['Link']}</span></div>`;
+            if (allMetadata['Link']) leftHtml += `<div class="flex items-baseline mt-2"><span class="modal-label w-36 mr-2 flex-shrink-0 uppercase text-xs">Link:</span> <span>${allMetadata['Link']}</span></div>`;
             leftHtml += '</div>';
             
             modalLeftCol.innerHTML = leftHtml;
             // Description uses Font 2 (Body)
-            modalRightCol.innerHTML = `<p class="modal-desc">${project.description || ''}</p>`;
+            modalRightCol.innerHTML = `<p class="modal-desc text-sm leading-relaxed">${project.description || ''}</p>`;
             modalContainer.classList.add('open');
         }
 
