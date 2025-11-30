@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Portfolio 3D View V9 - Mobile Optimized</title>
+    <title>Portfolio 3D View V9 - Fully Adaptive</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meshopt Decoder (Global) -->
@@ -39,10 +39,9 @@
             --modal-bg: #ffb8d5;
             --card-bg: transparent; 
             
-            /* Font Assignments Updated */
-            --font-headers: 'Telegrama Raw', sans-serif;       /* Menu & Headers */
-            --font-body: 'Telegrama Render', sans-serif;       /* Body & Description */
-            --font-3d: 'GAU Private', cursive;                 /* 3D Labels */
+            --font-headers: 'Telegrama Raw', sans-serif;
+            --font-body: 'Telegrama Render', sans-serif;
+            --font-3d: 'GAU Private', cursive;
         }
 
         html, body {
@@ -60,7 +59,7 @@
 
         *::-webkit-scrollbar { display: none; width: 0; height: 0; background: transparent; }
 
-        /* --- UI CONTAINER (Responsive) --- */
+        /* --- UI CONTAINER --- */
         #ui-container {
             position: absolute; top: 0; left: 0; width: 100%; z-index: 100;
             padding: 1.5rem; pointer-events: none;
@@ -68,16 +67,18 @@
             flex-direction: column; 
             align-items: flex-start;
             justify-content: flex-start;
-            gap: 10px; /* Space between rows */
         }
 
-        /* Menu Rows */
-        .menu-row {
+        /* --- HYBRID MENU SYSTEM --- */
+        
+        /* DESKTOP DEFAULT STYLE:
+           Tek bir kapsayıcı (.menu-bar), içinde yan yana gruplar (.menu-group).
+           Arada ayırıcı çizgi (.menu-divider).
+        */
+        .menu-bar {
             display: flex; 
-            flex-wrap: wrap; /* Allow wrap if screen is extremely small */
-            gap: 0.5rem; 
-            justify-content: flex-start;
-            align-items: center; 
+            flex-direction: row; /* Yan yana */
+            align-items: center;
             pointer-events: auto; 
             width: auto; 
             background-color: rgba(0, 0, 0, 0.5); 
@@ -85,6 +86,19 @@
             border-radius: 30px; 
             border: 1px solid rgba(255, 0, 106, 0.3);
             backdrop-filter: blur(5px);
+            gap: 0.5rem;
+        }
+
+        .menu-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .menu-divider {
+            width: 1px; height: 16px; 
+            background-color: var(--ui-color);
+            opacity: 0.3; margin: 0 6px;
         }
 
         .nav-btn {
@@ -101,30 +115,49 @@
         .nav-btn:hover { opacity: 1; border-color: var(--ui-color); text-shadow: 0 0 8px var(--ui-color); }
         .nav-btn.active { background-color: rgba(255, 0, 106, 0.1); color: var(--ui-color); border-color: var(--ui-color); opacity: 1; }
 
-        /* --- MOBILE OPTIMIZATION --- */
+        /* --- MOBILE OVERRIDES (@media) --- */
+        /* Sadece ekran küçükse bu kurallar çalışır */
         @media (max-width: 768px) {
             #ui-container {
                 padding: 10px;
                 width: 100%;
-                align-items: stretch; /* Stretch to fill width */
+                align-items: center; /* Ortala */
             }
 
-            .menu-row {
+            /* Ana barı görünmez yapıp içindeki grupları blok haline getiriyoruz */
+            .menu-bar {
+                flex-direction: column; /* Alt alta diz */
+                background-color: transparent; /* Arkaplanı kaldır, gruplara vereceğiz */
+                border: none;
+                backdrop-filter: none;
+                padding: 0;
                 width: 100%;
-                justify-content: space-between; /* Distribute items evenly */
-                padding: 8px;
-                border-radius: 12px;
-                gap: 4px;
+                gap: 10px; /* Satırlar arası boşluk */
+                align-items: stretch;
             }
+
+            /* Her grup (View ve Filter) kendi başına bir bar olur */
+            .menu-group {
+                background-color: rgba(0, 0, 0, 0.5); 
+                border: 1px solid rgba(255, 0, 106, 0.3);
+                backdrop-filter: blur(5px);
+                border-radius: 12px;
+                padding: 8px;
+                width: 100%;
+                justify-content: space-between; /* Butonları yay */
+            }
+
+            /* Masaüstü ayırıcısını gizle */
+            .menu-divider { display: none; }
 
             .nav-btn {
-                flex: 1; /* Proportional scaling */
+                flex: 1; /* Butonlar eşit genişlesin */
                 text-align: center;
-                padding: 6px 2px; /* Less horizontal padding, more vertical for touch */
-                font-size: 0.65rem; /* Slightly smaller font to fit */
+                padding: 8px 0; /* Dokunma alanı artsın */
+                font-size: 0.7rem;
             }
 
-            /* Adjust slider position for mobile */
+            /* Slider'ı mobilde aşağı sabitle */
             #slider-container {
                 bottom: 20px !important;
                 left: 50% !important;
@@ -138,7 +171,7 @@
         #slider-container {
             position: fixed; bottom: 30px; left: 30px; 
             z-index: 100;
-            display: flex; flex-direction: row; align-items: center; gap: 10px; pointer-events: auto;
+            display: flex; flex-direction: row; align-items: flex-end; gap: 10px; pointer-events: auto;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 8px 16px; 
             border-radius: 10px;
@@ -147,21 +180,29 @@
         }
         
         .slider-wrapper {
-            display: flex; flex-direction: column; align-items: center; gap: 2px; flex-grow: 1;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        /* Mobile slider wrapper fix */
+        @media (max-width: 768px) {
+            .slider-wrapper { flex-grow: 1; align-items: stretch; }
         }
 
         #slider-label {
             font-family: var(--font-headers);
-            font-size: 0.7rem; text-transform: uppercase; font-weight: bold; opacity: 0.8; color: var(--ui-color);
+            font-size: 0.7rem; text-transform: uppercase; font-weight: bold; opacity: 0.8; color: var(--ui-color); text-align: center;
         }
         input[type=range] {
-            -webkit-appearance: none; width: 100%; height: 3px; background: rgba(255, 0, 106, 0.3);
+            -webkit-appearance: none; width: 100px; height: 3px; background: rgba(255, 0, 106, 0.3);
             border-radius: 2px; outline: none;
         }
+        @media (max-width: 768px) { input[type=range] { width: 100%; } }
+
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 14px; height: 14px; /* Larger touch target */
+            -webkit-appearance: none; appearance: none; width: 10px; height: 10px;
             border-radius: 50%; background: var(--ui-color); cursor: pointer;
-            border: 2px solid black;
+        }
+        @media (max-width: 768px) {
+            input[type=range]::-webkit-slider-thumb { width: 16px; height: 16px; border: 2px solid black; }
         }
         
         #fit-btn {
@@ -169,22 +210,25 @@
             font-size: 0.7rem; 
             font-weight: bold; 
             text-transform: uppercase;
-            padding: 6px 12px;
+            padding: 3px 10px;
             border: 1px solid var(--ui-color); 
             background: rgba(0,0,0,0.4);
             color: var(--ui-color);
+            height: 26px; 
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             border-radius: 4px;
             transition: background 0.2s;
-            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            #fit-btn { height: 36px; padding: 0 16px; }
         }
         #fit-btn:hover { background: var(--ui-color); color: black; }
 
         /* --- INTRO OVERLAY --- */
         #intro-overlay {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 200; pointer-events: none; /* Make sure clicks pass through immediately if needed, but we handle via opacity */
+            z-index: 200; pointer-events: none;
             text-align: center; width: 90%; max-width: 600px;
             opacity: 1; transition: opacity 1s ease-out;
         }
@@ -199,9 +243,6 @@
             line-height: 1.2;
             text-transform: uppercase;
             box-shadow: 0 0 20px rgba(255, 0, 106, 0.3);
-        }
-        @media (max-width: 768px) {
-            .intro-text { font-size: 0.8rem; padding: 8px 12px; }
         }
 
         /* --- 3D ELEMENTS --- */
@@ -289,7 +330,6 @@
         #modal-left-col::-webkit-scrollbar, #modal-right-col::-webkit-scrollbar { display: block; width: 4px; }
         #modal-left-col::-webkit-scrollbar-thumb, #modal-right-col::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 2px; border: none; }
 
-        /* Typography Mapping in Modal */
         .modal-label { font-family: var(--font-headers); font-weight: 500; font-size: 0.9rem; } 
         .modal-value { font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; }
         .modal-desc { font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.5; }
@@ -342,21 +382,31 @@
     </div>
 
     <div id="ui-container">
-        <!-- ROW 1: View Modes -->
-        <div class="menu-row view-controls">
-            <button class="nav-btn active" data-type="view" data-val="grid">Grid</button>
-            <button class="nav-btn" data-type="view" data-val="sphere">Sphere</button>
-            <button class="nav-btn" data-type="view" data-val="random">Chaos</button>
-        </div>
+        <!-- 
+            HYBRID MENU STRUCTURE 
+            Desktop: Tek bar gibi görünür.
+            Mobile: CSS ile ikiye ayrılır.
+        -->
+        <div class="menu-bar">
+            <!-- Group 1: Views -->
+            <div class="menu-group" id="view-group">
+                <button class="nav-btn active" data-type="view" data-val="grid">Grid</button>
+                <button class="nav-btn" data-type="view" data-val="sphere">Sphere</button>
+                <button class="nav-btn" data-type="view" data-val="random">Chaos</button>
+            </div>
 
-        <!-- ROW 2: Filters -->
-        <div class="menu-row filter-controls">
-            <button class="nav-btn active" data-type="filter" data-val="all">All</button>
-            <button class="nav-btn" data-type="filter" data-val="year">Year</button>
-            <button class="nav-btn" data-type="filter" data-val="type">Type</button>
-            <button class="nav-btn" data-type="filter" data-val="subtype">Subtype</button>
-            <button class="nav-btn" data-type="filter" data-val="collection">Coll.</button>
-            <button class="nav-btn" data-type="filter" data-val="medium">Med.</button>
+            <!-- Divider (Desktop only) -->
+            <div class="menu-divider"></div>
+
+            <!-- Group 2: Filters -->
+            <div class="menu-group" id="filter-group">
+                <button class="nav-btn active" data-type="filter" data-val="all">All</button>
+                <button class="nav-btn" data-type="filter" data-val="year">Year</button>
+                <button class="nav-btn" data-type="filter" data-val="type">Type</button>
+                <button class="nav-btn" data-type="filter" data-val="subtype">Subtype</button>
+                <button class="nav-btn" data-type="filter" data-val="collection">Coll.</button>
+                <button class="nav-btn" data-type="filter" data-val="medium">Med.</button>
+            </div>
         </div>
     </div>
 
@@ -370,6 +420,7 @@
 
     <div id="container"></div>
 
+    <!-- Modal -->
     <div id="modal-container" tabindex="-1">
         <div id="modal-backdrop"></div>
         <div id="modal-content">
@@ -403,7 +454,6 @@
         const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
         // --- DATA ---
-        // (Reduced data set for space, assuming same structure as provided)
         const projects = [
             { 
                 id: "demo-1", 
@@ -434,7 +484,6 @@
                 media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/a122.png" }],
                 categories: { year: 2019, type: "painting", subtype: "figurative", collection: "irl", medium: "canvas", expression: "decentralize*", reality: "irl", contents: "drawing" }
             },
-            // ... (Includes all other items conceptually, truncated here for brevity in response but logic applies to all)
             {
                 id: "fig-3",
                 name: "cellular spleens",
@@ -467,13 +516,11 @@
                 media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/B4.png" }],
                 categories: { year: 2021, type: "painting", subtype: "mixed media", collection: "irl", medium: "mixed", expression: "decentralize*", reality: "irl", contents: "drawing" }
             }
-            // Note: In a real scenario, all 200+ items from the original prompt would be here. 
-            // The logic below works regardless of array size.
         ];
 
 
         // --- STATE ---
-        let state = { view: 'grid', filter: 'all' }; // Default View is now GRID
+        let state = { view: 'grid', filter: 'all' };
         let camera, scene, renderer, controls;
         let objects = []; 
         let labels = []; 
@@ -500,7 +547,7 @@
                 10000 
             );
             
-            // Initial Camera Position for Grid
+            // Initial Camera Position
             camera.position.set(2000, 1000, 2000);
             camera.lookAt(0, 0, 0);
 
@@ -538,18 +585,15 @@
             setTimeout(() => { l.remove(); }, 500);
 
             // --- INTRO OVERLAY LOGIC ---
-            // Fade out after 2 seconds
             const intro = document.getElementById('intro-overlay');
             setTimeout(() => {
                 intro.style.opacity = '0';
-                // Remove from DOM or disable pointer events permanently after fade
                 setTimeout(() => {
                     intro.style.display = 'none';
-                }, 1000); // wait for fade transition to finish
+                }, 1000);
             }, 2000);
 
             // --- AUTO FIT VIEW ON LOAD ---
-            // Wait slightly for positions to stabilize then fit
             setTimeout(() => {
                 performFitView();
             }, 600);
@@ -587,7 +631,6 @@
                 el.addEventListener('click', (e) => { e.stopPropagation(); openModal(p); });
 
                 const obj = new CSS3DObject(el);
-                // Initial positions
                 obj.position.x = Math.random() * 1500 - 750;
                 obj.position.y = Math.random() * 1500 - 750;
                 obj.position.z = Math.random() * 1500 - 750;
@@ -618,9 +661,14 @@
                 btn.addEventListener('click', (e) => {
                     const type = e.target.dataset.type;
                     const val = e.target.dataset.val;
-                    const siblings = e.target.closest('.menu-row').querySelectorAll(`.nav-btn[data-type="${type}"]`);
+                    
+                    // Scope selection to the closest menu group so groups don't conflict, 
+                    // BUT for filtering/view we want global exclusivity within that type.
+                    // Actually, simple global selection by type works best.
+                    const siblings = document.querySelectorAll(`.nav-btn[data-type="${type}"]`);
                     siblings.forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
+                    
                     state[type] = val;
                     updateLayout();
                 });
@@ -634,25 +682,20 @@
             });
         }
 
-        // Logic extracted for reuse on startup
         function performFitView() {
             let maxDist = 0;
             objects.forEach(obj => {
                 if (obj.userData.center) { 
-                    // Approximate max dimension
                     const zDist = Math.abs(obj.userData.center.z + obj.userData.offset.z);
                     const rDist = obj.userData.center.length() + obj.userData.offset.length();
                     const dist = Math.max(zDist, rDist);
                     if (dist > maxDist) maxDist = dist;
                 }
             });
-            
-            // Add padding so it's not right on the edge
             maxDist += 300; 
 
             const aspect = window.innerWidth / window.innerHeight;
             const frustumBase = 3500;
-            
             let targetZoom = 1;
             
             if (state.view === 'grid') {
@@ -664,10 +707,8 @@
                     targetZoom = (frustumBase * aspect) / (2 * maxDist);
                 }
             }
-
             targetZoom = Math.max(0.1, Math.min(targetZoom, 5));
 
-            // Animate Zoom
             new TWEEN.Tween(camera)
                 .to({ zoom: targetZoom }, 1000)
                 .easing(TWEEN.Easing.Cubic.Out)
@@ -755,7 +796,6 @@
                 const indexes = groups[key];
                 let cx = 0, cy = 0, cz = 0;
                 
-                // --- SPHERE CONSTANTS ---
                 const sphereRadius = Math.max(Math.sqrt(indexes.length) * 60, 200);
                 const clusterSpacing = Math.max(2200, (groupKeys.length * 1200) / (2 * Math.PI));
 
@@ -833,7 +873,6 @@
                 }
                 else if (state.view === 'random') {
                     const spread = 750; 
-                    
                     indexes.forEach((objIndex) => {
                           const ox = (Math.random()-0.5) * spread;
                           const oy = (Math.random()-0.5) * spread;
@@ -1024,7 +1063,6 @@
             if (project.link) allMetadata['Link'] = `<a href="${project.link}" target="_blank" class="underline ui-text">${project.link}</a>`;
 
             let leftHtml = '<div class="space-y-1 ui-text text-sm">';
-            // Project Name
             leftHtml += `<div class="flex items-baseline mb-2">
                             <span class="modal-label w-36 mr-2 flex-shrink-0 opacity-70 uppercase tracking-widest text-xs">Project:</span>
                             <span class="modal-value font-bold">${allMetadata['Project']}</span>
