@@ -6,10 +6,8 @@
     <title>Portfolio 3D Scene V1 - Curator Mode</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Meshopt Decoder (Global) -->
     <script src="https://unpkg.com/meshoptimizer@0.19.0/meshopt_decoder.js"></script>
 
-    <!-- FONTS -->
     <style>
         @font-face {
             font-family: 'Telegrama Raw';
@@ -37,6 +35,9 @@
         html, body {
             font-family: 'Telegrama Render', sans-serif;
             background-color: var(--bg-color);
+            /* Arka plan resmi eklemek istersen buraya ekleyebilirsin */
+            /* background-image: url('...'); */
+            /* background-size: cover; */
             color: var(--ui-color);
             margin: 0;
             overflow: hidden; /* Prevent scrolling */
@@ -135,7 +136,7 @@
                 label: 'artist-info 1min',
                 fontFamily: 'Robot',
                 color: '#FF006A',
-                position: { x: -1200, y: -100, z: 120 },
+                position: { x: -900, y: 1200, z: 120 },
                 rotation: { x: 0, y: 35, z: 0 },
                 scale: 1.2 
             },
@@ -152,12 +153,6 @@
                 rotation: { x: 0, y: 0, z: 0 },
                 scale: 1.2
             },
-
-            
-
-            
-
-            
 
             // --- 3D MODEL ---   
             {
@@ -198,11 +193,8 @@
                 rotation: { x: 0, y: 0, z: 0 },
                 scale: 1000
             },
-            //	delikli.jpg
-//	framed.jpg
-//	beton.jpg
-//	dalga.jpg
-{
+            
+            {
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/framed.jpg',
                 width: 2100,
@@ -215,7 +207,7 @@
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/beton.jpg',
                 width: 2300,
                 position: { x: 600, y: -1300, z: -1000 },
-                rotation: { x: 100              , y: 0, z: 0 },
+                rotation: { x: 100             , y: 0, z: 0 },
                 scale: 1000
             },
             {
@@ -248,11 +240,11 @@
              {
                 type: 'text',
                 content: 'Other entities \nclick or touch to new tab', 
-                fontSize: 25, 
-                color: 'white',
+                fontSize: 55, 
+                color: '#FF006A',
                 fontFamily: 'Telegrama Render', 
-                position: { x: -1200, y: 1100, z: -300 },
-                rotation: { x: 0, y: 0, z: 5 }
+                position: { x: -1500, y: -200, z: -300 },
+                rotation: { x: 0, y: -20, z: 0 }
             },
             
             {
@@ -266,11 +258,11 @@
             },
             {
                 type: 'text',
-                content: 'Rotate with your mouse \n move', 
+                content: 'Rotate the camera \nwith your mouse / finger', 
                 fontSize: 70, 
                 color: '#696868',
                 fontFamily: 'Telegrama Raw', 
-                position: { x: -300, y: -400, z: -0 },
+                position: { x: 1300, y: -1200, z: -0 },
                 rotation: { x: 0, y: 30, z: 0 }
             },
             {
@@ -283,7 +275,7 @@
                 rotation: { x: 20, y: 0, z: 0 }
             },
 
-            // --- NEW: LINK OBJECT EXAMPLE --- 
+            // --- LINK OBJECTS --- 
              
             {
                 type: 'link',
@@ -292,9 +284,9 @@
                 label: 'Neue2Dojo Gallery', // Altındaki yazı
                 fontFamily: 'Telegrama Raw',
                 fontSize: 80,
-                color: '#FFFFFF',
+                color: '#FFFFFF', // Bu artık etki etmeyecek, aşağıda özel renk veriyoruz
                 width: 250, // Resmin genişliği
-               position: { x: -1200, y: 900, z: -300 }, // Konumu
+                position: { x: -1500, y: 1000, z: -300 }, // Konumu
                 rotation: { x: 0, y: 40, z: 0 },
                 scale: .6
             },
@@ -307,7 +299,7 @@
                 fontSize: 80,
                 color: '#FFFFFF',
                 width: 250, // Resmin genişliği
-                position: { x: -1200, y: 650, z: 0 }, // Konumu
+                position: { x: -1500, y: 600, z: 0 }, // Konumu
                 rotation: { x: 0, y: 40, z: 0 },
                 scale: .6
             },
@@ -320,7 +312,7 @@
                 fontSize: 80,
                 color: '#FFFFFF',
                 width: 250, // Resmin genişliği
-                position: { x: -1200, y: 400, z: 200 }, // Konumu
+                position: { x: -1500, y: 200, z: 200 }, // Konumu
                 rotation: { x: 0, y: 40, z: 0 },
                 scale: .6
             }
@@ -569,12 +561,13 @@
             return degrees * (Math.PI / 180);
         }
 
-        function createTextTexture(text, fontSize, font, color) {
+        // GÜNCELLENEN FONKSİYON: Arka plan rengi (backgroundColor) parametresi eklendi
+        function createTextTexture(text, fontSize, font, color, backgroundColor = null) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
             const lines = text.split('\\n').length > 1 ? text.split('\\n') : text.split('\n');
-            const lineHeight = fontSize * 1.1;
+            const lineHeight = fontSize * 1.2; 
             
             ctx.font = `${fontSize}px "${font}"`;
             let maxWidth = 0;
@@ -583,8 +576,18 @@
                 if(w > maxWidth) maxWidth = w;
             });
             
-            canvas.width = Math.ceil(maxWidth + 40); 
-            canvas.height = Math.ceil(lines.length * lineHeight + 40);
+            // Arka plan varsa biraz dolgu (padding) ekleyelim ki yazı sıkışmasın
+            const paddingX = backgroundColor ? 50 : 20; 
+            const paddingY = backgroundColor ? 50 : 20;
+
+            canvas.width = Math.ceil(maxWidth + paddingX * 2); 
+            canvas.height = Math.ceil(lines.length * lineHeight + paddingY);
+            
+            // Eğer arka plan rengi varsa kutuyu boya
+            if (backgroundColor) {
+                ctx.fillStyle = backgroundColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
             
             ctx.font = `${fontSize}px "${font}"`;
             ctx.fillStyle = color;
@@ -592,7 +595,7 @@
             ctx.textBaseline = 'middle';
             
             const centerX = canvas.width / 2;
-            let startY = (canvas.height - (lines.length - 1) * lineHeight) / 2;
+            const startY = (canvas.height - (lines.length - 1) * lineHeight) / 2;
             
             lines.forEach((line, i) => {
                 ctx.fillText(line, centerX, startY + (i * lineHeight));
@@ -600,6 +603,7 @@
             
             const tex = new THREE.CanvasTexture(canvas);
             tex.colorSpace = THREE.SRGBColorSpace;
+            tex.minFilter = THREE.LinearFilter;
             return { texture: tex, width: canvas.width, height: canvas.height };
         }
 
@@ -731,6 +735,7 @@
 
                     // Add Label (Text Mesh) as Child
                     if (item.label) {
+                        // Sound label şeffaf kalsın diye background parametresi göndermiyoruz (null)
                         const { texture, width, height } = createTextTexture(item.label, 40, item.fontFamily || 'sans-serif', item.color || '#fff');
                         const labelGeo = new THREE.PlaneGeometry(width, height);
                         const labelMat = new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide });
@@ -780,6 +785,7 @@
 
                 // --- TEXT (WEBGL) ---
                 else if (item.type === 'text') {
+                    // Normal textler şeffaf kalsın, backgroundColor parametresi yollamıyoruz.
                     const { texture, width, height } = createTextTexture(item.content, item.fontSize, item.fontFamily, item.color);
                     
                     const geometry = new THREE.PlaneGeometry(width, height);
@@ -814,7 +820,7 @@
                     }, undefined, (err) => console.error(err));
                 }
 
-                // --- LINK OBJECT (NEW) ---
+                // --- LINK OBJECT (MODIFIED) ---
                 else if (item.type === 'link') {
                     const group = new THREE.Group();
                     applyTransform(group);
@@ -836,21 +842,26 @@
 
                     group.add(imgMesh);
 
-                    // 2. Etiket (Label)
+                    // 2. Etiket (Label) - GÜNCELLENDİ
                     if (item.label) {
+                        // SADECE LİNKLER İÇİN: Beyaz Arka Plan, Pembe Yazı
+                        const textColor = '#FF006A';
+                        const bgColor = '#FFFFFF';
+
                         const { texture: textTex, width: textW, height: textH } = createTextTexture(
                             item.label, 
                             item.fontSize || 40, 
                             item.fontFamily || 'sans-serif', 
-                            item.color || '#fff'
+                            textColor, 
+                            bgColor // Arka plan rengi burada gönderiliyor
                         );
                         
                         const labelGeo = new THREE.PlaneGeometry(textW, textH);
                         const labelMat = new THREE.MeshBasicMaterial({ map: textTex, transparent: true, side: THREE.DoubleSide });
                         const labelMesh = new THREE.Mesh(labelGeo, labelMat);
                         
-                        // Konum: Resmin altına
-                        labelMesh.position.y = - (imgWidth / 2 + 50); 
+                        // Konum: Resmin altına (Boşluğu 200 birime çıkardık)
+                        labelMesh.position.y = - (imgWidth / 2 + 200); 
                         
                         group.add(labelMesh);
                     }
