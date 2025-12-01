@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DECENTRALIZE*</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/logia2.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
+
+    <!-- SECURITY SCRIPT START -->
+    <script>
+        (function() {
+            // 1. MOUSE DOWN SEVİYESİNDE ENGEL (En erken müdahale)
+            // Sağ tık (button 2) veya Shift tuşu basılıyken yapılan her şeyi durdur.
+            document.addEventListener('mousedown', function(e) {
+                if (e.button === 2 || e.shiftKey) { // 2 = Sağ Tık
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    return false;
+                }
+            }, true); // 'true' = Capture Phase (Butona ulaşmadan yakala)
+
+            // 2. STANDART SAĞ TIK MENÜSÜ ENGELİ
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return false;
+            }, true);
+
+            // 3. KLAVYE ENGELİ (Menü Tuşu Dahil)
+            document.addEventListener('keydown', function(e) {
+                // F12 (123)
+                // Context Menu Key (93) - Klavyedeki sağ tık tuşu
+                // Shift (16) - Shift basılı tutarak bypass denemesi
+                if (e.keyCode === 123 || e.keyCode === 93 || e.shiftKey) { 
+                    e.preventDefault(); 
+                    e.stopPropagation(); 
+                    return false; 
+                }
+                
+                // Ctrl+Shift+I (Inspect), Ctrl+Shift+J (Console), Ctrl+Shift+C (Element), Ctrl+U (Source), Ctrl+S (Save)
+                if (e.ctrlKey && (e.shiftKey || e.keyCode === 85 || e.keyCode === 83)) {
+                    e.preventDefault();
+                    return false;
+                }
+            }, true);
+
+            // 4. SÜRÜKLE BIRAK ENGELİ (Resim çalınmasını önler)
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault(); 
+                return false; 
+            }, true);
+
+            // 5. DEBUGGER TUZAĞI (Gelişmiş)
+            // Konsol açılırsa tarayıcıyı kilitler.
+            setInterval(function() {
+                debugger; 
+            }, 100);
+
+            // 6. KONSOL TEMİZLEME
+            if(window.console) {
+                // Konsol fonksiyonlarını boşaltarak log almayı engelle
+                console.log = function() {};
+                console.warn = function() {};
+                console.error = function() {};
+                console.clear();
+            }
+        })();
+    </script>
+    <!-- SECURITY SCRIPT END -->
+
+    <style>
+        /* --- THEME SETTINGS --- */
+        :root {
+            --ui-color: #FF006A; 
+            --bg-color: black;
+        }
+
+        /* --- GLOBAL KİLİT (HER ŞEY) --- */
+        * {
+            -webkit-user-select: none !important; /* Chrome/Safari/Opera */
+            -moz-user-select: none !important;    /* Firefox */
+            -ms-user-select: none !important;     /* IE/Edge */
+            user-select: none !important;         /* Standart */
+            -webkit-touch-callout: none !important; /* iOS Safari uzun basma menüsü */
+            -webkit-user-drag: none !important;   /* Sürükleme engeli */
+        }
+
+        /* Input ve Textarea hariç (Eğer form varsa yazılabilsin diye, şu an yok ama güvenli) */
+        input, textarea {
+            -webkit-user-select: text !important;
+            user-select: text !important;
+        }
+
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--ui-color);
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: default; /* İmleci standart yap */
+        }
+
+        /* --- UI CONTAINER (HEADER) --- */
+        #ui-container {
+            position: relative; 
+            width: 100%; 
+            z-index: 100;
+            padding: 0 0 0 2rem; 
+            height: 50px; 
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: space-between; 
+            background-color: var(--bg-color); 
+            border-bottom: 1px solid rgba(255, 0, 106, 0.3); 
+            flex-shrink: 0;
+        }
+
+        /* SOL TARAF: MENÜ */
+        .menu-bar {
+            display: flex; 
+            flex-wrap: nowrap; 
+            gap: 0.5rem; 
+            align-items: center; 
+        }
+
+        .menu-group-separator {
+            width: 1px; height: 14px; background-color: var(--ui-color);
+            opacity: 0.3; margin: 0 6px;
+        }
+
+        .nav-btn {
+            background: transparent; 
+            border: 1px solid transparent; 
+            color: var(--ui-color); 
+            padding: 2px 8px; 
+            text-transform: capitalize; 
+            font-size: 0.75rem; 
+            font-weight: 400;
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            border-radius: 0.25rem; 
+            opacity: 0.7;
+            pointer-events: auto; /* Tıklanabilir olsun */
+        }
+        .nav-btn:hover { opacity: 1; border-color: var(--ui-color); }
+        .nav-btn.active { background-color: transparent; color: var(--ui-color); border-color: var(--ui-color); opacity: 1; font-weight: 500; }
+
+        /* SAĞ TARAF: LOGOLAR */
+        .right-section {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            gap: 30px; 
+        }
+
+        /* Ana Logo (D*) */
+        .main-logo-container {
+            height: 100%; 
+            display: flex;
+            align-items: center;
+        }
+
+        .main-logo {
+            height: 100%; 
+            width: auto;
+            object-fit: contain; 
+            object-position: right; 
+            opacity: 1;
+            display: block;
+            pointer-events: none; /* Logoya hiç tıklanmasın */
+        }
+        
+        /* Sosyal İkon Grubu */
+        .social-group {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+        }
+
+        .social-icon {
+            width: 12px;
+            height: 12px;
+            display: block;
+            opacity: 0.6;
+            transition: all 0.2s;
+            object-fit: contain;
+            pointer-events: auto;
+        }
+        .social-icon:hover {
+            opacity: 1;
+            transform: scale(1.2); 
+        }
+
+        /* --- IFRAME CONTAINER --- */
+        #iframe-container {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #000;
+            overflow: hidden; 
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            /* Iframe içeriği kendi kurallarına sahiptir */
+        }
+
+        @media (max-width: 768px) { 
+            #ui-container { padding: 0 1rem; }
+            .right-section { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER BAR -->
+    <div id="ui-container">
+        
+        <!-- SOL: MENÜ -->
+        <div class="menu-bar">
+            <button class="nav-btn active" onclick="loadUrl('home', this)">HOME</button>
+            <div class="menu-group-separator"></div>
+            <button class="nav-btn" onclick="loadUrl('works', this)">WORKS</button>
+            <button class="nav-btn" onclick="loadUrl('list', this)">LIST</button>
+            <button class="nav-btn" onclick="loadUrl('info', this)">INFO</button>
+        </div>
+
+        <!-- SAĞ: LOGOLAR -->
+        <div class="right-section">
+            <div class="social-group">
+                <a href="https://twitter.com/decentralize___" target="_blank">
+                    <img src="https://cdn.simpleicons.org/x/FF006A" class="social-icon" alt="Twitter">
+                </a>
+                <a href="mailto:community@de-centralize.com">
+                    <img src="https://cdn.simpleicons.org/gmail/FF006A" class="social-icon" alt="Mail">
+                </a>
+            </div>
+            <div class="main-logo-container">
+                <img src="https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/logia2w.png" alt="D* Logo" class="main-logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- İÇERİK ALANI -->
+    <div id="iframe-container">
+        <iframe id="main-frame" src="" allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    </div>
+
+    <script>
+        const _0x1a2b = {
+            'h': 'https://de-centralize.com/home',
+            'w': 'https://de-centralize.com/works-mobile',
+            'l': 'https://de-centralize.com/list-mobile',
+            'i': 'https://de-centralize.com/info-2'
+        };
+
+        const frame = document.getElementById('main-frame');
+
+        function loadUrl(key, btn) {
+            let target = '';
+            if(key === 'home') target = _0x1a2b.h;
+            if(key === 'works') target = _0x1a2b.w;
+            if(key === 'list') target = _0x1a2b.l;
+            if(key === 'info') target = _0x1a2b.i;
+
+            if(target) {
+                frame.src = target;
+            }
+            if(btn) {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        }
+
+        window.onload = function() {
+            loadUrl('home', null);
+        };
+    </script>
+</body>
+</html>
