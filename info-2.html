@@ -132,13 +132,13 @@
             // --- SOUND OBJECT ---
             {
                 type: 'sound',
-                src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artist-info.mp3',
-                label: 'artist-info 1min',
-                fontFamily: 'Robot',
+                src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/info-audio.mp3',
+                label: '',
+                fontFamily: 'Telegrama Raw',
                 color: '#FF006A',
-                position: { x: -900, y: -300, z: -1000 },
-                rotation: { x: 0, y: 35, z: 0 },
-                scale: 1.2 
+                position: { x: -650, y: 1150, z: -1000 },
+                rotation: { x: 0, y: 0, z: 0 },
+                scale: 4
             },
 
              
@@ -294,7 +294,7 @@
                 type: 'image',
                 src: 'https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/framed-low.png',
                 width: 2100,
-                position: { x: -1500, y: 1000, z: -1000 },
+                position: { x: -1800, y: 1000, z: -1000 },
                 rotation: { x: 0, y: 45, z: 0 },
                 scale: 1000
             },
@@ -815,7 +815,7 @@
                 else if (item.type === 'sound') {
                     const audio = new Audio(safeSrc);
                     // Load Speaker PNG
-                    const speakerTex = textureLoader.load('https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/speaker.png');
+                    const speakerTex = textureLoader.load('https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/clicktoplay.png');
                     speakerTex.colorSpace = THREE.SRGBColorSpace;
 
                     const size = 200; 
