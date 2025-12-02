@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Portfolio 3D View V11 - Mobile Adaptive Type Loader</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Meshopt Decoder (Global) -->
+    <script src="https://unpkg.com/meshoptimizer@0.19.0/meshopt_decoder.js"></script>
+
+    <!-- 
+        CUSTOM FONTS FROM GITHUB
+    -->
+    <style>
+        @font-face {
+            font-family: 'Telegrama Raw';
+            src: url('https://raw.githubusercontent.com/decentralize-dfw/font/main/telegrama_raw.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Telegrama Render';
+            src: url('https://raw.githubusercontent.com/decentralize-dfw/font/main/telegrama_render_osn.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'GAU Private';
+            src: url('https://raw.githubusercontent.com/decentralize-dfw/font/main/GAU_private_R.TTF') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* --- THEME SETTINGS --- */
+        :root {
+            --ui-color: #FF006A; 
+            --bg-color: black;
+            --modal-bg: #ffb8d5;
+            --card-bg: transparent; 
+            
+            --font-headers: 'Telegrama Raw', sans-serif;
+            --font-body: 'Telegrama Render', sans-serif;
+            --font-3d: 'GAU Private', cursive;
+        }
+
+        html, body {
+            font-family: var(--font-body); 
+            background-color: var(--bg-color);
+            color: var(--ui-color);
+            margin: 0;
+            overflow: hidden;
+            touch-action: none; 
+            width: 100%;
+            height: 100%;
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
+        }
+
+        *::-webkit-scrollbar { display: none; width: 0; height: 0; background: transparent; }
+
+        /* --- UI CONTAINER --- */
+        #ui-container {
+            position: absolute; top: 0; left: 0; width: 100%; z-index: 100;
+            padding: 1.5rem; pointer-events: none;
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 10px; /* Space between rows */
+        }
+
+        /* --- HYBRID MENU SYSTEM --- */
+        
+        /* DESKTOP DEFAULT STYLE */
+        .menu-bar {
+            display: flex; 
+            flex-direction: row; 
+            align-items: center;
+            pointer-events: auto; 
+            width: auto; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 6px 12px; 
+            border-radius: 30px; 
+            border: 1px solid rgba(255, 0, 106, 0.3);
+            backdrop-filter: blur(5px);
+            gap: 0.5rem;
+        }
+
+        .menu-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .menu-divider {
+            width: 1px; height: 16px; 
+            background-color: var(--ui-color);
+            opacity: 0.3; margin: 0 6px;
+        }
+
+        .nav-btn {
+            background: transparent; border: 1px solid transparent; color: var(--ui-color); 
+            padding: 2px 10px; 
+            text-transform: uppercase; 
+            font-family: var(--font-headers); 
+            font-size: 0.75rem; 
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer; transition: all 0.2s ease; border-radius: 0.25rem; opacity: 0.7;
+            white-space: nowrap;
+        }
+        .nav-btn:hover { opacity: 1; border-color: var(--ui-color); text-shadow: 0 0 8px var(--ui-color); }
+        .nav-btn.active { background-color: rgba(255, 0, 106, 0.1); color: var(--ui-color); border-color: var(--ui-color); opacity: 1; }
+
+        /* Mobile Type Bar (Hidden by default on Desktop) */
+        #mobile-type-bar {
+            display: none;
+        }
+
+        /* --- MOBILE OVERRIDES (@media) --- */
+        @media (max-width: 768px) {
+            #ui-container {
+                padding: 10px;
+                width: 100%;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .menu-bar {
+                flex-direction: column; 
+                background-color: transparent; 
+                border: none; 
+                backdrop-filter: none;
+                padding: 0;
+                width: 100%;
+                gap: 8px; 
+                align-items: stretch;
+            }
+
+            .menu-group {
+                background-color: rgba(0, 0, 0, 0.5); 
+                border: 1px solid rgba(255, 0, 106, 0.3);
+                backdrop-filter: blur(5px);
+                border-radius: 12px;
+                padding: 8px 4px; 
+                width: 100%;
+                justify-content: space-between; 
+            }
+
+            /* Mobile Type Bar Specifics */
+            #mobile-type-bar {
+                display: flex;
+                background-color: rgba(0, 0, 0, 0.5);
+                border: 1px solid rgba(255, 0, 106, 0.3);
+                backdrop-filter: blur(5px);
+                border-radius: 12px;
+                padding: 8px 4px;
+                width: 100%;
+                overflow-x: auto; /* Allow scroll if very many types */
+                pointer-events: auto;
+            }
+            
+            #mobile-type-bar .nav-btn {
+                flex: 1; /* Equal width division */
+                min-width: 60px; /* Ensure text fits */
+            }
+
+            .menu-divider { display: none; }
+
+            .nav-btn {
+                flex: 1; 
+                text-align: center;
+                padding: 8px 0; 
+                font-size: 0.6rem; 
+                letter-spacing: 0; 
+            }
+
+            /* Hide 'Type' button in the bottom filter group only on mobile */
+            #filter-group .nav-btn[data-val="type"] {
+                display: none;
+            }
+
+            #slider-container {
+                bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 90%;
+                justify-content: space-between;
+            }
+        }
+
+        /* --- SLIDER & FIT BUTTON --- */
+        #slider-container {
+            position: fixed; bottom: 30px; left: 30px; 
+            z-index: 100;
+            display: flex; flex-direction: row; align-items: flex-end; gap: 10px; pointer-events: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px; 
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 106, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .slider-wrapper {
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+        @media (max-width: 768px) {
+            .slider-wrapper { flex-grow: 1; align-items: stretch; }
+        }
+
+        #slider-label {
+            font-family: var(--font-headers);
+            font-size: 0.7rem; text-transform: uppercase; font-weight: bold; opacity: 0.8; color: var(--ui-color); text-align: center;
+        }
+        input[type=range] {
+            -webkit-appearance: none; width: 100px; height: 3px; background: rgba(255, 0, 106, 0.3);
+            border-radius: 2px; outline: none;
+        }
+        @media (max-width: 768px) { input[type=range] { width: 100%; } }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--ui-color); cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            input[type=range]::-webkit-slider-thumb { width: 16px; height: 16px; border: 2px solid black; }
+        }
+        
+        #fit-btn {
+            font-family: var(--font-headers);
+            font-size: 0.7rem; 
+            font-weight: bold; 
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border: 1px solid var(--ui-color); 
+            background: rgba(0,0,0,0.4);
+            color: var(--ui-color);
+            height: 26px; 
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        @media (max-width: 768px) {
+            #fit-btn { height: 36px; padding: 0 16px; }
+        }
+        #fit-btn:hover { background: var(--ui-color); color: black; }
+
+        /* --- INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 200; pointer-events: none;
+            text-align: center; width: 90%; max-width: 600px;
+            opacity: 1; transition: opacity 1s ease-out;
+        }
+        .intro-text {
+            font-family: var(--font-headers);
+            color: var(--ui-color);
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--ui-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(255, 0, 106, 0.3);
+        }
+
+        /* --- 3D ELEMENTS --- */
+        .element-card {
+            width: 160px; height: 160px; 
+            background-color: var(--card-bg);
+            border: none; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            pointer-events: auto; user-select: none;
+            backface-visibility: visible; -webkit-backface-visibility: visible;
+            transform-style: preserve-3d;
+            transition: transform 0.2s;
+        }
+        .element-card:hover { transform: scale(1.15); z-index: 1000; }
+        
+        .card-image {
+            width: 100%; height: 100%; object-fit: contain; pointer-events: none;
+            display: block; user-select: none; -webkit-user-drag: none;
+        }
+
+        /* --- 3D LABELS --- */
+        .group-label-container {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            pointer-events: none; user-select: none;
+            text-align: center; opacity: 0; transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+            backface-visibility: visible; -webkit-backface-visibility: visible;
+        }
+        .group-label-container.visible { opacity: 1 !important; transform: scale(1); }
+
+        .group-label-main {
+            font-family: var(--font-3d); 
+            font-size: 70px; 
+            line-height: 0.9;
+            color: var(--ui-color);
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        
+        .group-label-sub {
+            font-family: var(--font-body); 
+            font-size: 28px; 
+            font-style: italic;
+            font-weight: 300;
+            color: #fff;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(255, 0, 106, 0.8);
+            padding: 2px 10px;
+        }
+
+        /* --- MODAL --- */
+        #modal-container {
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+            position: fixed; inset: 0; z-index: 99999;
+            display: flex; align-items: center; justify-content: center; padding: 3%; pointer-events: none;
+        }
+        #modal-container.open { opacity: 1; visibility: visible; pointer-events: auto; }
+        
+        #modal-backdrop {
+            position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px); z-index: -1; cursor: pointer;
+        }
+
+        #modal-content {
+            position: relative; z-index: 50; width: 100%; height: 100%;
+            border: 1px solid var(--ui-color); border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(255, 0, 106, 0.2);
+            display: flex; flex-direction: column; overflow: hidden;
+            background-color: var(--modal-bg); color: var(--ui-color);
+        }
+
+        .media-scroller {
+            scrollbar-width: thin; scrollbar-color: var(--ui-color) transparent;
+            overflow-x: auto; overflow-y: hidden;
+        }
+        .media-scroller::-webkit-scrollbar { display: block; height: 6px; }
+        .media-scroller::-webkit-scrollbar-track { background: transparent; }
+        .media-scroller::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 3px; opacity: 0.5; border: none; }
+        
+        #modal-left-col, #modal-right-col {
+            scrollbar-width: thin; scrollbar-color: var(--ui-color) transparent;
+        }
+        #modal-left-col::-webkit-scrollbar, #modal-right-col::-webkit-scrollbar { display: block; width: 4px; }
+        #modal-left-col::-webkit-scrollbar-thumb, #modal-right-col::-webkit-scrollbar-thumb { background: var(--ui-color); border-radius: 2px; border: none; }
+
+        .modal-label { font-family: var(--font-headers); font-weight: 500; font-size: 0.9rem; } 
+        .modal-value { font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; }
+        .modal-desc { font-family: var(--font-body); font-weight: 400; font-size: 1rem; line-height: 1.5; }
+
+        /* UTILS */
+        .ui-text { color: var(--ui-color); }
+        .ui-border { border-color: var(--ui-color); }
+        
+        .html-scale-wrapper {
+            position: relative; overflow: hidden; background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;
+            aspect-ratio: 16 / 9; min-width: 720px; margin-right: 1rem; border: 1px solid #eee;
+        }
+        .html-scale-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 200%; height: 200%; border: none;
+            transform: scale(0.5); transform-origin: 0 0;
+        }
+        .glb-wrapper {
+            height: 100%; min-width: 500px; margin-right: 1rem; position: relative;
+            background: transparent; border-radius: 4px;
+        }
+
+        /* LOADER */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 99999; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease-out; pointer-events: auto; 
+        }
+        .loader-text {
+            font-family: var(--font-headers);
+            font-size: 3rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ui-color); font-weight: bold;
+        }
+
+        #container { 
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: auto;
+            touch-action: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-text">***decentralizing***</div>
+    </div>
+
+    <!-- Intro Overlay -->
+    <div id="intro-overlay">
+        <div class="intro-text">Use your mouse to rotate and open / close each work</div>
+    </div>
+
+    <div id="ui-container">
+        <!-- ROW 1: View Buttons (Desktop & Mobile) -->
+        <div class="menu-bar">
+            <div class="menu-group" id="view-group">
+                <button class="nav-btn active" data-type="view" data-val="grid">Grid</button>
+                <button class="nav-btn" data-type="view" data-val="sphere">Sphere</button>
+                <button class="nav-btn" data-type="view" data-val="random">Chaos</button>
+            </div>
+
+            <div class="menu-divider"></div>
+
+            <!-- ROW 3 (Desktop) / ROW 3 (Mobile): Filter Buttons -->
+            <!-- On mobile, this will appear visually below the generated type bar -->
+            <div class="menu-group" id="filter-group">
+                <button class="nav-btn active" data-type="filter" data-val="all">All</button>
+                <button class="nav-btn" data-type="filter" data-val="year">Year</button>
+                <!-- Type button hidden on mobile via CSS -->
+                <button class="nav-btn" data-type="filter" data-val="type">Type</button> 
+                <button class="nav-btn" data-type="filter" data-val="subtype">Subtype</button>
+                <button class="nav-btn" data-type="filter" data-val="collection">Collection</button>
+                <button class="nav-btn" data-type="filter" data-val="medium">Medium</button>
+            </div>
+        </div>
+
+        <!-- ROW 2 (Mobile Only): Dynamic Type Bar -->
+        <!-- Populated via JS -->
+        <div id="mobile-type-bar"></div>
+    </div>
+
+    <div id="slider-container">
+        <div class="slider-wrapper">
+            <div id="slider-label">Auto Rotate</div>
+            <input type="range" id="rotate-slider" min="-2" max="2" step="0.1" value="0">
+        </div>
+        <button id="fit-btn" class="nav-btn">FIT VIEW</button>
+    </div>
+
+    <div id="container"></div>
+
+    <!-- Modal -->
+    <div id="modal-container" tabindex="-1">
+        <div id="modal-backdrop"></div>
+        <div id="modal-content">
+            <button id="modal-close-btn" class="absolute top-4 right-4 z-50 text-sm font-medium px-3 py-1 rounded-md border ui-border ui-text bg-black/60 hover:bg-black/80 transition-colors text-white cursor-pointer" style="font-family: var(--font-headers);">Close</button>
+            <div id="modal-media-scroller" class="media-scroller w-full h-[60%] flex-shrink-0 overflow-x-auto overflow-y-hidden whitespace-nowrap border-b ui-border bg-transparent flex items-center p-4 gap-4"></div>
+            <div class="w-full h-[40%] grid grid-cols-1 md:grid-cols-2 gap-px ui-border" style="border-color: var(--ui-color);">
+                <div id="modal-left-col" class="p-[3%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
+                <div id="modal-right-col" class="p-[5%] overflow-y-auto" style="background-color: var(--modal-bg);"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+        import TWEEN from 'three/addons/libs/tween.module.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+        import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+
+        const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
+
+        // --- SAMPLE DATA (Reduced to ~30 for testing per request) ---
+        const projects = [
+            // PAINTINGS
+            {
+                id: "fig-1", name: "penguin is not a friend", description: "acrylic on canvas, 2023", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/a161.png" }],
+                categories: { year: 2023, type: "painting", subtype: "figurative", collection: "irl", medium: "canvas" }
+            },
+            {
+                id: "fig-2", name: "despite transgression", description: "acrylic on gray carton, 2019", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/a122.png" }],
+                categories: { year: 2019, type: "painting", subtype: "figurative", collection: "irl", medium: "canvas" }
+            },
+            {
+                id: "fig-3", name: "cellular spleens", description: "acrylic on canvas, 2020", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/a130.png" }],
+                categories: { year: 2020, type: "painting", subtype: "figurative", collection: "irl", medium: "canvas" }
+            },
+            {
+                id: "abs-1", name: "eeriy forest", description: "acrylic on canvas, 2018", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/a108.png" }],
+                categories: { year: 2018, type: "painting", subtype: "abstract", collection: "irl", medium: "canvas" }
+            },
+            {
+                id: "abs-7", name: "ikeacyan", description: "acrylic on deconstructed carton, 2020", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/b48.png" }],
+                categories: { year: 2020, type: "painting", subtype: "abstract", collection: "irl", medium: "paper" }
+            },
+            {
+                id: "stu-1", name: "crow_4", description: "acrylic on paper, 2020", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/b65.png" }],
+                categories: { year: 2020, type: "painting", subtype: "crow studies", collection: "irl", medium: "paper" }
+            },
+            {
+                id: "mix-1", name: "i dolci dell'ticinese", description: "mixed media, 2021", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/B4.png" }],
+                categories: { year: 2021, type: "painting", subtype: "mixed media", collection: "irl", medium: "mixed" }
+            },
+            
+            // PHOTOGRAPHY
+            {
+                id: "people-1", name: "0-70", description: "milano, 2018", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/0-70.jpg" }],
+                categories: { year: 2018, type: "photography", subtype: "people", collection: "Killing the Moment", medium: "photo" }
+            },
+            {
+                id: "people-19", name: "frnze", description: "firenze, 2018", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/frnze.JPG" }],
+                categories: { year: 2018, type: "photography", subtype: "people", collection: "Killing the Moment", medium: "photo" }
+            },
+            {
+                id: "spleen-5", name: "asa", description: "milano, 2018", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/asa.jpg" }],
+                categories: { year: 2018, type: "photography", subtype: "spleen", collection: "Killing the Moment", medium: "photo" }
+            },
+            {
+                id: "spleen-35", name: "sauron", description: "berlin, 2017", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/sauron.JPG" }],
+                categories: { year: 2017, type: "photography", subtype: "spleen", collection: "Killing the Moment", medium: "photo" }
+            },
+            {
+                id: "mass-v-9", name: "concrete", description: "berlin, 2017", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/concrete.jpg" }],
+                categories: { year: 2017, type: "photography", subtype: "mass and volume", collection: "Killing the Moment", medium: "photo" }
+            },
+            {
+                id: "street-11", name: "gothamlike", description: "istanbul, 2017", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/gothamlike.jpg" }],
+                categories: { year: 2017, type: "photography", subtype: "street", collection: "Killing the Moment", medium: "photo" }
+            },
+
+            // DIGITAL ART
+            {
+                id: "fwssexp-1", name: "3rd WebCam Opening", description: "Future Wabi-Sabi", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-1.png" }],
+                categories: { year: 2020, type: "Digital Art", subtype: "Future Wabi-Sabi", collection: "FWSSExp", medium: "computer" }
+            },
+            {
+                id: "fwssexp-38", name: "Non-Fungible Casino Vertigo", description: "Future Wabi-Sabi", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/fwssexp-38.png" }],
+                categories: { year: 2020, type: "Digital Art", subtype: "Future Wabi-Sabi", collection: "FWSSExp", medium: "computer" }
+            },
+            {
+                id: "digitalspl-6", name: "Face", description: "Digital Spleen", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-6.jpg" }],
+                categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer" }
+            },
+            {
+                id: "punk-1", name: "artpunk_001", description: "artpunks crypto", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk001.PNG" }],
+                categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer" }
+            },
+            {
+                id: "cactus-1", name: "Cactus Raid", description: "Cactus #RAID", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus1-bigdot-low.jpg" }],
+                categories: { year: 2021, type: "Digital Art", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer" }
+            },
+            {
+                id: "wtdbts-1", name: "WTDBTS_001", description: "Technological microorganisms", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/WTDBTS_001.jpg" }],
+                categories: { year: 2021, type: "Digital Art", subtype: "WTDBTS", collection: "Watch the Drone", medium: "computer" }
+            },
+            {
+                id: "bbw-32", name: "broadway-boogie-woogie", description: "generative visuals", link: null,
+                media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/broadway-boogie-woogie-full.png" }],
+                categories: { year: 2023, type: "Digital Art", subtype: "BBW-Generative", collection: "Broadway Boogie Woogie", medium: "computer" }
+            },
+            
+            // SKETCHES (To ensure multiple types)
+            {
+                id: "ske-1", name: "xyyz008-s prototype", description: "colored pencil on A4", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/b1.png" }],
+                categories: { year: 2020, type: "sketch", subtype: "sketch", collection: "irl", medium: "paper" }
+            },
+            {
+                id: "ske-27", name: "witch", description: "colored pencil", link: null,
+                media: [{ "type": "image", "src": "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/b5.png" }],
+                categories: { year: 2019, type: "sketch", subtype: "sketch", collection: "irl", medium: "paper" }
+            }
+        ];
+
+        // --- STATE ---
+        let state = { view: 'grid', filter: 'all' };
+        let camera, scene, renderer, controls;
+        let objects = []; 
+        let labels = []; 
+        let chaosOffsets = []; 
+        let isDragging = false; 
+        
+        let autoRotateSpeed = 0;
+        let globalRotation = 0;
+
+        // Mobile Specific State
+        let isMobile = false;
+        let currentMobileType = "";
+        let activeData = []; // The data currently being rendered
+
+        init();
+        animate();
+
+        function init() {
+            // Detect Mobile
+            isMobile = window.innerWidth <= 768;
+
+            const container = document.getElementById('container');
+
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumSize = 3500; 
+            camera = new THREE.OrthographicCamera( 
+                frustumSize * aspect / - 2, 
+                frustumSize * aspect / 2, 
+                frustumSize / 2, 
+                frustumSize / - 2, 
+                1, 
+                10000 
+            );
+            
+            camera.position.set(2000, 1000, 2000);
+            camera.lookAt(0, 0, 0);
+
+            scene = new THREE.Scene();
+
+            renderer = new CSS3DRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.domElement.style.position = 'absolute';
+            renderer.domElement.style.top = '0';
+            container.appendChild(renderer.domElement);
+
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.zoomSpeed = 2.5; 
+            controls.minZoom = 0.1;
+            controls.maxZoom = 5;
+            controls.autoRotateSpeed = 0; 
+            controls.minPolarAngle = 0.1;
+            controls.maxPolarAngle = Math.PI - 0.1;
+
+            window.addEventListener('mousedown', () => { isDragging = true; });
+            window.addEventListener('mouseup', () => { isDragging = false; });
+            window.addEventListener('touchstart', () => { isDragging = true; });
+            window.addEventListener('touchend', () => { isDragging = false; });
+
+            // Initialize Mobile UI or Desktop default
+            if (isMobile) {
+                setupMobileUI();
+                // Intro text update
+                const introText = document.querySelector('.intro-text');
+                if (introText) introText.textContent = "Use your fingers to rotate and open / close each work";
+            } else {
+                activeData = projects; // Load everything on desktop
+                buildScene();
+            }
+
+            window.addEventListener('resize', onWindowResize);
+            setupMenuButtons();
+            setupSlider();
+            setupFitButton();
+
+            const l = document.getElementById('loader');
+            l.style.opacity = 0;
+            setTimeout(() => { l.remove(); }, 500);
+
+            // Intro fade
+            const intro = document.getElementById('intro-overlay');
+            setTimeout(() => {
+                intro.style.opacity = '0';
+                setTimeout(() => { intro.style.display = 'none'; }, 1000);
+            }, 2000);
+
+            // Fit View
+            setTimeout(() => { performFitView(); }, 600);
+        }
+
+        // --- MOBILE UI SETUP ---
+        function setupMobileUI() {
+            // 1. Extract unique types
+            const types = [...new Set(projects.map(p => p.categories.type))].sort();
+            
+            // 2. Set default active type
+            currentMobileType = types[0];
+            
+            // 3. Filter data for the initial load
+            activeData = projects.filter(p => p.categories.type === currentMobileType);
+
+            // 4. Build the top Type Bar
+            const typeBar = document.getElementById('mobile-type-bar');
+            
+            types.forEach(type => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                if (type === currentMobileType) btn.classList.add('active');
+                btn.textContent = type;
+                
+                btn.addEventListener('click', () => {
+                    if (currentMobileType === type) return; // No change
+                    
+                    // Update active class
+                    const siblings = typeBar.querySelectorAll('.nav-btn');
+                    siblings.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Update logic
+                    currentMobileType = type;
+                    handleMobileTypeChange();
+                });
+
+                typeBar.appendChild(btn);
+            });
+
+            // 5. Initial build
+            buildScene();
+        }
+
+        function handleMobileTypeChange() {
+            // Wipe memory/scene is handled inside buildScene logic implicitly by clearing objects array
+            // 1. Filter new data
+            activeData = projects.filter(p => p.categories.type === currentMobileType);
+            
+            // 2. Reset Filter state (optional, keeps UI consistent)
+            state.filter = 'all'; 
+            const filterBtns = document.querySelectorAll('#filter-group .nav-btn');
+            filterBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('#filter-group .nav-btn[data-val="all"]').classList.add('active');
+
+            // 3. Rebuild
+            buildScene();
+            
+            // 4. Reset View to Grid (optional preference) and Fit
+            state.view = 'grid'; // Reset view to grid on type change
+            const viewBtns = document.querySelectorAll('#view-group .nav-btn');
+            viewBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('#view-group .nav-btn[data-val="grid"]').classList.add('active');
+
+            setTimeout(performFitView, 100);
+        }
+
+        function buildScene() {
+            // CLEAR SCENE
+            objects.forEach(obj => {
+                if(obj.element && obj.element.parentNode) {
+                    obj.element.parentNode.removeChild(obj.element);
+                }
+                scene.remove(obj);
+            });
+            objects = [];
+            chaosOffsets = [];
+            removeOldLabels(); // Clear labels
+
+            // BUILD SCENE with activeData (which is filtered on mobile, full on desktop)
+            activeData.forEach((p) => {
+                const el = document.createElement('div');
+                el.className = 'element-card';
+                
+                const img = document.createElement('img');
+                img.className = 'card-image';
+                
+                const imgMedia = p.media && p.media.find(m => m.type === 'image');
+                
+                if (imgMedia) {
+                    const filename = imgMedia.src.split('/').pop().replace(/\.[^/.]+$/, "");
+                    const thumbUrl = `https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives-thumbnail/main/${filename}.png`;
+                    img.src = thumbUrl;
+                    img.onerror = () => { img.src = imgMedia.src; };
+                } else {
+                    img.src = 'https://placehold.co/300x300/000000/FFF?text=MEDIA';
+                }
+
+                img.loading = "eager"; 
+                img.draggable = false;
+                el.appendChild(img);
+
+                el.addEventListener('mouseenter', () => { if (!isDragging) controls.enabled = false; });
+                el.addEventListener('mouseleave', () => { controls.enabled = true; });
+                el.addEventListener('click', (e) => { e.stopPropagation(); openModal(p); });
+
+                const obj = new CSS3DObject(el);
+                obj.position.x = Math.random() * 1500 - 750;
+                obj.position.y = Math.random() * 1500 - 750;
+                obj.position.z = Math.random() * 1500 - 750;
+                
+                obj.userData = {
+                    center: new THREE.Vector3(0,0,0),
+                    offset: new THREE.Vector3(obj.position.x, obj.position.y, obj.position.z),
+                    rotation: new THREE.Euler(0,0,0)
+                };
+                
+                scene.add(obj);
+                objects.push(obj);
+
+                chaosOffsets.push({
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2,
+                    z: (Math.random() - 0.5) * 2,
+                    timeOffset: Math.random() * 100
+                });
+            });
+
+            updateLayout();
+        }
+
+        function setupMenuButtons() {
+            const buttons = document.querySelectorAll('.nav-btn:not(#fit-btn)');
+            buttons.forEach(btn => {
+                // Skip if inside mobile-type-bar (handled separately)
+                if (btn.parentElement.id === 'mobile-type-bar') return;
+
+                btn.addEventListener('click', (e) => {
+                    const type = e.target.dataset.type;
+                    const val = e.target.dataset.val;
+                    
+                    const siblings = document.querySelectorAll(`#ui-container .nav-btn[data-type="${type}"]`);
+                    siblings.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    state[type] = val;
+                    updateLayout();
+                });
+            });
+        }
+
+        function setupSlider() {
+            const slider = document.getElementById('rotate-slider');
+            slider.addEventListener('input', (e) => {
+                autoRotateSpeed = parseFloat(e.target.value) * 0.02;
+            });
+        }
+
+        function performFitView() {
+            let maxDist = 0;
+            objects.forEach(obj => {
+                if (obj.userData.center) { 
+                    const finalX = obj.userData.center.x + obj.userData.offset.x;
+                    const finalY = obj.userData.center.y + obj.userData.offset.y;
+                    const finalZ = obj.userData.center.z + obj.userData.offset.z;
+                    
+                    const pos = new THREE.Vector3(finalX, finalY, finalZ);
+                    const dist = pos.length();
+                    
+                    if (dist > maxDist) maxDist = dist;
+                }
+            });
+            maxDist += 300; 
+
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumBase = 3500;
+            let targetZoom = 1;
+            
+            if (state.view === 'grid') {
+                 targetZoom = frustumBase / (maxDist * 1.5);
+            } else {
+                if (aspect >= 1) {
+                    targetZoom = frustumBase / (2 * maxDist);
+                } else {
+                    targetZoom = (frustumBase * aspect) / (2 * maxDist);
+                }
+            }
+            targetZoom = Math.max(0.1, Math.min(targetZoom, 5));
+
+            new TWEEN.Tween(camera)
+                .to({ zoom: targetZoom }, 2000)
+                .easing(TWEEN.Easing.Cubic.Out)
+                .onUpdate(() => { camera.updateProjectionMatrix(); })
+                .start();
+        }
+
+        function setupFitButton() {
+            const fitBtn = document.getElementById('fit-btn');
+            fitBtn.addEventListener('click', () => {
+                performFitView();
+            });
+        }
+
+        function removeOldLabels() {
+            const oldLabels = [...labels]; labels = []; 
+            oldLabels.forEach(l => { 
+                l.element.classList.remove('visible'); 
+                setTimeout(() => { 
+                    if(l.parent) scene.remove(l); 
+                }, 1000); 
+            });
+        }
+
+        function createLabel(text, subtitle, x, y, z) {
+            const container = document.createElement('div');
+            container.className = 'group-label-container';
+
+            const mainDiv = document.createElement('div');
+            mainDiv.className = 'group-label-main';
+            mainDiv.textContent = text;
+            container.appendChild(mainDiv);
+
+            if (subtitle) {
+                const subDiv = document.createElement('div');
+                subDiv.className = 'group-label-sub';
+                subDiv.textContent = subtitle;
+                container.appendChild(subDiv);
+            }
+
+            const label = new CSS3DObject(container);
+            label.position.set(x, y, z);
+            label.rotation.set(0, 0, 0); 
+            scene.add(label);
+            labels.push(label);
+            setTimeout(() => container.classList.add('visible'), 50);
+        }
+
+        function updateLayout() {
+            TWEEN.removeAll();
+            removeOldLabels();
+
+            objects.forEach(obj => {
+                obj.userData.rotation.set(0, 0, 0);
+                obj.userData.sphereCenter = null;
+            });
+
+            // Filtering based on activeData (which is already pre-filtered on mobile)
+            let activeIndices = [];
+            if (state.filter === 'all') {
+                activeIndices = objects.map((_, i) => i);
+            } else {
+                objects.forEach((_, i) => {
+                    // Check against activeData, not global projects
+                    if (activeData[i].categories[state.filter]) activeIndices.push(i);
+                    else {
+                         new TWEEN.Tween(objects[i].position).to({ y: 10000 }, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                         objects[i].userData.center = null; 
+                    }
+                });
+            }
+
+            const groups = {};
+            if (state.filter === 'all') groups['ALL'] = activeIndices;
+            else {
+                activeIndices.forEach(i => {
+                    const p = activeData[i];
+                    const key = p.categories[state.filter] || 'Other';
+                    if (!groups[key]) groups[key] = [];
+                    groups[key].push(i);
+                });
+            }
+
+            const groupKeys = Object.keys(groups).sort();
+            
+            groupKeys.forEach((key, gIndex) => {
+                const indexes = groups[key];
+                let cx = 0, cy = 0, cz = 0;
+                
+                const sphereRadius = Math.max(Math.sqrt(indexes.length) * 60, 200);
+                const clusterSpacing = Math.max(2200, (groupKeys.length * 1200) / (2 * Math.PI));
+
+                const LABEL_Y_HEIGHT = 800;
+                const SPHERE_OFFSET_Y = 400; 
+                const GRID_TOP_Y = 400;
+                
+                const ITEM_SPACING = 180;
+
+                if (state.filter !== 'all') {
+                    if (state.view === 'grid') {
+                        const groupZSpacing = 1500;
+                        const totalZLen = (groupKeys.length - 1) * groupZSpacing;
+                        cx = 0; 
+                        cz = (totalZLen / 2) - (gIndex * groupZSpacing);
+                    } else {
+                        const angle = (gIndex / groupKeys.length) * Math.PI * 2;
+                        cx = Math.cos(angle) * clusterSpacing;
+                        cz = Math.sin(angle) * clusterSpacing;
+                    }
+                    
+                    let subText = "";
+                    if (state.filter === 'subtype') {
+                        const firstItem = activeData[indexes[0]];
+                        subText = firstItem.categories.type; 
+                    } else if (state.filter === 'year') {
+                         subText = "Timeline";
+                    } else {
+                         subText = state.filter;
+                    }
+
+                    createLabel(key, subText, cx, LABEL_Y_HEIGHT, cz); 
+                }
+
+                const dummy = new THREE.Object3D();
+
+                if (state.view === 'grid') {
+                    const cols = Math.ceil(Math.sqrt(indexes.length));
+                    indexes.forEach((objIndex, i) => {
+                        const row = Math.floor(i / cols);
+                        const col = i % cols;
+                        
+                        const ox = (col - (cols - 1) / 2) * ITEM_SPACING;
+                        const oy = GRID_TOP_Y - (row * ITEM_SPACING);
+                        const oz = 0; 
+
+                        const obj = objects[objIndex];
+                        
+                        new TWEEN.Tween(obj.userData.center).to({x: cx, y: cy, z: cz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                        new TWEEN.Tween(obj.userData.offset).to({x: ox, y: oy, z: oz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                        new TWEEN.Tween(obj.userData.rotation).to({x: 0, y: 0, z: 0}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                    });
+
+                } 
+                else if (state.view === 'sphere') {
+                    const sphereCenterY = SPHERE_OFFSET_Y - sphereRadius; 
+
+                    indexes.forEach((objIndex, i) => {
+                        const phi = Math.acos(-1 + (2 * i) / indexes.length);
+                        const theta = Math.sqrt(indexes.length * Math.PI) * phi;
+                        
+                        const ox = sphereRadius * Math.sin(phi) * Math.cos(theta);
+                        const oy = sphereRadius * Math.sin(phi) * Math.sin(theta);
+                        const oz = sphereRadius * Math.cos(phi);
+                        
+                        dummy.position.set(ox, oy, oz);
+                        dummy.lookAt(0, 0, 0); 
+
+                        const obj = objects[objIndex];
+                        obj.userData.sphereCenter = new THREE.Vector3(cx, sphereCenterY, cz);
+
+                        new TWEEN.Tween(obj.userData.center).to({x: cx, y: cy, z: cz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                        new TWEEN.Tween(obj.userData.offset).to({x: ox, y: oy + sphereCenterY, z: oz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                        new TWEEN.Tween(obj.userData.rotation).to({x: dummy.rotation.x, y: dummy.rotation.y, z: dummy.rotation.z}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                    });
+                }
+                else if (state.view === 'random') {
+                    const spread = 750; 
+                    indexes.forEach((objIndex) => {
+                          const ox = (Math.random()-0.5) * spread;
+                          const oy = (Math.random()-0.5) * spread;
+                          const oz = (Math.random()-0.5) * spread;
+                          
+                          const rx = (Math.random()-0.5)*0.5;
+                          const rz = (Math.random()-0.5)*0.5;
+
+                          const obj = objects[objIndex];
+                          new TWEEN.Tween(obj.userData.center).to({x: cx, y: cy, z: cz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                          new TWEEN.Tween(obj.userData.offset).to({x: ox, y: oy, z: oz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                          new TWEEN.Tween(obj.userData.rotation).to({x: rx, y: 0, z: rz}, 2500).easing(TWEEN.Easing.Exponential.InOut).start();
+                    });
+                }
+            });
+
+            performFitView();
+        }
+
+        function onWindowResize() {
+            const aspect = window.innerWidth / window.innerHeight;
+            const frustumSize = 3500;
+            camera.left = - frustumSize * aspect / 2;
+            camera.right = frustumSize * aspect / 2;
+            camera.top = frustumSize / 2;
+            camera.bottom = - frustumSize / 2;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            TWEEN.update();
+            controls.update();
+
+            globalRotation += autoRotateSpeed;
+            const time = Date.now() * 0.002;
+            const vectorHelper = new THREE.Vector3();
+
+            objects.forEach((obj, i) => {
+                if(obj.userData.center) { 
+                      const offset = obj.userData.offset.clone();
+                      offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), globalRotation);
+                      
+                      let targetPos = new THREE.Vector3().copy(obj.userData.center).add(offset);
+                      
+                      if (state.view === 'random') {
+                          const chaos = chaosOffsets[i];
+                          targetPos.x += Math.sin(time + chaos.timeOffset) * 50; 
+                          targetPos.y += Math.cos(time * 0.9 + chaos.timeOffset) * 50;
+                          targetPos.z += Math.sin(time * 0.7 + chaos.timeOffset) * 50;
+
+                          obj.position.copy(targetPos);
+                          obj.rotation.x = obj.userData.rotation.x + Math.sin(time * 0.5) * 0.2;
+                          obj.rotation.y = obj.userData.rotation.y + globalRotation;
+                          obj.rotation.z = obj.userData.rotation.z + Math.cos(time * 0.3) * 0.2;
+                      } 
+                      else if (state.view === 'sphere') {
+                          obj.position.copy(targetPos);
+                          if (obj.userData.sphereCenter) {
+                              vectorHelper.subVectors(obj.position, obj.userData.sphereCenter).add(obj.position);
+                              obj.lookAt(vectorHelper);
+                          }
+                      } 
+                      else { 
+                          obj.position.copy(targetPos);
+                          obj.rotation.set(0, globalRotation, 0); 
+                      }
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // --- 3D HELPER (GLB) ---
+        function initThreeJSViewer(container, modelUrl) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 3);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            container.appendChild(renderer.domElement);
+
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+            new RGBELoader().setDataType(THREE.UnsignedByteType).load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/equirectangular/venice_sunset_1k.hdr', function (texture) {
+                    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+                    scene.environment = envMap;
+                    texture.dispose();
+                    pmremGenerator.dispose();
+            });
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            dirLight.position.set(5, 10, 7.5);
+            scene.add(dirLight);
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            
+            const loader = new GLTFLoader();
+            const dracoLoader = new DRACOLoader();
+            dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+            loader.setDRACOLoader(dracoLoader);
+            loader.setMeshoptDecoder(MeshoptDecoder);
+
+            loader.load(modelUrl, (gltf) => {
+                const model = gltf.scene;
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 2 / maxDim;
+                model.scale.setScalar(scale);
+                model.position.sub(center.multiplyScalar(scale));
+                scene.add(model);
+                 if (gltf.animations && gltf.animations.length > 0) {
+                    const mixer = new THREE.AnimationMixer(model);
+                    gltf.animations.forEach(clip => { mixer.clipAction(clip).play(); });
+                 }
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // --- MODAL ---
+        const modalContainer = document.getElementById('modal-container');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalMediaScroller = document.getElementById('modal-media-scroller');
+        const modalLeftCol = document.getElementById('modal-left-col');
+        const modalRightCol = document.getElementById('modal-right-col');
+
+        modalMediaScroller.addEventListener('wheel', (evt) => {
+            if (evt.target === modalMediaScroller) {
+                evt.preventDefault();
+                modalMediaScroller.scrollLeft += evt.deltaY;
+            }
+        });
+
+        function openModal(project) {
+            modalMediaScroller.innerHTML = '';
+            if (project.media) {
+                project.media.forEach(media => {
+                    let mediaEl;
+                    if (media.type === 'image') {
+                        mediaEl = document.createElement('img');
+                        mediaEl.src = media.src;
+                        mediaEl.className = "inline-block h-full object-contain mr-4"; 
+                    } else if (media.type === 'video') {
+                        mediaEl = document.createElement('video');
+                        mediaEl.src = media.src;
+                        mediaEl.controls = true;
+                        mediaEl.className = "inline-block h-full object-contain mr-4";
+                    } else if (media.type === 'model') {
+                        mediaEl = document.createElement('div');
+                        mediaEl.className = "glb-wrapper inline-block h-full min-w-[300px] w-auto mr-4";
+                        let modelUrl = media.src;
+                        if (modelUrl.includes('raw.githubusercontent.com')) {
+                             modelUrl = modelUrl.replace('raw.githubusercontent.com', 'cdn.jsdelivr.net/gh').replace('/main/', '@main/');
+                        }
+                        setTimeout(() => initThreeJSViewer(mediaEl, modelUrl), 0);
+                    } else if (media.type === 'html') {
+                        mediaEl = document.createElement('iframe');
+                        let url = media.src;
+                        if (url.includes('raw.githubusercontent.com') && url.endsWith('.html')) {
+                            url = url.replace('raw.githubusercontent.com', 'raw.githack.com').replace('/refs/heads/', '/'); 
+                        }
+                        const wrapper = document.createElement('div');
+                        wrapper.className = "html-scale-wrapper inline-block mr-4";
+                        mediaEl.src = url;
+                        mediaEl.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                        mediaEl.allowFullscreen = true;
+                        wrapper.appendChild(mediaEl);
+                        modalMediaScroller.appendChild(wrapper);
+                        return;
+                    }
+                    if (mediaEl) modalMediaScroller.appendChild(mediaEl);
+                });
+            }
+
+            const allMetadata = { 'Project': project.name, ...project.categories };
+            if (project.link) allMetadata['Link'] = `<a href="${project.link}" target="_blank" class="underline ui-text">${project.link}</a>`;
+
+            let leftHtml = '<div class="space-y-1 ui-text text-sm">';
+            leftHtml += `<div class="flex items-baseline mb-2">
+                            <span class="modal-label w-36 mr-2 flex-shrink-0 opacity-70 uppercase tracking-widest text-xs">Project:</span>
+                            <span class="modal-value font-bold">${allMetadata['Project']}</span>
+                         </div>`;
+            
+            categoryPriorityList.forEach(key => {
+                if (allMetadata[key]) {
+                    leftHtml += `<div class="flex items-baseline border-b border-pink-900/30 pb-1 mb-1">
+                        <span class="modal-label w-36 mr-2 flex-shrink-0 opacity-70 uppercase tracking-widest text-xs">${key}:</span> 
+                        <span class="modal-value">${allMetadata[key]}</span>
+                    </div>`;
+                }
+            });
+            if (allMetadata['Link']) leftHtml += `<div class="flex items-baseline mt-2"><span class="modal-label w-36 mr-2 flex-shrink-0 uppercase text-xs">Link:</span> <span>${allMetadata['Link']}</span></div>`;
+            leftHtml += '</div>';
+            
+            modalLeftCol.innerHTML = leftHtml;
+            modalRightCol.innerHTML = `<p class="modal-desc text-sm leading-relaxed">${project.description || ''}</p>`;
+            modalContainer.classList.add('open');
+        }
+
+        function closeModal() {
+            modalContainer.classList.remove('open');
+            setTimeout(() => { modalMediaScroller.innerHTML = ''; }, 300);
+        }
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', closeModal);
+        window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    </script>
+</body>
+</html>
