@@ -148,42 +148,49 @@
                 justify-content: space-between; 
             }
 
-            /* Mobile Type Bar Specifics - FORCED FIT */
+            /* Mobile Type Bar Specifics - PARAMETRIC FIT */
             #mobile-type-bar {
                 display: flex;
                 background-color: rgba(0, 0, 0, 0.5);
                 border: 1px solid rgba(255, 0, 106, 0.3);
                 backdrop-filter: blur(5px);
                 border-radius: 12px;
-                padding: 6px 2px;
+                padding: 4px; /* Padding reduced for compact fit */
                 width: 100%;
-                overflow: hidden; /* No scrolling */
-                flex-wrap: nowrap; /* Force single line */
+                overflow: hidden; 
+                flex-wrap: nowrap;
                 pointer-events: auto;
-                gap: 2px; /* Tiny gap */
+                gap: 4px; /* Small gap between buttons */
+                justify-content: space-between; /* Distribute items */
             }
             
             #mobile-type-bar .nav-btn {
-                flex: 1; /* Distribute width equally */
+                /* Parametric sizing: content determines base width, but can grow/shrink */
+                flex: 1 1 auto; 
                 width: auto;
-                min-width: 0; /* Allow shrinking below content size */
-                padding: 6px 0; /* Minimal padding */
+                min-width: 0; 
+                padding: 6px 4px; /* Small side padding as requested */
                 
-                /* Responsive Font Size for fitting many items */
-                /* 6 items on 360px screen -> ~60px per item. */
-                font-size: 2.5vw; 
-                max-font-size: 10px;
+                font-size: 0.6rem; /* Smaller font to fit everything */
+                font-weight: 600; /* Bold for readability */
                 
                 letter-spacing: 0;
                 white-space: nowrap;
-                overflow: hidden;
-                text-overflow: clip; /* Just clip if it overflows, better than ellipsis for tight fits */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
             }
 
             .menu-divider { display: none; }
 
-            .nav-btn {
+            /* Filter Group Buttons */
+            #filter-group .nav-btn {
+                flex: 1; 
                 text-align: center;
+                padding: 8px 0; 
+                font-size: 0.6rem; 
+                letter-spacing: 0; 
             }
 
             /* Hide 'Type' button in the bottom filter group only on mobile */
@@ -486,7 +493,7 @@
         const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
         // --- SAMPLE DATA (Modified to simulate 6 types) ---
-                const projects = [
+           const projects = [
            {
     id: "fig-1",
     name: "penguin is not a friend, only a sinner",
@@ -3678,7 +3685,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-0.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-1",
@@ -3686,7 +3693,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-1.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-2",
@@ -3694,7 +3701,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-2.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-3",
@@ -3702,7 +3709,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-3.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-4",
@@ -3710,7 +3717,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-4.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-5",
@@ -3718,7 +3725,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-5.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-6",
@@ -3726,7 +3733,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-6.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "digitalspl-7",
@@ -3734,7 +3741,7 @@
   description: "After scanning the painting, these new re-interpretations are made with dots, and as an expression; the language created has overtone of a cosmic vision with its resemblance to the star-maps while the patterns invented are evolved in way similar to the pandemic maps for showing cases. In both ways, the compositions vague and fragmented attitude refers to the today's new normal with its texture and its inverted new colors.",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/digitalspleens-7.jpg" }],
-  categories: { year: 2020, type: "Digital Painting", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
+  categories: { year: 2020, type: "Digital Art", subtype: "DigitalSpleen", collection: "Digital Spleens", medium: "computer", expression: "early religious robotics", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-1",
@@ -3742,7 +3749,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk001.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-2",
@@ -3750,7 +3757,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk002.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-3",
@@ -3758,7 +3765,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk003.jpg" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-4",
@@ -3766,7 +3773,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk004.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-5",
@@ -3774,7 +3781,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk005.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-6",
@@ -3782,7 +3789,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk006.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-7",
@@ -3790,7 +3797,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk007.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-8",
@@ -3798,7 +3805,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk008.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-9",
@@ -3806,7 +3813,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk009.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-10",
@@ -3814,7 +3821,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk010.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-11",
@@ -3822,7 +3829,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk011.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-12",
@@ -3830,7 +3837,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk012.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-13",
@@ -3838,7 +3845,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk013.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-14",
@@ -3846,7 +3853,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk014.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-15",
@@ -3854,7 +3861,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk015.jpg" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-16",
@@ -3862,7 +3869,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk016.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-17",
@@ -3870,7 +3877,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk017.jpg" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-18",
@@ -3878,7 +3885,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk018.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-19",
@@ -3886,7 +3893,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk019.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-20",
@@ -3894,7 +3901,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk020.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-21",
@@ -3902,7 +3909,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk021.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-22",
@@ -3910,7 +3917,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk022.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-23",
@@ -3918,7 +3925,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk023.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-24",
@@ -3926,7 +3933,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk024.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "punk-25",
@@ -3934,7 +3941,7 @@
   description: "artpunks crypto punk derivatives made of Leonardo DaVinci",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/artpunk025.PNG" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Artpunks", collection: "Artpunks", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "cactus-1",
@@ -3942,7 +3949,7 @@
   description: "“!CACTUS #RAID” THIS ARTWORK RESEARCHES THE BACK-HAND PROGRAMMING OF A MONOTONOUS IMAGE WITH THE SPIRIT OF SHOWING DECENTRALIZATION AND PARTICIPATION OF VARIOUS AURAS TOWARDS A UNIQUE GOAL ON A LARGE SCALE. AFTER FINDING A RANDOM STOCK LANDSCAPE IMAGE ONLINE, A NEW RE-INTERPRETATION IS MADE WITH DOTS TEXTURE. AS AN EXPRESSION, THAT STRICT REGULAR ARRAY OF BUBBLES IS THE LIMIT OF WHAT'S ENOUGH TO TRANSMIT A UNIVERSAL MESSAGE WITH A JPEG. THE CHAOS WITH THE ORDER INSIDE EACH DOT MIGHT BE UNRECOGNIZABLE FROM A DISTANCE RATHER THAN A DESERT LANDSCAPE WITH INVERTED COLORS; HENCE, EACH \"INDIVIDUAL\" HAS A DIVERSE CENTER FOR ITS OWN. THE COMPOSITION COMES INTO EXISTENCE WITH 18550 DIFFERENT EMOTIONAL VARIATIONS OF DIGITAL CHAKRAS. NONETHELESS, THIS STATED ESSENCE OF DECENTALISATION UNDER A \"VISION\" MIGHT BE THE PLOT TWIST BY CRITICIZING THE MAIN PROBLEM OF DIGITAL COMMUNITIES ON DISCORD, TELEGRAM, OR ELSEWHERE; THE CENTRALIZATION UNDER A COMMON GOAL. WHO DETERMINES THE MOST APPROPRIATE FOCAL POINT FOR COMMUNITIES? THE COMMUNITY MAKERS. IN THE CONTEXT OF THIS ARTWORK, IS IT REASONABLE FOR 18550 UNIQUE INDIVIDUALS TO UNITE UNDER A RANDOM CONTENTED LOYALTY-FREE INTERNET PICTURE? THE MAJORITY OF PEOPLE MAY UNDENIABLY BELIEVE IT IS. EVEN ARTISTS EFFORT AND STRIVE TO CREATE NON-STOP, AND THE CURATORS PUT THEM IN AN EXCELLENT HABITAT IN WHICH THEY MAKE SENSE TOGETHER TOO; FOR THE MOST PART, THE DIGITAL COMMUNITIES THAT HAVE SPRUNG UP OVER THE PAST YEAR HAVE BEEN PURELY MATERIALISTIC, WITH MEMBERS JOINING PRIMARILY TO TRADE AND \"FLIP.\" I BELIEVE WE REQUIRE SOMETHING MORE THAN A CACTUS, ALTHOUGH IT APPEARS TO BE AESTHETICALLY PLEASING OR WORTH FOLLOWING THROUGH THE INSISTENT DICTATION OF \"MAKERS.\" 100x150cm, digital",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus1-bigdot-low.jpg" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "cactus-2",
@@ -3950,7 +3957,7 @@
   description: "“!CACTUS #RAID” THIS ARTWORK RESEARCHES THE BACK-HAND PROGRAMMING OF A MONOTONOUS IMAGE WITH THE SPIRIT OF SHOWING DECENTRALIZATION AND PARTICIPATION OF VARIOUS AURAS TOWARDS A UNIQUE GOAL ON A LARGE SCALE. AFTER FINDING A RANDOM STOCK LANDSCAPE IMAGE ONLINE, A NEW RE-INTERPRETATION IS MADE WITH DOTS TEXTURE. AS AN EXPRESSION, THAT STRICT REGULAR ARRAY OF BUBBLES IS THE LIMIT OF WHAT''S ENOUGH TO TRANSMIT A UNIVERSAL MESSAGE WITH A JPEG. THE CHAOS WITH THE ORDER INSIDE EACH DOT MIGHT BE UNRECOGNIZABLE FROM A DISTANCE RATHER THAN A DESERT LANDSCAPE WITH INVERTED COLORS; HENCE, EACH \"INDIVIDUAL\" HAS A DIVERSE CENTER FOR ITS OWN. THE COMPOSITION COMES INTO EXISTENCE WITH 18550 DIFFERENT EMOTIONAL VARIATIONS OF DIGITAL CHAKRAS. NONETHELESS, THIS STATED ESSENCE OF DECENTALISATION UNDER A \"VISION\" MIGHT BE THE PLOT TWIST BY CRITICIZING THE MAIN PROBLEM OF DIGITAL COMMUNITIES ON DISCORD, TELEGRAM, OR ELSEWHERE; THE CENTRALIZATION UNDER A COMMON GOAL. WHO DETERMINES THE MOST APPROPRIATE FOCAL POINT FOR COMMUNITIES? THE COMMUNITY MAKERS. IN THE CONTEXT OF THIS ARTWORK, IS IT REASONABLE FOR 18550 UNIQUE INDIVIDUALS TO UNITE UNDER A RANDOM CONTENTED LOYALTY-FREE INTERNET PICTURE? THE MAJORITY OF PEOPLE MAY UNDENIABLY BELIEVE IT IS. EVEN ARTISTS EFFORT AND STRIVE TO CREATE NON-STOP, AND THE CURATORS PUT THEM IN AN EXCELLENT HABITAT IN WHICH THEY MAKE SENSE TOGETHER TOO; FOR THE MOST PART, THE DIGITAL COMMUNITIES THAT HAVE SPRUNG UP OVER THE PAST YEAR HAVE BEEN PURELY MATERIALISTIC, WITH MEMBERS JOINING PRIMARILY TO TRADE AND \"FLIP.\" I BELIEVE WE REQUIRE SOMETHING MORE THAN A CACTUS, ALTHOUGH IT APPEARS TO BE AESTHETICALLY PLEASING OR WORTH FOLLOWING THROUGH THE INSISTENT DICTATION OF \"MAKERS.\" 100x150cm, digital",
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus2.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
 {
   id: "cactus-3",
@@ -3958,9 +3965,32 @@
   description: "“!CACTUS #RAID” THIS ARTWORK RESEARCHES THE BACK-HAND PROGRAMMING OF A MONOTONOUS IMAGE WITH THE SPIRIT OF SHOWING DECENTRALIZATION AND PARTICIPATION OF VARIOUS AURAS TOWARDS A UNIQUE GOAL ON A LARGE SCALE. AFTER FINDING A RANDOM STOCK LANDSCAPE IMAGE ONLINE, A NEW RE-INTERPRETATION IS MADE WITH DOTS TEXTURE. AS AN EXPRESSION, THAT STRICT REGULAR ARRAY OF BUBBLES IS THE LIMIT OF WHAT'S ENOUGH TO TRANSMIT A UNIVERSAL MESSAGE WITH A JPEG. THE CHAOS WITH THE ORDER INSIDE EACH DOT MIGHT BE UNRECOGNIZABLE FROM A DISTANCE RATHER THAN A DESERT LANDSCAPE WITH INVERTED COLORS; HENCE, EACH \"INDIVIDUAL\" HAS A DIVERSE CENTER FOR ITS OWN. THE COMPOSITION COMES INTO EXISTENCE WITH 18550 DIFFERENT EMOTIONAL VARIATIONS OF DIGITAL CHAKRAS. NONETHELESS, THIS STATED ESSENCE OF DECENTALISATION UNDER A \"VISION\" MIGHT BE THE PLOT TWIST BY CRITICIZING THE MAIN PROBLEM OF DIGITAL COMMUNITIES ON DISCORD, TELEGRAM, OR ELSEWHERE; THE CENTRALIZATION UNDER A COMMON GOAL. WHO DETERMINES THE MOST APPROPRIATE FOCAL POINT FOR COMMUNITIES? THE COMMUNITY MAKERS. IN THE CONTEXT OF THIS ARTWORK, IS IT REASONABLE FOR 18550 UNIQUE INDIVIDUALS TO UNITE UNDER A RANDOM CONTENTED LOYALTY-FREE INTERNET PICTURE? THE MAJORITY OF PEOPLE MAY UNDENIABLY BELIEVE IT IS. EVEN ARTISTS EFFORT AND STRIVE TO CREATE NON-STOP, AND THE CURATORS PUT THEM IN AN EXCELLENT HABITAT IN WHICH THEY MAKE SENSE TOGETHER TOO; FOR THE MOST PART, THE DIGITAL COMMUNITIES THAT HAVE SPRUNG UP OVER THE PAST YEAR HAVE BEEN PURELY MATERIALISTIC, WITH MEMBERS JOINING PRIMARILY TO TRADE AND \"FLIP.\" I BELIEVE WE REQUIRE SOMETHING MORE THAN A CACTUS, ALTHOUGH IT APPEARS TO BE AESTHETICALLY PLEASING OR WORTH FOLLOWING THROUGH THE INSISTENT DICTATION OF \"MAKERS.\" 100x150cm, digital" ,
   link: null,
   media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus3.png" }],
-  categories: { year: 2021, type: "Digital Painting", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+  categories: { year: 2021, type: "Digital Art", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
 },
-
+{
+  id: "cactus-3",
+  name: "Cactus Raid- Colored Base",
+  description: "“!CACTUS #RAID” THIS ARTWORK RESEARCHES THE BACK-HAND PROGRAMMING OF A MONOTONOUS IMAGE WITH THE SPIRIT OF SHOWING DECENTRALIZATION AND PARTICIPATION OF VARIOUS AURAS TOWARDS A UNIQUE GOAL ON A LARGE SCALE. AFTER FINDING A RANDOM STOCK LANDSCAPE IMAGE ONLINE, A NEW RE-INTERPRETATION IS MADE WITH DOTS TEXTURE. AS AN EXPRESSION, THAT STRICT REGULAR ARRAY OF BUBBLES IS THE LIMIT OF WHAT'S ENOUGH TO TRANSMIT A UNIVERSAL MESSAGE WITH A JPEG. THE CHAOS WITH THE ORDER INSIDE EACH DOT MIGHT BE UNRECOGNIZABLE FROM A DISTANCE RATHER THAN A DESERT LANDSCAPE WITH INVERTED COLORS; HENCE, EACH \"INDIVIDUAL\" HAS A DIVERSE CENTER FOR ITS OWN. THE COMPOSITION COMES INTO EXISTENCE WITH 18550 DIFFERENT EMOTIONAL VARIATIONS OF DIGITAL CHAKRAS. NONETHELESS, THIS STATED ESSENCE OF DECENTALISATION UNDER A \"VISION\" MIGHT BE THE PLOT TWIST BY CRITICIZING THE MAIN PROBLEM OF DIGITAL COMMUNITIES ON DISCORD, TELEGRAM, OR ELSEWHERE; THE CENTRALIZATION UNDER A COMMON GOAL. WHO DETERMINES THE MOST APPROPRIATE FOCAL POINT FOR COMMUNITIES? THE COMMUNITY MAKERS. IN THE CONTEXT OF THIS ARTWORK, IS IT REASONABLE FOR 18550 UNIQUE INDIVIDUALS TO UNITE UNDER A RANDOM CONTENTED LOYALTY-FREE INTERNET PICTURE? THE MAJORITY OF PEOPLE MAY UNDENIABLY BELIEVE IT IS. EVEN ARTISTS EFFORT AND STRIVE TO CREATE NON-STOP, AND THE CURATORS PUT THEM IN AN EXCELLENT HABITAT IN WHICH THEY MAKE SENSE TOGETHER TOO; FOR THE MOST PART, THE DIGITAL COMMUNITIES THAT HAVE SPRUNG UP OVER THE PAST YEAR HAVE BEEN PURELY MATERIALISTIC, WITH MEMBERS JOINING PRIMARILY TO TRADE AND \"FLIP.\" I BELIEVE WE REQUIRE SOMETHING MORE THAN A CACTUS, ALTHOUGH IT APPEARS TO BE AESTHETICALLY PLEASING OR WORTH FOLLOWING THROUGH THE INSISTENT DICTATION OF \"MAKERS.\" 100x150cm, digital" ,
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus3.png" }],
+  categories: { year: 2021, type: "MP3", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+},
+{
+  id: "cactus-3",
+  name: "Cactus Raid- Colored Base",
+  description: "“!CACTUS #RAID” THIS ARTWORK RESEARCHES THE BACK-HAND PROGRAMMING OF A MONOTONOUS IMAGE WITH THE SPIRIT OF SHOWING DECENTRALIZATION AND PARTICIPATION OF VARIOUS AURAS TOWARDS A UNIQUE GOAL ON A LARGE SCALE. AFTER FINDING A RANDOM STOCK LANDSCAPE IMAGE ONLINE, A NEW RE-INTERPRETATION IS MADE WITH DOTS TEXTURE. AS AN EXPRESSION, THAT STRICT REGULAR ARRAY OF BUBBLES IS THE LIMIT OF WHAT'S ENOUGH TO TRANSMIT A UNIVERSAL MESSAGE WITH A JPEG. THE CHAOS WITH THE ORDER INSIDE EACH DOT MIGHT BE UNRECOGNIZABLE FROM A DISTANCE RATHER THAN A DESERT LANDSCAPE WITH INVERTED COLORS; HENCE, EACH \"INDIVIDUAL\" HAS A DIVERSE CENTER FOR ITS OWN. THE COMPOSITION COMES INTO EXISTENCE WITH 18550 DIFFERENT EMOTIONAL VARIATIONS OF DIGITAL CHAKRAS. NONETHELESS, THIS STATED ESSENCE OF DECENTALISATION UNDER A \"VISION\" MIGHT BE THE PLOT TWIST BY CRITICIZING THE MAIN PROBLEM OF DIGITAL COMMUNITIES ON DISCORD, TELEGRAM, OR ELSEWHERE; THE CENTRALIZATION UNDER A COMMON GOAL. WHO DETERMINES THE MOST APPROPRIATE FOCAL POINT FOR COMMUNITIES? THE COMMUNITY MAKERS. IN THE CONTEXT OF THIS ARTWORK, IS IT REASONABLE FOR 18550 UNIQUE INDIVIDUALS TO UNITE UNDER A RANDOM CONTENTED LOYALTY-FREE INTERNET PICTURE? THE MAJORITY OF PEOPLE MAY UNDENIABLY BELIEVE IT IS. EVEN ARTISTS EFFORT AND STRIVE TO CREATE NON-STOP, AND THE CURATORS PUT THEM IN AN EXCELLENT HABITAT IN WHICH THEY MAKE SENSE TOGETHER TOO; FOR THE MOST PART, THE DIGITAL COMMUNITIES THAT HAVE SPRUNG UP OVER THE PAST YEAR HAVE BEEN PURELY MATERIALISTIC, WITH MEMBERS JOINING PRIMARILY TO TRADE AND \"FLIP.\" I BELIEVE WE REQUIRE SOMETHING MORE THAN A CACTUS, ALTHOUGH IT APPEARS TO BE AESTHETICALLY PLEASING OR WORTH FOLLOWING THROUGH THE INSISTENT DICTATION OF \"MAKERS.\" 100x150cm, digital" ,
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus3.png" }],
+  categories: { year: 2021, type: "VIDEO", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+},
+{
+  id: "cactus-3",
+  name: "Cactus Raid- Colored Base",
+  description: "“!CACTUS #RAID” THIS ARTWORK RESEARCHES THE BACK-HAND PROGRAMMING OF A MONOTONOUS IMAGE WITH THE SPIRIT OF SHOWING DECENTRALIZATION AND PARTICIPATION OF VARIOUS AURAS TOWARDS A UNIQUE GOAL ON A LARGE SCALE. AFTER FINDING A RANDOM STOCK LANDSCAPE IMAGE ONLINE, A NEW RE-INTERPRETATION IS MADE WITH DOTS TEXTURE. AS AN EXPRESSION, THAT STRICT REGULAR ARRAY OF BUBBLES IS THE LIMIT OF WHAT'S ENOUGH TO TRANSMIT A UNIVERSAL MESSAGE WITH A JPEG. THE CHAOS WITH THE ORDER INSIDE EACH DOT MIGHT BE UNRECOGNIZABLE FROM A DISTANCE RATHER THAN A DESERT LANDSCAPE WITH INVERTED COLORS; HENCE, EACH \"INDIVIDUAL\" HAS A DIVERSE CENTER FOR ITS OWN. THE COMPOSITION COMES INTO EXISTENCE WITH 18550 DIFFERENT EMOTIONAL VARIATIONS OF DIGITAL CHAKRAS. NONETHELESS, THIS STATED ESSENCE OF DECENTALISATION UNDER A \"VISION\" MIGHT BE THE PLOT TWIST BY CRITICIZING THE MAIN PROBLEM OF DIGITAL COMMUNITIES ON DISCORD, TELEGRAM, OR ELSEWHERE; THE CENTRALIZATION UNDER A COMMON GOAL. WHO DETERMINES THE MOST APPROPRIATE FOCAL POINT FOR COMMUNITIES? THE COMMUNITY MAKERS. IN THE CONTEXT OF THIS ARTWORK, IS IT REASONABLE FOR 18550 UNIQUE INDIVIDUALS TO UNITE UNDER A RANDOM CONTENTED LOYALTY-FREE INTERNET PICTURE? THE MAJORITY OF PEOPLE MAY UNDENIABLY BELIEVE IT IS. EVEN ARTISTS EFFORT AND STRIVE TO CREATE NON-STOP, AND THE CURATORS PUT THEM IN AN EXCELLENT HABITAT IN WHICH THEY MAKE SENSE TOGETHER TOO; FOR THE MOST PART, THE DIGITAL COMMUNITIES THAT HAVE SPRUNG UP OVER THE PAST YEAR HAVE BEEN PURELY MATERIALISTIC, WITH MEMBERS JOINING PRIMARILY TO TRADE AND \"FLIP.\" I BELIEVE WE REQUIRE SOMETHING MORE THAN A CACTUS, ALTHOUGH IT APPEARS TO BE AESTHETICALLY PLEASING OR WORTH FOLLOWING THROUGH THE INSISTENT DICTATION OF \"MAKERS.\" 100x150cm, digital" ,
+  link: null,
+  media: [{ type: "image", src: "https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/cactus3.png" }],
+  categories: { year: 2021, type: "3D", subtype: "Cactus Raid", collection: "Cactus Raid", medium: "computer", expression: "decentralize*", reality: "meta", contents: "digital image" }
+},
 {
   id: "usa-0",
   name: "What?",
@@ -4726,6 +4756,7 @@
 
 
         ];
+
 
         // --- STATE ---
         let state = { view: 'grid', filter: 'all' };
