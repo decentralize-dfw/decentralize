@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DECENTRALIZE*</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/logia2.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- THEME SETTINGS --- */
+        :root {
+            --ui-color: #FF006A; 
+            --bg-color: black;
+        }
+
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--ui-color);
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- UI CONTAINER (HEADER) --- */
+        #ui-container {
+            position: relative; 
+            width: 100%; 
+            z-index: 100;
+            padding: 0 0 0 2rem; 
+            height: 50px;
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: space-between; 
+            background-color: var(--bg-color); 
+            border-bottom: 1px solid rgba(255, 0, 106, 0.3); 
+            flex-shrink: 0;
+        }
+
+        /* SOL TARAF: MENÜ */
+        .menu-bar {
+            display: flex; 
+            flex-wrap: nowrap; 
+            gap: 0.5rem; 
+            align-items: center; 
+        }
+
+        .menu-group-separator {
+            width: 1px; height: 14px; background-color: var(--ui-color);
+            opacity: 0.3; margin: 0 6px;
+        }
+
+        .nav-btn {
+            background: transparent; 
+            border: 1px solid transparent; 
+            color: var(--ui-color); 
+            padding: 2px 8px; 
+            text-transform: capitalize; 
+            font-size: 0.75rem; 
+            font-weight: 400;
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            border-radius: 0.25rem; 
+            opacity: 0.7;
+        }
+        .nav-btn:hover { opacity: 1; border-color: var(--ui-color); }
+        .nav-btn.active { background-color: transparent; color: var(--ui-color); border-color: var(--ui-color); opacity: 1; font-weight: 500; }
+
+        /* SAĞ TARAF: LOGOLAR */
+        .right-section {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            gap: 30px; 
+        }
+
+        /* Ana Logo (D*) - En sağda - STATİK */
+        .main-logo-container {
+            height: 100%; 
+            display: flex;
+            align-items: center;
+        }
+
+        .main-logo {
+            height: 100%; 
+            width: auto;
+            object-fit: contain; 
+            object-position: right; 
+            opacity: 1;
+            cursor: default; 
+            display: block;
+        }
+        
+        /* Sosyal İkon Grubu - Ana Logonun Solunda */
+        .social-group {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+        }
+
+        /* Küçük İkonlar (12x12 pixel) */
+        .social-icon {
+            width: 12px;
+            height: 12px;
+            display: block;
+            opacity: 0.6;
+            transition: all 0.2s;
+            object-fit: contain;
+        }
+        .social-icon:hover {
+            opacity: 1;
+            transform: scale(1.2); 
+        }
+
+        /* --- IFRAME CONTAINER --- */
+        #iframe-container {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #000;
+            overflow: hidden; 
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* --- MOBİL DÜZENLEMELER --- */
+        @media (max-width: 768px) { 
+            #ui-container { 
+                padding: 0 0.5rem; /* Mobilde padding'i biraz azalttım ki sığsın */
+            }
+            
+            /* Mobilde sağ tarafın gizlenmesini İPTAL ETTİK, artık görünecek */
+            /* .right-section { display: none; }  <-- Bu satır kaldırıldı */
+
+            /* Studio butonunu mobilde gizle */
+            .studio-btn {
+                display: none;
+            }
+
+            /* Logoların mobilde çok yer kaplamaması için biraz sıkılaştırma (Opsiyonel) */
+            .right-section {
+                gap: 15px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui-container">
+        
+        <div class="menu-bar">
+            <button class="nav-btn active" onclick="loadUrl('home', this)">HOME</button>
+            <div class="menu-group-separator"></div>
+            <button class="nav-btn" onclick="loadUrl('works', this)">WORKS</button>
+            <button class="nav-btn" onclick="loadUrl('list', this)">LIST</button>
+            <button class="nav-btn" onclick="loadUrl('info', this)">INFO</button>
+            <button class="nav-btn studio-btn" onclick="loadUrl('studio', this)">STUDIO</button>
+        </div>
+
+        <div class="right-section">
+            
+            <div class="social-group">
+                <a href="https://twitter.com/decentralize___" target="_blank">
+                    <img src="https://cdn.simpleicons.org/x/FF006A" class="social-icon" alt="Twitter">
+                </a>
+                
+                <a href="mailto:community@de-centralize.com">
+                    <img src="https://cdn.simpleicons.org/gmail/FF006A" class="social-icon" alt="Mail">
+                </a>
+            </div>
+
+            <div class="main-logo-container">
+                <img src="https://raw.githubusercontent.com/decentralize-dfw/decentralize-archives/main/logia2w.png" alt="D* Logo" class="main-logo">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="iframe-container">
+        <iframe id="main-frame" src="" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        const links = {
+            'home': 'https://de-centralize.com/home',
+            'works': 'https://de-centralize.com/works-mobile-2',
+            'list': 'https://de-centralize.com/list-mobile-2',
+            'info': 'https://de-centralize.com/info-2',
+            'studio': 'https://de-centralize.com/studio'
+        };
+
+        const frame = document.getElementById('main-frame');
+
+        function loadUrl(key, btn) {
+            if(links[key]) {
+                frame.src = links[key];
+            }
+            if(btn) {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        }
+
+        window.onload = function() {
+            loadUrl('home', null);
+        };
+    </script>
+</body>
+</html>
