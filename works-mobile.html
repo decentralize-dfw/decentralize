@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Portfolio 3D View V9 - Fully Adaptive</title>
+    <title>Portfolio 3D View V10 - Adaptive Zoom & Compact Grid</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meshopt Decoder (Global) -->
@@ -71,13 +71,10 @@
 
         /* --- HYBRID MENU SYSTEM --- */
         
-        /* DESKTOP DEFAULT STYLE:
-           Tek bir kapsayıcı (.menu-bar), içinde yan yana gruplar (.menu-group).
-           Arada ayırıcı çizgi (.menu-divider).
-        */
+        /* DESKTOP DEFAULT STYLE */
         .menu-bar {
             display: flex; 
-            flex-direction: row; /* Yan yana */
+            flex-direction: row; 
             align-items: center;
             pointer-events: auto; 
             width: auto; 
@@ -116,7 +113,6 @@
         .nav-btn.active { background-color: rgba(255, 0, 106, 0.1); color: var(--ui-color); border-color: var(--ui-color); opacity: 1; }
 
         /* --- MOBILE OVERRIDES (@media) --- */
-        /* Sadece ekran küçükse bu kurallar çalışır */
         @media (max-width: 768px) {
             #ui-container {
                 padding: 10px;
@@ -124,41 +120,37 @@
                 align-items: center; /* Ortala */
             }
 
-            /* Ana barı görünmez yapıp içindeki grupları blok haline getiriyoruz */
             .menu-bar {
-                flex-direction: column; /* Alt alta diz */
-                background-color: transparent; /* Arkaplanı kaldır, gruplara vereceğiz */
+                flex-direction: column; 
+                background-color: transparent; 
                 border: none;
                 backdrop-filter: none;
                 padding: 0;
                 width: 100%;
-                gap: 10px; /* Satırlar arası boşluk */
+                gap: 10px; 
                 align-items: stretch;
             }
 
-            /* Her grup (View ve Filter) kendi başına bir bar olur */
             .menu-group {
                 background-color: rgba(0, 0, 0, 0.5); 
                 border: 1px solid rgba(255, 0, 106, 0.3);
                 backdrop-filter: blur(5px);
                 border-radius: 12px;
-                padding: 8px 4px; /* Kenar boşluklarını azalttık */
+                padding: 8px 4px; 
                 width: 100%;
-                justify-content: space-between; /* Butonları yay */
+                justify-content: space-between; 
             }
 
-            /* Masaüstü ayırıcısını gizle */
             .menu-divider { display: none; }
 
             .nav-btn {
-                flex: 1; /* Butonlar eşit genişlesin */
+                flex: 1; 
                 text-align: center;
-                padding: 8px 0; /* Dokunma alanı artsın */
-                font-size: 0.6rem; /* Uzun kelimeler sığsın diye hafif küçülttük */
-                letter-spacing: 0; /* Harf aralığını sıkılaştırdık */
+                padding: 8px 0; 
+                font-size: 0.6rem; 
+                letter-spacing: 0; 
             }
 
-            /* Slider'ı mobilde aşağı sabitle */
             #slider-container {
                 bottom: 20px !important;
                 left: 50% !important;
@@ -384,11 +376,6 @@
     </div>
 
     <div id="ui-container">
-        <!-- 
-            HYBRID MENU STRUCTURE 
-            Desktop: Tek bar gibi görünür.
-            Mobile: CSS ile ikiye ayrılır.
-        -->
         <div class="menu-bar">
             <!-- Group 1: Views -->
             <div class="menu-group" id="view-group">
@@ -456,7 +443,7 @@
         const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
         // --- DATA ---
-        const projects = [
+                const projects = [
            {
     id: "fig-1",
     name: "penguin is not a friend, only a sinner",
@@ -4699,6 +4686,13 @@
 
 
 
+
+
+
+
+
+
+
         // --- STATE ---
         let state = { view: 'grid', filter: 'all' };
         let camera, scene, renderer, controls;
@@ -4742,6 +4736,7 @@
             controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
+            controls.zoomSpeed = 2.5; // Örnek: Yavaşlatmak için
             controls.minZoom = 0.1;
             controls.maxZoom = 5;
             controls.autoRotateSpeed = 0; 
@@ -4852,9 +4847,6 @@
                     const type = e.target.dataset.type;
                     const val = e.target.dataset.val;
                     
-                    // Scope selection to the closest menu group so groups don't conflict, 
-                    // BUT for filtering/view we want global exclusivity within that type.
-                    // Actually, simple global selection by type works best.
                     const siblings = document.querySelectorAll(`.nav-btn[data-type="${type}"]`);
                     siblings.forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
@@ -4876,9 +4868,15 @@
             let maxDist = 0;
             objects.forEach(obj => {
                 if (obj.userData.center) { 
-                    const zDist = Math.abs(obj.userData.center.z + obj.userData.offset.z);
-                    const rDist = obj.userData.center.length() + obj.userData.offset.length();
-                    const dist = Math.max(zDist, rDist);
+                    // Calculate based on DESTINATION (userData.center + userData.offset)
+                    // This allows us to predict the frame before the animation finishes.
+                    const finalX = obj.userData.center.x + obj.userData.offset.x;
+                    const finalY = obj.userData.center.y + obj.userData.offset.y;
+                    const finalZ = obj.userData.center.z + obj.userData.offset.z;
+                    
+                    const pos = new THREE.Vector3(finalX, finalY, finalZ);
+                    const dist = pos.length();
+                    
                     if (dist > maxDist) maxDist = dist;
                 }
             });
@@ -4899,8 +4897,9 @@
             }
             targetZoom = Math.max(0.1, Math.min(targetZoom, 5));
 
+            // Increased duration to 2000ms to match the layout transition smoother
             new TWEEN.Tween(camera)
-                .to({ zoom: targetZoom }, 1000)
+                .to({ zoom: targetZoom }, 2000)
                 .easing(TWEEN.Easing.Cubic.Out)
                 .onUpdate(() => { camera.updateProjectionMatrix(); })
                 .start();
@@ -4992,11 +4991,13 @@
                 const LABEL_Y_HEIGHT = 800;
                 const SPHERE_OFFSET_Y = 400; 
                 const GRID_TOP_Y = 400;
+                
+                // REDUCED SPACING BY ~40% (Original was 180, now 108)
                 const ITEM_SPACING = 180;
 
                 if (state.filter !== 'all') {
                     if (state.view === 'grid') {
-                        const groupZSpacing = 2500;
+                        const groupZSpacing = 1500;
                         const totalZLen = (groupKeys.length - 1) * groupZSpacing;
                         cx = 0; 
                         cz = (totalZLen / 2) - (gIndex * groupZSpacing);
@@ -5078,6 +5079,11 @@
                     });
                 }
             });
+
+            // Automatically fit view when layout changes
+            // We use a small timeout or immediate call, but since userData is updated instantly above, we can call it now.
+            // The tween inside performFitView will animate the camera alongside the objects.
+            performFitView();
         }
 
         function onWindowResize() {
