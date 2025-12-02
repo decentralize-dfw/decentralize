@@ -155,15 +155,28 @@
                 border: 1px solid rgba(255, 0, 106, 0.3);
                 backdrop-filter: blur(5px);
                 border-radius: 12px;
-                padding: 8px 4px;
+                padding: 8px 8px;
                 width: 100%;
-                overflow-x: auto; /* Allow scroll if very many types */
+                overflow-x: auto; /* Enable horizontal scrolling */
+                white-space: nowrap; /* Keep items in one line */
                 pointer-events: auto;
+                gap: 8px; /* Add gap between buttons */
+                
+                /* Hide scrollbar for cleaner look */
+                scrollbar-width: none; 
+                -ms-overflow-style: none;
+            }
+            #mobile-type-bar::-webkit-scrollbar { 
+                display: none; 
             }
             
             #mobile-type-bar .nav-btn {
-                flex: 1; /* Equal width division */
-                min-width: 60px; /* Ensure text fits */
+                flex: 0 0 auto; /* Do not stretch, do not shrink */
+                width: auto; /* Natural width based on content */
+                min-width: auto; 
+                padding: 8px 16px; /* Adequate padding */
+                font-size: 0.65rem;
+                letter-spacing: 0.5px;
             }
 
             .menu-divider { display: none; }
@@ -476,7 +489,7 @@
         const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
         // --- SAMPLE DATA (Reduced to ~30 for testing per request) ---
-        const projects = [
+                const projects = [
            {
     id: "fig-1",
     name: "penguin is not a friend, only a sinner",
@@ -4855,21 +4868,13 @@
             // 1. Filter new data
             activeData = projects.filter(p => p.categories.type === currentMobileType);
             
-            // 2. Reset Filter state (optional, keeps UI consistent)
-            state.filter = 'all'; 
-            const filterBtns = document.querySelectorAll('#filter-group .nav-btn');
-            filterBtns.forEach(b => b.classList.remove('active'));
-            document.querySelector('#filter-group .nav-btn[data-val="all"]').classList.add('active');
+            // REMOVED RESET LOGIC FOR FILTER AND VIEW (As requested)
+            // The view and filter states remain as they are.
 
             // 3. Rebuild
             buildScene();
             
-            // 4. Reset View to Grid (optional preference) and Fit
-            state.view = 'grid'; // Reset view to grid on type change
-            const viewBtns = document.querySelectorAll('#view-group .nav-btn');
-            viewBtns.forEach(b => b.classList.remove('active'));
-            document.querySelector('#view-group .nav-btn[data-val="grid"]').classList.add('active');
-
+            // 4. Fit view automatically for new data
             setTimeout(performFitView, 100);
         }
 
