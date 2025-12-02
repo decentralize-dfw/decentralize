@@ -291,17 +291,17 @@
             <div class="w-full h-[50%] md:h-[40%] flex flex-col md:grid md:grid-cols-2 gap-px ui-border">
                 
                 <!-- 
-                   CHANGED LEFT COL: 
-                   - flex-shrink-0: prevents it from growing to fill half height on mobile, hugs content instead.
-                   - border-b: now acts as the separator line immediately after content on mobile.
-                   - md:border-b-0 md:border-r: Switches to vertical border on desktop.
+                    CHANGED LEFT COL: 
+                    - flex-shrink-0: prevents it from growing to fill half height on mobile, hugs content instead.
+                    - border-b: now acts as the separator line immediately after content on mobile.
+                    - md:border-b-0 md:border-r: Switches to vertical border on desktop.
                 -->
                 <div id="modal-left-col" class="p-4 md:p-[3%] flex-shrink-0 border-b md:border-b-0 md:border-r ui-border flex flex-col" style="background-color: var(--modal-bg);"></div>
                 
                 <!-- 
-                   CHANGED RIGHT COL:
-                   - flex-grow: takes up all remaining space in the container on mobile.
-                   - overflow-y-auto: scrolls if text is long.
+                    CHANGED RIGHT COL:
+                    - flex-grow: takes up all remaining space in the container on mobile.
+                    - overflow-y-auto: scrolls if text is long.
                 -->
                 <div id="modal-right-col" class="p-4 md:p-[5%] flex-grow overflow-y-auto" style="background-color: var(--modal-bg);"></div>
             </div>
@@ -310,7 +310,7 @@
 
 
     <script>
-        // --- 1. DATA (REDUCED SET: 10 Items) ---
+        // --- 1. DATA (SELECTED SET: ~20 Items including Audio) ---
         // SWAPPED 'contents' and 'medium' order here
         const categoryPriorityList = ['type', 'year', 'collection', 'contents', 'expression', 'reality', 'medium'];
 
@@ -5418,6 +5418,13 @@
                     mediaEl.src = media.src;
                     mediaEl.controls = true;
                     mediaEl.className = "inline-block h-full object-contain mr-4";
+                } else if (media.type === 'audio') {
+                    // NEW: Audio Support
+                    mediaEl = document.createElement('audio');
+                    mediaEl.src = media.src;
+                    mediaEl.controls = true;
+                    // Styling for audio player
+                    mediaEl.className = "inline-block min-w-[300px] h-12 self-center mr-4 bg-white/10 rounded-full border border-white/20";
                 } else if (media.type === 'model') {
                     mediaEl = document.createElement('model-viewer');
                     mediaEl.src = media.src;
