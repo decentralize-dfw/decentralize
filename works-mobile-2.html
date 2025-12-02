@@ -148,45 +148,42 @@
                 justify-content: space-between; 
             }
 
-            /* Mobile Type Bar Specifics */
+            /* Mobile Type Bar Specifics - FORCED FIT */
             #mobile-type-bar {
                 display: flex;
                 background-color: rgba(0, 0, 0, 0.5);
                 border: 1px solid rgba(255, 0, 106, 0.3);
                 backdrop-filter: blur(5px);
                 border-radius: 12px;
-                padding: 8px 8px;
+                padding: 6px 2px;
                 width: 100%;
-                overflow-x: auto; /* Enable horizontal scrolling */
-                white-space: nowrap; /* Keep items in one line */
+                overflow: hidden; /* No scrolling */
+                flex-wrap: nowrap; /* Force single line */
                 pointer-events: auto;
-                gap: 8px; /* Add gap between buttons */
-                
-                /* Hide scrollbar for cleaner look */
-                scrollbar-width: none; 
-                -ms-overflow-style: none;
-            }
-            #mobile-type-bar::-webkit-scrollbar { 
-                display: none; 
+                gap: 2px; /* Tiny gap */
             }
             
             #mobile-type-bar .nav-btn {
-                flex: 0 0 auto; /* Do not stretch, do not shrink */
-                width: auto; /* Natural width based on content */
-                min-width: auto; 
-                padding: 8px 16px; /* Adequate padding */
-                font-size: 0.65rem;
-                letter-spacing: 0.5px;
+                flex: 1; /* Distribute width equally */
+                width: auto;
+                min-width: 0; /* Allow shrinking below content size */
+                padding: 6px 0; /* Minimal padding */
+                
+                /* Responsive Font Size for fitting many items */
+                /* 6 items on 360px screen -> ~60px per item. */
+                font-size: 2.5vw; 
+                max-font-size: 10px;
+                
+                letter-spacing: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: clip; /* Just clip if it overflows, better than ellipsis for tight fits */
             }
 
             .menu-divider { display: none; }
 
             .nav-btn {
-                flex: 1; 
                 text-align: center;
-                padding: 8px 0; 
-                font-size: 0.6rem; 
-                letter-spacing: 0; 
             }
 
             /* Hide 'Type' button in the bottom filter group only on mobile */
@@ -488,8 +485,8 @@
 
         const categoryPriorityList = ['type', 'subtype', 'year', 'collection', 'medium', 'expression', 'reality', 'contents'];
 
-        // --- SAMPLE DATA (Reduced to ~30 for testing per request) ---
-         const projects = [
+        // --- SAMPLE DATA (Modified to simulate 6 types) ---
+                const projects = [
            {
     id: "fig-1",
     name: "penguin is not a friend, only a sinner",
